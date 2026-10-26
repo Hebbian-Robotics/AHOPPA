@@ -9,7 +9,6 @@ import inspectDrawerImage from "../docs/figures/storage-observations/inspect-d.p
 import storageResults from "../docs/figures/storage-results.json";
 import { ApiCosts } from "./ApiCosts";
 import { assetUrl } from "./assetUrl";
-import { EpisodeComparison, HighlightVideo } from "./EpisodeHighlights";
 import { ModelInputImages } from "./ModelInputImages";
 import { parseShutdownResults, ShutdownResults } from "./ShutdownResults";
 import { SimulatorCheck } from "./SimulatorCheck";
@@ -172,26 +171,18 @@ export function EpisodeShowcase() {
 				</Heading>
 				<Text as="p">
 					One instruction starts the inspection. The model chooses its route,
-					checks the drawers and returns home.
+					checks the drawers and returns home. The full episode is shown without
+					cuts, with adjustable playback speed.
 				</Text>
 			</div>
 			{featuredRecording ? (
 				<>
-					<div className="featured-highlights">
-						<HighlightVideo provider="astra" />
-					</div>
-					<details
-						className="full-recording"
-						id={`full-episode-${featuredRecording.identifier}`}
-					>
-						<summary>
-							Watch the full Astra episode and explore its decisions
-						</summary>
+					<div id={`full-episode-${featuredRecording.identifier}`}>
 						<EpisodeRecording
 							key={featuredRecording.identifier}
 							record={featuredRecording}
 						/>
-					</details>
+					</div>
 					{manifest.data?.records
 						.filter(
 							(record) => record.identifier !== featuredRecording.identifier,
@@ -344,7 +335,6 @@ export function StorageRound() {
 						online commands to a fixed controller, without a task skill library.
 					</Text>
 				</div>
-				<EpisodeComparison />
 				<dl className="study-design">
 					<div>
 						<dt>64 scheduled episodes</dt>

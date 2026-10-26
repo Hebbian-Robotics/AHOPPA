@@ -3,9 +3,8 @@
 The React source is in `web/`. The page uses the same versioned paper and result
 figures as the repository. Full replays, plans and original input images are
 supplied by the separately
-hashed media asset in `release-assets.json`. Small edited highlight clips are
-versioned in `web/highlights/`, with source and output hashes in
-`web/highlights/provenance.json`.
+hashed media asset in `release-assets.json`. The main player shows the full
+evaluated Astra episode without cuts.
 
 Build for GitHub Pages:
 
@@ -33,9 +32,8 @@ workflow never runs simulations or model calls.
 
 The page retains the centered Nerfies paper header, with a sharp vector overview
 immediately below the introduction, paired with the original seven-panel
-episode strip. Edited Astra highlights follow, with playback speed controls;
-the full episode
-expands on request.
+episode strip. The full Astra episode follows directly, with playback speed
+controls and no cuts.
 Additional recordings expand on request. The plan, decision timeline and
 original model inputs remain available in each recording's inspector. Recording
 details contain the stable video ID and direct link; shared links open their
@@ -50,10 +48,9 @@ top of the page. The featured replay's preview is the original external
 observation near the return home; playback shows synchronized views.
 
 The design review also used [HapticWorld](https://haptic-world.github.io/) for
-claim-oriented demonstrations and comparisons. Success and rejected-completion
-highlights sit together near the main result, with the same initial condition
-and effort labelled. Each clip has its own episode clock and advances
-independently. Subtle full-width shading separates results from task and method.
+claim-oriented demonstrations and comparisons. The page shows complete
+recordings to preserve continuity. Subtle full-width shading separates results
+from task and method.
 
 The design review used the official [ReKep](https://rekep-robot.github.io/),
 [SONIC](https://nvlabs.github.io/GEAR-SONIC/) and
@@ -115,32 +112,18 @@ the strip uses larger labels at paper width. Its last observation is at 942 s,
 preceding the completion declaration at 955 s. The table retains the primary
 numerical comparisons; the page includes fuller charts and episode observations.
 
-## Edited highlights
+## Continuous episode playback
 
-The clips derive only from the two evaluated episodes already included in the
-media release: Astra-low and Opus-low `open-A-D`. Each uses the published
-20 fps offline replay as its source. Source and output hashes, exact segment
-boundaries, output durations and physical outcomes are in
-`web/highlights/provenance.json`. The MP4 files total about 10 MB. Vite hashes
-them as separate assets; `preload="none"` keeps playback on demand.
+The main player shows the complete evaluated Astra-low `open-A-D` episode,
+using the original full replay in the pinned media release. It has no cuts.
+Shared 1x to 32x controls adjust playback speed, with 1x as the default. The
+additional Opus episode, plan timelines and original model inputs remain
+available through their existing disclosures and stable video identifiers.
 
-FFmpeg crops the external view at `(0, 100, 640, 360)` and the onboard view at
-`(640, 40, 640, 480)`, then arranges them side by side without stretching. It
-resets segment timestamps with `setpts=PTS-STARTPTS`, encodes H.264 at CRF 24
-and 20 fps with faststart, then concatenates the segments at real-time speed.
-Shared 1x to 32x controls select playback speed for highlights and full episodes,
-with 1x as the default. Scene labels and elapsed episode time are displayed
-below the image and follow the cuts and seek position. Native highlight
-controls remain available alongside the speed buttons. No title bar is burned
-into the video. English WebVTT captions describe each selected segment.
-No new physics or model calls are
-involved; raw recordings and original model inputs remain unchanged.
-
-The comparison reports both recorded physical outcomes and each episode's
-physics timing limit. Opus's D drawer ended 2.82 cm open and its home hold
-failed; Astra met both checks. These are selected examples, with all scheduled
-starts retained in the aggregate charts. Full-episode links expand the existing
-recordings and preserve their stable video identifiers.
+Stitched highlight reels are removed because cuts make the robot appear to
+teleport between places. Any future short example must use one continuous
+interval with explicit source timestamps. Full replays are offline pose
+renderings; their additional frames were not model observations.
 
 The paper introduces the research problem before the system and keeps its
 related-work citations in a compact paragraph. It presents the model interface

@@ -880,65 +880,6 @@ video-skin {
 .project-overview .overview-sequence img {
 	min-width: 640px;
 }
-.featured-highlights {
-	padding: 24px 28px;
-}
-.highlight-video {
-	margin: 0;
-}
-.highlight-video video {
-	aspect-ratio: 8 / 3;
-	border-radius: 6px;
-	background: var(--research-ink);
-}
-.highlight-video figcaption {
-	max-width: 78ch;
-	margin: 12px 0 0;
-	color: var(--research-muted);
-	font-size: 12px;
-	line-height: 1.65;
-}
-.full-recording {
-	border-top: 1px solid var(--research-line);
-}
-.full-recording > summary {
-	padding: 20px 28px;
-	color: var(--research-blue);
-	font-weight: 550;
-}
-.episode-comparison {
-	margin: 40px 0 48px;
-}
-.episode-comparison > h3 {
-	margin: 0 0 12px;
-	color: var(--research-ink);
-}
-.comparison-introduction {
-	max-width: 78ch;
-	margin: 0 0 24px;
-	font-size: 15px;
-}
-.episode-comparison-grid {
-	display: grid;
-	grid-template-columns: repeat(2, minmax(0, 1fr));
-	gap: 28px;
-}
-.episode-comparison-grid article {
-	min-width: 0;
-}
-.episode-comparison-grid h4 {
-	margin: 0 0 16px;
-	color: var(--research-ink);
-}
-.episode-comparison-grid p {
-	margin: 16px 0 0;
-	font-size: 14px;
-}
-.episode-comparison-grid .comparison-timing {
-	margin-top: 8px;
-	color: var(--research-muted);
-	font-size: 12px;
-}
 .results-section {
 	padding: 56px 0;
 	background: #f5f8fa;
@@ -948,20 +889,7 @@ video-skin {
 .result-chart {
 	background: #fff;
 }
-@media (max-width: 760px) {
-	.episode-comparison-grid {
-		grid-template-columns: 1fr;
-		gap: 32px;
-	}
-}
 @media (max-width: 680px) {
-	.featured-highlights,
-	.full-recording > summary {
-		padding: 18px 16px;
-	}
-	.full-recording > summary {
-		font-size: 14px;
-	}
 	.results-section {
 		padding: 36px 0;
 	}
@@ -969,31 +897,9 @@ video-skin {
 		text-align: left;
 	}
 }
-.episode-comparison-grid article > a {
-	display: inline-block;
-	margin-top: 12px;
-	color: var(--research-blue);
-	font-size: 13px;
-}
-
 .publication-link img.brand-icon {
 	filter: none;
 }
-.highlight-video .highlight-event {
-	display: flex;
-	flex-wrap: wrap;
-	justify-content: space-between;
-	gap: 4px 16px;
-	margin: 12px 0 0;
-	color: var(--research-ink);
-	font-size: 13px;
-	line-height: 1.6;
-}
-.highlight-clock {
-	color: var(--research-muted);
-	font-variant-numeric: tabular-nums;
-}
-
 @media (max-width: 640px) {
 	.playback-speed-controls.compact {
 		flex-direction: column;
