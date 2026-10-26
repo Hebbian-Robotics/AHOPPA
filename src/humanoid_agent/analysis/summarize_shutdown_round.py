@@ -186,13 +186,18 @@ def latex_table(
     providers: dict[str, Any],
     *,
     api_costs: dict[str, tuple[Decimal, Decimal, int]] | None = None,
+    successful_api_costs: dict[str, tuple[Decimal, Decimal] | None] | None = None,
+    attempt_times: dict[str, tuple[float | None, float | None]] | None = None,
 ) -> str:
     """Use all starts for success rates and completed episodes for physical counts."""
     lines = [
-        r"\begin{tabular}{lcccccc}" if api_costs is None else r"\begin{tabular}{lccccccc}",
+        r"\begin{tabular}{lcccccccc}"
+        if attempt_times is not None
+        else (r"\begin{tabular}{lcccccc}" if api_costs is None else r"\begin{tabular}{lccccccc}"),
         r"\toprule",
         "Model & Success & Physical & Closed & Seen & False & Control"
         + (r" & Est. \$" if api_costs is not None else "")
+        + (" & Episode (s)" if attempt_times is not None else "")
         + r" \\",
         r"\midrule",
     ]
@@ -205,9 +210,33 @@ def latex_table(
         if api_costs is not None:
             minimum, maximum, unreported = api_costs[provider]
             cost_text = f"{minimum:.2f}" if minimum == maximum else f"{minimum:.2f}--{maximum:.2f}"
-            cost_suffix = f" & {cost_text}" + (r"$^{*}$" if unreported else "")
+            if successful_api_costs is not None:
+                successful_cost = successful_api_costs[provider]
+                if successful_cost is None:
+                    cost_text += r" / --$^{*}$"
+                else:
+                    success_minimum, success_maximum = successful_cost
+                    success_text = (
+                        f"{success_minimum:.2f}"
+                        if success_minimum == success_maximum
+                        else f"{success_minimum:.2f}--{success_maximum:.2f}"
+                    )
+                    cost_text += f" / {success_text}"
+            elif unreported:
+                cost_text += r"$^{*}$"
+            cost_suffix = f" & {cost_text}"
+        label = group_label(provider)
+        if attempt_times is not None:
+            model, _, effort = provider.partition("-")
+            label = f"{model.title()} ({effort})"
+            all_seconds, successful_seconds = attempt_times[provider]
+            all_text = "--" if all_seconds is None else f"{all_seconds:.0f}"
+            successful_text = (
+                r"--$^{*}$" if successful_seconds is None else f"{successful_seconds:.0f}"
+            )
+            cost_suffix += f" & {all_text} / {successful_text}"
         lines.append(
-            f"{group_label(provider)} & "
+            f"{label} & "
             f"{manipulation['task_success']}/{manipulation['started']} & "
             f"{manipulation['physical_completion_observed']} & "
             f"{manipulation['open_drawers_closed']} & "

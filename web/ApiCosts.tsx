@@ -6,54 +6,107 @@ const dollarFormatter = new Intl.NumberFormat("en-US", {
 	currency: "USD",
 });
 
+function formatEstimatedCost(cost: {
+	minimum_usd: string;
+	maximum_usd: string;
+}) {
+	const minimum = dollarFormatter.format(Number(cost.minimum_usd));
+	const maximum = dollarFormatter.format(Number(cost.maximum_usd));
+	return minimum === maximum ? minimum : `${minimum} to ${maximum}`;
+}
+
 export function ApiCosts() {
+	const unresolvedCalls =
+		costReport.unreported_calls - costReport.recovered_calls;
 	return (
 		<div className="api-costs result-table">
 			<Heading as="h3" size="5">
-				Estimated API cost
+				Cost and episode duration
 			</Heading>
 			<Text as="p">
-				Mean cost per scheduled task attempt, using recorded token usage and
-				published standard API rates. Each row covers the same seven attempts as
-				the success comparison, including unsuccessful attempts. The all-closed
-				control is excluded.
+				All attempts averages all seven scheduled task attempts, including
+				failures and early terminations. Successful attempts averages only
+				completed tasks. Episode duration is active elapsed time through the
+				recorded cutoff; the all-closed control is excluded.
 			</Text>
 			<div className="result-table-scroll">
 				<table>
-					<caption>Estimated API cost per task attempt in US dollars</caption>
+					<caption>Mean API cost and elapsed time per attempt</caption>
 					<thead>
 						<tr>
-							<th scope="col">Model / effort</th>
-							<th scope="col">USD / attempt</th>
-							<th scope="col">Calls without response usage</th>
+							<th scope="col" rowSpan={2}>
+								Model / effort
+							</th>
+							<th scope="colgroup" colSpan={2}>
+								Estimated API cost (USD)
+							</th>
+							<th scope="colgroup" colSpan={2}>
+								Episode time (min)
+							</th>
+						</tr>
+						<tr>
+							<th scope="col">All</th>
+							<th scope="col">Successful</th>
+							<th scope="col">All</th>
+							<th scope="col">Successful</th>
 						</tr>
 					</thead>
 					<tbody>
-						{costReport.groups.map((group) => {
-							const costs = group.task_attempts.mean_cost_per_attempt;
-							const minimum = dollarFormatter.format(Number(costs.minimum_usd));
-							const maximum = dollarFormatter.format(Number(costs.maximum_usd));
-							return (
-								<tr key={group.group}>
-									<th scope="row">{group.label}</th>
-									<td>
-										{minimum === maximum ? minimum : `${minimum} to ${maximum}`}
-										{group.task_attempts.unreported_calls > 0 ? (
-											<sup>*</sup>
-										) : null}
-									</td>
-									<td>{group.task_attempts.unreported_calls}</td>
-								</tr>
-							);
-						})}
+						{costReport.groups.map((group) => (
+							<tr key={group.group}>
+								<th scope="row">{group.label}</th>
+								<td>
+									{formatEstimatedCost(
+										group.task_attempts.mean_cost_per_attempt,
+									)}
+								</td>
+								<td>
+									{group.successful_task_attempts ? (
+										formatEstimatedCost(
+											group.successful_task_attempts.mean_cost_per_attempt,
+										)
+									) : (
+										<>
+											—<sup>*</sup>
+										</>
+									)}
+								</td>
+								<td>
+									{group.attempt_timing?.mean_elapsed_seconds == null
+										? "—"
+										: (group.attempt_timing.mean_elapsed_seconds / 60).toFixed(
+												1,
+											)}
+								</td>
+								<td>
+									{group.successful_task_attempts ? (
+										group.attempt_timing?.mean_successful_elapsed_seconds ==
+										null ? (
+											"—"
+										) : (
+											(
+												group.attempt_timing.mean_successful_elapsed_seconds /
+												60
+											).toFixed(1)
+										)
+									) : (
+										<>
+											—<sup>*</sup>
+										</>
+									)}
+								</td>
+							</tr>
+						))}
 					</tbody>
 				</table>
 			</div>
 			<Text as="p" className="result-caveat">
-				* Calls without recorded response usage are excluded from the estimate,
-				so actual charges may be higher. OpenAI's Usage API confirms that cache
-				writes used the 30-minute rate. These are token-priced estimates, not
-				billed amounts; GPU hosting, taxes and account discounts are excluded.
+				Astra high cost less in these runs despite generating more output
+				tokens: cached reads covered about 50% of its input, compared with 29%
+				at low.
+			</Text>
+			<Text as="p" className="result-caveat">
+				* No successful attempt observed.
 			</Text>
 			<details>
 				<summary>Pricing sources and calculation</summary>
@@ -62,15 +115,19 @@ export function ApiCosts() {
 					correction calls. Cache reads, writes and uncached input are priced
 					separately. Output includes reasoning tokens, counted once. Across all
 					64 starts, {costReport.recorded_calls.toLocaleString("en-US")}{" "}
-					responses have usage and {costReport.unreported_calls} calls have no
-					recorded response usage.
+					responses have saved usage. Provider reports and rejection policies
+					resolve {costReport.recovered_calls} additional calls;{" "}
+					{unresolvedCalls} Gemini calls remain unresolved, about 0.30% of all
+					attempted calls. Their charges are excluded. Four HTTP 400 rejections
+					are confirmed not charged. GPU hosting, taxes and account discounts
+					are excluded from all estimates.
 				</p>
 				<p>
-					Astra's Usage API totals match all 996 retained responses exactly.
-					Sol's report contains six additional calls, matching the six
-					interrupted calls without saved responses. Their aggregate usage is
-					documented, but it is excluded from per-attempt estimates because we
-					cannot assign it to individual attempts reliably.
+					We match OpenAI usage to recorded completion timestamps and Anthropic
+					usage to timestamped HTTP receipts, then attribute only residual usage
+					that uniquely matches an interrupted attempt. Google monitoring does
+					not expose the cached-input split needed to price the remaining Gemini
+					calls reliably.
 				</p>
 				<p>
 					Rates:{" "}

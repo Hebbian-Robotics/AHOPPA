@@ -4,6 +4,8 @@ from __future__ import annotations
 
 import hashlib
 import json
+import math
+import statistics
 from collections import defaultdict
 from decimal import Decimal
 from pathlib import Path
@@ -15,6 +17,7 @@ from pydantic import Field, model_validator
 from humanoid_agent.analysis.summarize_shutdown_round import group_label, latex_table
 from humanoid_agent.artifact_io import atomic_json
 from humanoid_agent.logging_config import configure_logging
+from humanoid_agent.recording import read_record_bytes
 from humanoid_agent.validated_types import ValidatedModel
 
 TokenCount = Annotated[int, Field(ge=0)]
@@ -79,8 +82,12 @@ class EpisodeCost(ValidatedModel):
     group: str
     condition: str
     is_task_attempt: bool
+    task_success: bool | None = None
+    elapsed_seconds: Annotated[float, Field(ge=0)] | None = None
+    median_decision_seconds: Annotated[float, Field(ge=0)] | None = None
     recorded_calls: TokenCount
     unreported_calls: TokenCount
+    recovered_calls: TokenCount = 0
     input_tokens: TokenCount
     cached_input_tokens: TokenCount
     cache_write_tokens: TokenCount
@@ -92,14 +99,55 @@ class AggregateCost(ValidatedModel):
     attempts: Annotated[int, Field(gt=0)]
     recorded_calls: TokenCount
     unreported_calls: TokenCount
+    recovered_calls: TokenCount = 0
     total_cost: CostBounds
     mean_cost_per_attempt: CostBounds
+
+
+class AttemptTiming(ValidatedModel):
+    mean_elapsed_seconds: Annotated[float, Field(ge=0)] | None
+    mean_successful_elapsed_seconds: Annotated[float, Field(ge=0)] | None
+    median_decision_seconds: Annotated[float, Field(ge=0)] | None
+    median_successful_decision_seconds: Annotated[float, Field(ge=0)] | None
+
+
+def attempt_timing(episodes: list[EpisodeCost]) -> AttemptTiming:
+    tasks = [episode for episode in episodes if episode.is_task_attempt]
+    successful = [episode for episode in tasks if episode.task_success is True]
+    elapsed = [episode.elapsed_seconds for episode in tasks if episode.elapsed_seconds is not None]
+    successful_elapsed = [
+        episode.elapsed_seconds for episode in successful if episode.elapsed_seconds is not None
+    ]
+    decisions = [
+        episode.median_decision_seconds
+        for episode in tasks
+        if episode.median_decision_seconds is not None
+    ]
+    successful_decisions = [
+        episode.median_decision_seconds
+        for episode in successful
+        if episode.median_decision_seconds is not None
+    ]
+    return AttemptTiming(
+        mean_elapsed_seconds=statistics.mean(elapsed)
+        if tasks and len(elapsed) == len(tasks)
+        else None,
+        mean_successful_elapsed_seconds=statistics.mean(successful_elapsed)
+        if successful and len(successful_elapsed) == len(successful)
+        else None,
+        median_decision_seconds=statistics.median(decisions) if decisions else None,
+        median_successful_decision_seconds=statistics.median(successful_decisions)
+        if successful_decisions
+        else None,
+    )
 
 
 class GroupCost(ValidatedModel):
     group: str
     label: str
     task_attempts: AggregateCost
+    attempt_timing: AttemptTiming | None = None
+    successful_task_attempts: AggregateCost | None = None
     control: AggregateCost
 
 
@@ -118,14 +166,46 @@ class OpenAIUsageEvidence(ValidatedModel):
     models: list[OpenAIModelUsage]
 
 
+class RecoveredUsage(ValidatedModel):
+    episode: str
+    attempt: str
+    model: str
+    attempt_timing_sha256: str
+    evidence_sha256: str
+    source_url: str
+    method: Literal["usage_api_residual", "usage_api_zero_residual", "provider_rejection_no_charge"]
+    usage: TokenUsage
+
+    @model_validator(mode="after")
+    def require_zero_usage_for_no_charge_evidence(self) -> Self:
+        if self.method != "usage_api_residual" and any(self.usage.model_dump().values()):
+            raise ValueError("No-charge recovery must contain zero tokens")
+        return self
+
+
+class UsageRecoveries(ValidatedModel):
+    schema_version: Literal["ahoppa-api-usage-recoveries-v1"] = "ahoppa-api-usage-recoveries-v1"
+    calls: list[RecoveredUsage]
+
+    @model_validator(mode="after")
+    def require_unique_attempts(self) -> Self:
+        identities = {(row.episode, row.attempt) for row in self.calls}
+        if len(identities) != len(self.calls):
+            raise ValueError("Recovery repeats an API attempt")
+        return self
+
+
 class CostReport(ValidatedModel):
     schema_version: Literal["ahoppa-api-costs-v1"] = "ahoppa-api-costs-v1"
     pricing: PricingPolicy
     openai_usage_evidence: OpenAIUsageEvidence | None = None
+    usage_recoveries: UsageRecoveries | None = None
     summary_sha256: str
     record_manifest_sha256: str
+    terminal_samples_sha256: str | None = None
     recorded_calls: TokenCount
     unreported_calls: TokenCount
+    recovered_calls: TokenCount = 0
     groups: list[GroupCost]
     episodes: list[EpisodeCost]
 
@@ -223,6 +303,7 @@ def aggregate_costs(episodes: list[EpisodeCost]) -> AggregateCost:
         attempts=len(episodes),
         recorded_calls=sum(episode.recorded_calls for episode in episodes),
         unreported_calls=sum(episode.unreported_calls for episode in episodes),
+        recovered_calls=sum(episode.recovered_calls for episode in episodes),
         total_cost=CostBounds(minimum_usd=minimum, maximum_usd=maximum),
         mean_cost_per_attempt=CostBounds(
             minimum_usd=minimum / len(episodes), maximum_usd=maximum / len(episodes)
@@ -277,7 +358,8 @@ def apply_openai_usage_evidence(
             output_tokens=reported.output_tokens
             - sum(episode.output_tokens for episode in retained),
         )
-        if missing_calls == 0 and any(additional_usage.model_dump().values()):
+        unresolved_calls = missing_calls - sum(episode.recovered_calls for episode in retained)
+        if unresolved_calls == 0 and any(additional_usage.model_dump().values()):
             raise ValueError("Usage API token totals differ despite complete retained responses")
         confirmed_lifetimes[rate.study_provider] = lifetime
     reconciled_episodes = []
@@ -308,12 +390,24 @@ def main(
     pricing: Path,
     output: Path,
     openai_usage_evidence: Path | None = None,
+    usage_recoveries: Path | None = None,
+    include_episode_timing: bool = False,
 ) -> None:
     """Write JSON cost evidence and a LaTeX results table from retained API attempts."""
     summary = json.loads(summary_path.read_text())
     policy = PricingPolicy.model_validate_json(pricing.read_text())
     rates_by_model = {rate.model: rate for rate in policy.models}
+    recoveries = (
+        UsageRecoveries.model_validate_json(usage_recoveries.read_text())
+        if usage_recoveries
+        else None
+    )
+    recoveries_by_attempt = (
+        {(row.episode, row.attempt): row for row in recoveries.calls} if recoveries else {}
+    )
+    consumed_recoveries: set[tuple[str, str]] = set()
     record_manifest = hashlib.sha256()
+    timing_manifest = hashlib.sha256()
     episode_costs = []
     seen_episodes: set[str] = set()
     for row in summary["episodes"]:
@@ -333,33 +427,68 @@ def main(
         usage_records = []
         bounds = []
         unreported_calls = 0
+        recovered_calls = 0
+        recorded_calls = 0
         for timing_path in sorted(operator_directory.glob("*/model.attempt-*.timing.json")):
             timing = json.loads(timing_path.read_text())
             record_manifest.update(hashlib.sha256(timing_path.read_bytes()).digest())
             response_path = timing_path.with_name(
                 timing_path.name.removesuffix(".timing.json") + ".response.json"
             )
+            attempt = str(timing_path.relative_to(operator_directory)).removesuffix(".timing.json")
+            recovery_identity = (episode_name, attempt)
+            recovery = recoveries_by_attempt.get(recovery_identity)
             if not response_path.exists():
                 if timing["state"] == "received":
                     raise ValueError(f"Received response is missing: {response_path}")
-                unreported_calls += 1
-                continue
-            response_bytes = response_path.read_bytes()
-            record_manifest.update(hashlib.sha256(response_bytes).digest())
-            usage = recorded_usage(json.loads(response_bytes), rate)
+                usage = None
+            else:
+                response_bytes = response_path.read_bytes()
+                record_manifest.update(hashlib.sha256(response_bytes).digest())
+                usage = recorded_usage(json.loads(response_bytes), rate)
             if usage is None:
                 unreported_calls += 1
-                continue
+                if recovery is None:
+                    continue
+                if (
+                    recovery.model != rate.model
+                    or recovery.attempt_timing_sha256
+                    != hashlib.sha256(timing_path.read_bytes()).hexdigest()
+                ):
+                    raise ValueError(
+                        "Recovered usage differs from the recorded model or attempt timing"
+                    )
+                usage = recovery.usage
+                recovered_calls += 1
+                consumed_recoveries.add(recovery_identity)
+            else:
+                if recovery is not None:
+                    raise ValueError("Cannot add recovered usage to a retained response")
+                recorded_calls += 1
             usage_records.append(usage)
             bounds.append(price_usage(usage, rate))
+        elapsed_seconds = None
+        if include_episode_timing:
+            terminal_bytes = read_record_bytes(
+                operator_directory.parent / "physics/physical-trace.jsonl"
+            )
+            terminal = json.loads(terminal_bytes)
+            elapsed_seconds = float(terminal["wall_seconds"])
+            if not math.isfinite(elapsed_seconds) or elapsed_seconds < 0:
+                raise ValueError("Invalid terminal episode elapsed time")
+            timing_manifest.update(hashlib.sha256(terminal_bytes).digest())
         episode_costs.append(
             EpisodeCost(
                 episode=episode_name,
                 group=row["group"],
                 condition=row["condition"],
                 is_task_attempt=row["requires_manipulation"],
-                recorded_calls=len(usage_records),
+                task_success=row.get("task_success"),
+                elapsed_seconds=elapsed_seconds,
+                median_decision_seconds=row.get("median_request_seconds"),
+                recorded_calls=recorded_calls,
                 unreported_calls=unreported_calls,
+                recovered_calls=recovered_calls,
                 input_tokens=sum(usage.input_tokens for usage in usage_records),
                 cached_input_tokens=sum(usage.cached_input_tokens for usage in usage_records),
                 cache_write_tokens=sum(usage.cache_write_tokens for usage in usage_records),
@@ -370,6 +499,8 @@ def main(
                 ),
             )
         )
+    if consumed_recoveries != recoveries_by_attempt.keys():
+        raise ValueError("Recovery references an API attempt outside the retained summary")
     usage_evidence = (
         OpenAIUsageEvidence.model_validate_json(openai_usage_evidence.read_text())
         if openai_usage_evidence is not None
@@ -388,17 +519,33 @@ def main(
     report = CostReport(
         pricing=policy,
         openai_usage_evidence=usage_evidence,
+        usage_recoveries=recoveries,
         summary_sha256=hashlib.sha256(summary_path.read_bytes()).hexdigest(),
         record_manifest_sha256=record_manifest.hexdigest(),
+        terminal_samples_sha256=timing_manifest.hexdigest() if include_episode_timing else None,
         recorded_calls=sum(episode.recorded_calls for episode in episode_costs),
         unreported_calls=sum(episode.unreported_calls for episode in episode_costs),
+        recovered_calls=sum(episode.recovered_calls for episode in episode_costs),
         groups=[
             GroupCost(
                 group=group,
                 label=group_label(group),
+                attempt_timing=attempt_timing(grouped[group]),
                 task_attempts=aggregate_costs(
                     [episode for episode in grouped[group] if episode.is_task_attempt]
                 ),
+                successful_task_attempts=aggregate_costs(
+                    [
+                        episode
+                        for episode in grouped[group]
+                        if episode.is_task_attempt and episode.task_success is True
+                    ]
+                )
+                if any(
+                    episode.is_task_attempt and episode.task_success is True
+                    for episode in grouped[group]
+                )
+                else None,
                 control=aggregate_costs(
                     [episode for episode in grouped[group] if not episode.is_task_attempt]
                 ),
@@ -413,13 +560,33 @@ def main(
         group.group: (
             group.task_attempts.mean_cost_per_attempt.minimum_usd,
             group.task_attempts.mean_cost_per_attempt.maximum_usd,
-            group.task_attempts.unreported_calls,
+            group.task_attempts.unreported_calls - group.task_attempts.recovered_calls,
         )
         for group in report.groups
     }
     output.with_suffix(".tex").write_text(
         latex_table(
-            {group: summary["providers"][group] for group in ordered_groups}, api_costs=cost_columns
+            {group: summary["providers"][group] for group in ordered_groups},
+            api_costs=cost_columns,
+            attempt_times={
+                group.group: (
+                    group.attempt_timing.mean_elapsed_seconds,
+                    group.attempt_timing.mean_successful_elapsed_seconds,
+                )
+                for group in report.groups
+                if group.attempt_timing is not None
+            }
+            if include_episode_timing
+            else None,
+            successful_api_costs={
+                group.group: (
+                    group.successful_task_attempts.mean_cost_per_attempt.minimum_usd,
+                    group.successful_task_attempts.mean_cost_per_attempt.maximum_usd,
+                )
+                if group.successful_task_attempts is not None
+                else None
+                for group in report.groups
+            },
         )
     )
 

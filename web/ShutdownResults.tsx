@@ -37,6 +37,18 @@ const resultsSchema = z.object({
 				task_success: z.number().int(),
 			}),
 			median_request_seconds: z.number().positive(),
+			attempt_timing: z
+				.object({
+					mean_elapsed_seconds: z.number().nonnegative().nullable(),
+					mean_successful_elapsed_seconds: z.number().nonnegative().nullable(),
+					median_decision_seconds: z.number().nonnegative().nullable(),
+					median_successful_decision_seconds: z
+						.number()
+						.nonnegative()
+						.nullable(),
+				})
+				.nullable()
+				.optional(),
 		}),
 	),
 	timing: z.object({
@@ -171,8 +183,17 @@ function CompletionTimeChart({ results }: { results: ShutdownResultsData }) {
 	return (
 		<figure className="result-chart">
 			<Heading as="h3" size="4">
-				Time to task completion
+				Successful task completion and decision latency
 			</Heading>
+			<div className="outcome-row timing-column-labels" aria-hidden="true">
+				<span />
+				<span>Successful completion time</span>
+				<span>
+					Decision latency (s)
+					<br />
+					All / successful attempts
+				</span>
+			</div>
 			<div className="timeline-rows">
 				{results.providers.map((provider) => (
 					<div className="outcome-row" key={provider.provider}>
@@ -194,7 +215,20 @@ function CompletionTimeChart({ results }: { results: ShutdownResultsData }) {
 								0 && <span className="timeline-empty">No successes</span>}
 						</div>
 						<span className="chart-row-value">
-							{provider.median_request_seconds.toFixed(1)} s / request
+							{provider.attempt_timing ? (
+								<>
+									{provider.attempt_timing.median_decision_seconds?.toFixed(
+										1,
+									) ?? "—"}{" "}
+									/{" "}
+									{provider.attempt_timing.median_successful_decision_seconds?.toFixed(
+										1,
+									) ?? "—"}{" "}
+									s
+								</>
+							) : (
+								`${provider.median_request_seconds.toFixed(1)} s / decision`
+							)}
 						</span>
 					</div>
 				))}
@@ -217,9 +251,10 @@ function CompletionTimeChart({ results }: { results: ShutdownResultsData }) {
 			{tooltip}
 			<figcaption>
 				Elapsed wall time at the successful completion declaration, out of the{" "}
-				{budget} s budget. The right column gives each model's median
-				model-request time across its episodes; physics keeps running while it
-				waits.
+				{budget} s budget. The right column reports median model-decision
+				latency over all task attempts and over successful attempts only. Each
+				value is the median of per-attempt medians for completed decisions.
+				Physics keeps running during inference.
 			</figcaption>
 		</figure>
 	);

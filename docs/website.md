@@ -50,10 +50,13 @@ The design review used the official [ReKep](https://rekep-robot.github.io/),
 demonstrations and capability-oriented sections.
 
 The estimated-cost table reads `figures/api-costs.json`, the same data used to
-generate the paper's cost column. Follow [the cost method](api-costs.md) for
-standard rates, usage reconciliation, missing usage and reproduction. OpenAI
-cache-write lifetimes are confirmed by the organization Usage API; public
-evidence omits account identifiers. The author
+generate the paper's paired cost/time columns. All-attempt means include all
+seven scheduled task attempts; successful-attempt means include only completed
+tasks. A dash and asterisk indicate no observed successful attempt. The
+completion chart separately pairs model-decision latency over all and successful
+task attempts. Physics lag is separate. Follow [the cost and timing method](api-costs.md)
+for aggregation and recovery. Small accounting gaps stay in expandable details;
+public evidence omits account identifiers. The author
 order is Kingston Kuan, Samuel J Chew, then Brandon Ong. Kingston and Brandon
 are at Hebbian Robotics; Samuel is at Carnegie Mellon University. His name links
 to his supplied LinkedIn profile. The affiliation row includes CMU's primary

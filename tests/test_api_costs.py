@@ -1,5 +1,6 @@
 """Billing estimates preserve provider token semantics and scheduled-attempt scope."""
 
+import hashlib
 import json
 import tempfile
 import unittest
@@ -190,6 +191,13 @@ class ApiCostTests(unittest.TestCase):
                 operator = root / name / "operator"
                 decision = operator / "decision-000"
                 decision.mkdir(parents=True)
+                physics = root / name / "physics"
+                physics.mkdir()
+                (physics / "physical-trace.jsonl").write_text(
+                    json.dumps(
+                        {"wall_seconds": {"task-one": 100, "task-two": 20, "control": 500}[name]}
+                    )
+                )
                 (operator / "operator-configuration.json").write_text(
                     json.dumps(
                         {
@@ -220,6 +228,10 @@ class ApiCostTests(unittest.TestCase):
                         "group": "sol-low",
                         "condition": name,
                         "requires_manipulation": task,
+                        "task_success": name == "task-one",
+                        "median_request_seconds": {"task-one": 40, "task-two": 10, "control": 1}[
+                            name
+                        ],
                     }
                 )
             summary_path = root / "summary.json"
@@ -233,6 +245,11 @@ class ApiCostTests(unittest.TestCase):
             self.assertEqual(report["unreported_calls"], 1)
             group = report["groups"][0]
             self.assertEqual(group["task_attempts"]["attempts"], 2)
+            self.assertEqual(group["successful_task_attempts"]["attempts"], 1)
+            self.assertEqual(
+                Decimal(group["successful_task_attempts"]["mean_cost_per_attempt"]["minimum_usd"]),
+                Decimal("0.0002"),
+            )
             self.assertEqual(
                 Decimal(group["task_attempts"]["mean_cost_per_attempt"]["minimum_usd"]),
                 Decimal("0.0004"),
@@ -240,6 +257,56 @@ class ApiCostTests(unittest.TestCase):
             self.assertEqual(
                 Decimal(group["control"]["total_cost"]["minimum_usd"]), Decimal("0.0018")
             )
+            missing_timing = root / "task-two/operator/decision-000/model.attempt-001.timing.json"
+            recovery_path = root / "recoveries.json"
+            recovery = {
+                "episode": "task-two",
+                "attempt": "decision-000/model.attempt-001",
+                "model": "gpt-6.1-sol",
+                "attempt_timing_sha256": hashlib.sha256(missing_timing.read_bytes()).hexdigest(),
+                "evidence_sha256": "b" * 64,
+                "source_url": "https://developers.openai.com/docs/api-reference/usage",
+                "method": "usage_api_residual",
+                "usage": {"input_tokens": 200, "output_tokens": 100},
+            }
+            recovery_path.write_text(json.dumps({"calls": [recovery]}))
+            main(
+                summary_path,
+                episodes_root=root,
+                pricing=PRICING_PATH,
+                output=output_path,
+                usage_recoveries=recovery_path,
+                include_episode_timing=True,
+            )
+            recovered = json.loads(output_path.read_text())
+            self.assertEqual(recovered["recorded_calls"], 3)
+            self.assertEqual(recovered["unreported_calls"], 1)
+            self.assertEqual(recovered["recovered_calls"], 1)
+            timing = recovered["groups"][0]["attempt_timing"]
+            self.assertEqual(timing["mean_elapsed_seconds"], 60)
+            self.assertEqual(timing["mean_successful_elapsed_seconds"], 100)
+            self.assertEqual(timing["median_decision_seconds"], 25)
+            self.assertEqual(timing["median_successful_decision_seconds"], 40)
+            self.assertEqual(
+                Decimal(
+                    recovered["groups"][0]["task_attempts"]["mean_cost_per_attempt"]["minimum_usd"]
+                ),
+                Decimal("0.0011"),
+            )
+            self.assertEqual(
+                Decimal(recovered["groups"][0]["control"]["total_cost"]["minimum_usd"]),
+                Decimal("0.0018"),
+            )
+            recovery["attempt_timing_sha256"] = "c" * 64
+            recovery_path.write_text(json.dumps({"calls": [recovery]}))
+            with self.assertRaisesRegex(ValueError, "attempt timing"):
+                main(
+                    summary_path,
+                    episodes_root=root,
+                    pricing=PRICING_PATH,
+                    output=output_path,
+                    usage_recoveries=recovery_path,
+                )
 
 
 if __name__ == "__main__":

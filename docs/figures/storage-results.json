@@ -2,7 +2,8 @@
   "schema_version": "webolt-shutdown-results-v1",
   "source": {
     "summary": "artifacts/storage-comparison-v3/summary.json",
-    "summary_sha256": "affe4a2076d72cd3bb059c289bda17b18f1b0d801b2d7dcc343fbf52678fa1fe"
+    "summary_sha256": "affe4a2076d72cd3bb059c289bda17b18f1b0d801b2d7dcc343fbf52678fa1fe",
+    "attempt_metrics_sha256": "ff6c4a5ea9c78520db02900f4db580acfb51c0eb3bd4c257309fa4173b625d91"
   },
   "episode_budget_seconds": 1800.0,
   "outcomes": [
@@ -47,7 +48,13 @@
         "completed": 1,
         "task_success": 0
       },
-      "median_request_seconds": 21.29002690599009
+      "median_request_seconds": 21.29002690599009,
+      "attempt_timing": {
+        "mean_elapsed_seconds": 998.4890347288539,
+        "mean_successful_elapsed_seconds": 1144.7375428825035,
+        "median_decision_seconds": 21.362769988976652,
+        "median_successful_decision_seconds": 21.75135775473609
+      }
     },
     {
       "provider": "astra-low",
@@ -82,7 +89,13 @@
         "completed": 1,
         "task_success": 1
       },
-      "median_request_seconds": 9.167672900744947
+      "median_request_seconds": 9.167672900744947,
+      "attempt_timing": {
+        "mean_elapsed_seconds": 817.3827213798484,
+        "mean_successful_elapsed_seconds": 925.5049125528216,
+        "median_decision_seconds": 9.242983195494162,
+        "median_successful_decision_seconds": 9.350813537734211
+      }
     },
     {
       "provider": "sol-low",
@@ -115,7 +128,13 @@
         "completed": 1,
         "task_success": 0
       },
-      "median_request_seconds": 10.368450193738681
+      "median_request_seconds": 10.368450193738681,
+      "attempt_timing": {
+        "mean_elapsed_seconds": 829.1962872871497,
+        "mean_successful_elapsed_seconds": 940.362191200009,
+        "median_decision_seconds": 10.39179399900604,
+        "median_successful_decision_seconds": 10.412613733002217
+      }
     },
     {
       "provider": "opus-high",
@@ -147,7 +166,13 @@
         "completed": 1,
         "task_success": 1
       },
-      "median_request_seconds": 35.27847764198668
+      "median_request_seconds": 35.27847764198668,
+      "attempt_timing": {
+        "mean_elapsed_seconds": 1392.1550632164249,
+        "mean_successful_elapsed_seconds": 1562.5119658463325,
+        "median_decision_seconds": 36.09304672200233,
+        "median_successful_decision_seconds": 34.46390856197104
+      }
     },
     {
       "provider": "sol-high",
@@ -179,7 +204,13 @@
         "completed": 1,
         "task_success": 0
       },
-      "median_request_seconds": 21.247870715975296
+      "median_request_seconds": 21.247870715975296,
+      "attempt_timing": {
+        "mean_elapsed_seconds": 1235.353981172849,
+        "mean_successful_elapsed_seconds": 1162.309427116629,
+        "median_decision_seconds": 21.511975052504567,
+        "median_successful_decision_seconds": 21.77607938903384
+      }
     },
     {
       "provider": "opus-low",
@@ -210,7 +241,13 @@
         "completed": 1,
         "task_success": 1
       },
-      "median_request_seconds": 13.396650222479366
+      "median_request_seconds": 13.396650222479366,
+      "attempt_timing": {
+        "mean_elapsed_seconds": 761.5630800411537,
+        "mean_successful_elapsed_seconds": 1028.0742100689968,
+        "median_decision_seconds": 13.21485234098509,
+        "median_successful_decision_seconds": 13.510488702988368
+      }
     },
     {
       "provider": "gemini-high",
@@ -238,7 +275,13 @@
         "completed": 1,
         "task_success": 0
       },
-      "median_request_seconds": 130.17873757175403
+      "median_request_seconds": 130.17873757175403,
+      "attempt_timing": {
+        "mean_elapsed_seconds": 1332.1862153338568,
+        "mean_successful_elapsed_seconds": null,
+        "median_decision_seconds": 136.6868000239774,
+        "median_successful_decision_seconds": null
+      }
     },
     {
       "provider": "gemini-low",
@@ -266,7 +309,13 @@
         "completed": 0,
         "task_success": 0
       },
-      "median_request_seconds": 28.24228433823737
+      "median_request_seconds": 28.24228433823737,
+      "attempt_timing": {
+        "mean_elapsed_seconds": 736.6040343622943,
+        "mean_successful_elapsed_seconds": null,
+        "median_decision_seconds": 32.3462091179681,
+        "median_successful_decision_seconds": null
+      }
     }
   ],
   "timing": {

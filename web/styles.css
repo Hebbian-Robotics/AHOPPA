@@ -842,3 +842,21 @@ video-skin {
 		width: 80px;
 	}
 }
+
+.timing-column-labels {
+	font-size: 0.75rem;
+	line-height: 1.4;
+	margin-bottom: 10px;
+}
+@media (max-width: 640px) {
+	.timing-column-labels > span:first-child {
+		display: none;
+	}
+}
+
+@media (max-width: 640px) {
+	.api-costs th,
+	.api-costs td {
+		padding-inline: 6px;
+	}
+}

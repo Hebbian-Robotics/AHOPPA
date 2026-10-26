@@ -1,0 +1,226 @@
+{
+  "schema_version": "ahoppa-api-usage-recoveries-v1",
+  "calls": [
+    {
+      "episode": "storage-cmp3-gemini-low-none-open-r1",
+      "attempt": "feedback_002/model.attempt-006",
+      "model": "gemini-4-argon",
+      "attempt_timing_sha256": "eb193f93f1ecebc02079813723dc1c6f7eb8fde82e547e5b76aeb09d938eb588",
+      "evidence_sha256": "cb8cbdffe5112195a53c423c1fc2e166ea243959d52606d8499cefc41e799b7f",
+      "source_url": "https://ai.google.dev/gemini-api/docs/billing",
+      "method": "provider_rejection_no_charge",
+      "usage": {
+        "input_tokens": 0,
+        "cached_input_tokens": 0,
+        "short_cache_write_tokens": 0,
+        "long_cache_write_tokens": 0,
+        "unspecified_cache_write_tokens": 0,
+        "output_tokens": 0
+      }
+    },
+    {
+      "episode": "storage-cmp3-gemini-low-open-a-b-r1",
+      "attempt": "feedback_021/model.attempt-003",
+      "model": "gemini-4-argon",
+      "attempt_timing_sha256": "634f57a37b3d0aeb71ed4c0026b3285dfd51f8bea6e342a8aff9d4e00c9eb2a1",
+      "evidence_sha256": "cb8cbdffe5112195a53c423c1fc2e166ea243959d52606d8499cefc41e799b7f",
+      "source_url": "https://ai.google.dev/gemini-api/docs/billing",
+      "method": "provider_rejection_no_charge",
+      "usage": {
+        "input_tokens": 0,
+        "cached_input_tokens": 0,
+        "short_cache_write_tokens": 0,
+        "long_cache_write_tokens": 0,
+        "unspecified_cache_write_tokens": 0,
+        "output_tokens": 0
+      }
+    },
+    {
+      "episode": "storage-cmp3-gemini-low-open-b-c-r1",
+      "attempt": "feedback_007/model.attempt-004",
+      "model": "gemini-4-argon",
+      "attempt_timing_sha256": "51fed8d9fafde9467892f612ea9c7045c511d0bf4943eab067e7fc476685da7f",
+      "evidence_sha256": "cb8cbdffe5112195a53c423c1fc2e166ea243959d52606d8499cefc41e799b7f",
+      "source_url": "https://ai.google.dev/gemini-api/docs/billing",
+      "method": "provider_rejection_no_charge",
+      "usage": {
+        "input_tokens": 0,
+        "cached_input_tokens": 0,
+        "short_cache_write_tokens": 0,
+        "long_cache_write_tokens": 0,
+        "unspecified_cache_write_tokens": 0,
+        "output_tokens": 0
+      }
+    },
+    {
+      "episode": "storage-cmp3-gemini-low-open-b-r1",
+      "attempt": "feedback_016/model.attempt-010",
+      "model": "gemini-4-argon",
+      "attempt_timing_sha256": "d612c3f8b34fa349b8d8ef72049bdadd3278d67112d36d7860de179b5beb53aa",
+      "evidence_sha256": "cb8cbdffe5112195a53c423c1fc2e166ea243959d52606d8499cefc41e799b7f",
+      "source_url": "https://ai.google.dev/gemini-api/docs/billing",
+      "method": "provider_rejection_no_charge",
+      "usage": {
+        "input_tokens": 0,
+        "cached_input_tokens": 0,
+        "short_cache_write_tokens": 0,
+        "long_cache_write_tokens": 0,
+        "unspecified_cache_write_tokens": 0,
+        "output_tokens": 0
+      }
+    },
+    {
+      "episode": "storage-cmp3-opus-high-open-d-r1",
+      "attempt": "feedback_010/model.attempt-001",
+      "model": "claude-opus-5-5",
+      "attempt_timing_sha256": "d9ed8d5acf5c26413b79ccfa9732c2367a6146d280b8e400e4004365b82db276",
+      "evidence_sha256": "a4dd3b81e8fa2fa78c8d2cf06e3c6861a25adff30eb9c943fb83c039c2c6c390",
+      "source_url": "https://platform.claude.com/docs/en/api/admin/usage_report/retrieve_messages",
+      "method": "usage_api_zero_residual",
+      "usage": {
+        "input_tokens": 0,
+        "cached_input_tokens": 0,
+        "short_cache_write_tokens": 0,
+        "long_cache_write_tokens": 0,
+        "unspecified_cache_write_tokens": 0,
+        "output_tokens": 0
+      }
+    },
+    {
+      "episode": "storage-cmp3-opus-low-open-a-b-r1",
+      "attempt": "feedback_015/model.attempt-000",
+      "model": "claude-opus-5-5",
+      "attempt_timing_sha256": "4ddfe4a2c31bc073114ac4e4e3e9a8d5fd8817ed140d6c903ff16953d7afd01e",
+      "evidence_sha256": "a4dd3b81e8fa2fa78c8d2cf06e3c6861a25adff30eb9c943fb83c039c2c6c390",
+      "source_url": "https://platform.claude.com/docs/en/api/admin/usage_report/retrieve_messages",
+      "method": "usage_api_residual",
+      "usage": {
+        "input_tokens": 17303,
+        "cached_input_tokens": 0,
+        "short_cache_write_tokens": 0,
+        "long_cache_write_tokens": 0,
+        "unspecified_cache_write_tokens": 0,
+        "output_tokens": 575
+      }
+    },
+    {
+      "episode": "storage-cmp3-opus-low-open-b-c-r1",
+      "attempt": "feedback_001/model.attempt-000",
+      "model": "claude-opus-5-5",
+      "attempt_timing_sha256": "5ffeb767acd11152d49a14ad429615c5d6fc9d0421ab3820a69df599a46bb572",
+      "evidence_sha256": "a4dd3b81e8fa2fa78c8d2cf06e3c6861a25adff30eb9c943fb83c039c2c6c390",
+      "source_url": "https://platform.claude.com/docs/en/api/admin/usage_report/retrieve_messages",
+      "method": "usage_api_residual",
+      "usage": {
+        "input_tokens": 15310,
+        "cached_input_tokens": 0,
+        "short_cache_write_tokens": 0,
+        "long_cache_write_tokens": 0,
+        "unspecified_cache_write_tokens": 0,
+        "output_tokens": 1182
+      }
+    },
+    {
+      "episode": "storage-cmp3-sol-high-open-a-b-r1",
+      "attempt": "feedback_065/model.attempt-000",
+      "model": "gpt-6.1-sol",
+      "attempt_timing_sha256": "5dfb864f12986c7c99fc61b3f685aabdaf837b46907651cba6c3d28140296391",
+      "evidence_sha256": "ce582fc354d71924344c76327eb2a62e7f3b0feb82985bf3363a035a89f2893e",
+      "source_url": "https://developers.openai.com/docs/api-reference/usage",
+      "method": "usage_api_residual",
+      "usage": {
+        "input_tokens": 11339,
+        "cached_input_tokens": 1183,
+        "short_cache_write_tokens": 10153,
+        "long_cache_write_tokens": 0,
+        "unspecified_cache_write_tokens": 0,
+        "output_tokens": 1679
+      }
+    },
+    {
+      "episode": "storage-cmp3-sol-high-open-a-d-r1",
+      "attempt": "feedback_064/model.attempt-000",
+      "model": "gpt-6.1-sol",
+      "attempt_timing_sha256": "f5ed1e2f4032bd804024768f691fd695792e08ae6870db83779cec8c6eb6a0a0",
+      "evidence_sha256": "ce582fc354d71924344c76327eb2a62e7f3b0feb82985bf3363a035a89f2893e",
+      "source_url": "https://developers.openai.com/docs/api-reference/usage",
+      "method": "usage_api_residual",
+      "usage": {
+        "input_tokens": 11328,
+        "cached_input_tokens": 1183,
+        "short_cache_write_tokens": 10142,
+        "long_cache_write_tokens": 0,
+        "unspecified_cache_write_tokens": 0,
+        "output_tokens": 1190
+      }
+    },
+    {
+      "episode": "storage-cmp3-sol-high-open-b-r1",
+      "attempt": "initial/model.attempt-000",
+      "model": "gpt-6.1-sol",
+      "attempt_timing_sha256": "22437f124bd2c3cf28a6d9ae9db8193e0ad251c30bbefce63cdff06f2f943a91",
+      "evidence_sha256": "ce582fc354d71924344c76327eb2a62e7f3b0feb82985bf3363a035a89f2893e",
+      "source_url": "https://developers.openai.com/docs/api-reference/usage",
+      "method": "usage_api_residual",
+      "usage": {
+        "input_tokens": 4675,
+        "cached_input_tokens": 0,
+        "short_cache_write_tokens": 4672,
+        "long_cache_write_tokens": 0,
+        "unspecified_cache_write_tokens": 0,
+        "output_tokens": 389
+      }
+    },
+    {
+      "episode": "storage-cmp3-sol-high-open-d-r1",
+      "attempt": "feedback_049/model.attempt-000",
+      "model": "gpt-6.1-sol",
+      "attempt_timing_sha256": "6a8f8905ba531b65805640e1299d1585aa1ceccc65a4ab83e70d29264b15309b",
+      "evidence_sha256": "ce582fc354d71924344c76327eb2a62e7f3b0feb82985bf3363a035a89f2893e",
+      "source_url": "https://developers.openai.com/docs/api-reference/usage",
+      "method": "usage_api_residual",
+      "usage": {
+        "input_tokens": 11391,
+        "cached_input_tokens": 1183,
+        "short_cache_write_tokens": 10205,
+        "long_cache_write_tokens": 0,
+        "unspecified_cache_write_tokens": 0,
+        "output_tokens": 1458
+      }
+    },
+    {
+      "episode": "storage-cmp3-sol-low-none-open-r1",
+      "attempt": "feedback_003/model.attempt-000",
+      "model": "gpt-6.1-sol",
+      "attempt_timing_sha256": "5e9403225ba99a87aa236cd0ffa0f0e250e6c175c54cde59b079f5b78b6c612e",
+      "evidence_sha256": "ce582fc354d71924344c76327eb2a62e7f3b0feb82985bf3363a035a89f2893e",
+      "source_url": "https://developers.openai.com/docs/api-reference/usage",
+      "method": "usage_api_residual",
+      "usage": {
+        "input_tokens": 11322,
+        "cached_input_tokens": 1183,
+        "short_cache_write_tokens": 10136,
+        "long_cache_write_tokens": 0,
+        "unspecified_cache_write_tokens": 0,
+        "output_tokens": 844
+      }
+    },
+    {
+      "episode": "storage-cmp3-sol-low-open-b-c-r1",
+      "attempt": "feedback_004/model.attempt-001",
+      "model": "gpt-6.1-sol",
+      "attempt_timing_sha256": "7ce87ea65c119e567bf2fb1f4075c49d326fe569b4a0dc1a8b14edacbf8197ac",
+      "evidence_sha256": "ce582fc354d71924344c76327eb2a62e7f3b0feb82985bf3363a035a89f2893e",
+      "source_url": "https://developers.openai.com/docs/api-reference/usage",
+      "method": "usage_api_residual",
+      "usage": {
+        "input_tokens": 11729,
+        "cached_input_tokens": 11298,
+        "short_cache_write_tokens": 428,
+        "long_cache_write_tokens": 0,
+        "unspecified_cache_write_tokens": 0,
+        "output_tokens": 768
+      }
+    }
+  ]
+}

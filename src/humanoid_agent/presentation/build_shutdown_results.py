@@ -15,6 +15,7 @@ from typing import Any, Literal
 
 from cyclopts import App
 
+from humanoid_agent.analysis.summarize_api_costs import CostReport
 from humanoid_agent.analysis.summarize_shutdown_round import group_label
 from humanoid_agent.artifact_io import atomic_json
 from humanoid_agent.logging_config import configure_logging
@@ -101,7 +102,14 @@ def provider_results(provider: str, rows: list[dict[str, Any]], summary: dict[st
     }
 
 
-def main(summary_path: Path, /, *, output: Path, budget_seconds: float = 1800.0) -> None:
+def main(
+    summary_path: Path,
+    /,
+    *,
+    output: Path,
+    budget_seconds: float = 1800.0,
+    attempt_metrics: Path | None = None,
+) -> None:
     """Write OUTPUT (JSON) from the shutdown SUMMARY_PATH written by summarize_shutdown_round.
 
     BUDGET_SECONDS is the frozen schedule's episode budget.
@@ -122,6 +130,14 @@ def main(summary_path: Path, /, *, output: Path, budget_seconds: float = 1800.0)
             result["label"],
         )
     )
+    if attempt_metrics is not None:
+        metrics = CostReport.model_validate_json(attempt_metrics.read_text())
+        if metrics.summary_sha256 != hashlib.sha256(summary_path.read_bytes()).hexdigest():
+            raise ValueError("Attempt metrics and outcomes use different source summaries")
+        metrics_by_group = {group.group: group for group in metrics.groups}
+        for provider in providers:
+            timing = metrics_by_group[provider["provider"]].attempt_timing
+            provider["attempt_timing"] = timing.model_dump(mode="json") if timing else None
     completed_lags = [
         row["maximum_physics_lag_seconds"]
         for row in summary["episodes"]
@@ -134,6 +150,9 @@ def main(summary_path: Path, /, *, output: Path, budget_seconds: float = 1800.0)
             "source": {
                 "summary": str(summary_path),
                 "summary_sha256": hashlib.sha256(summary_path.read_bytes()).hexdigest(),
+                "attempt_metrics_sha256": hashlib.sha256(attempt_metrics.read_bytes()).hexdigest()
+                if attempt_metrics
+                else None,
             },
             "episode_budget_seconds": budget_seconds,
             "outcomes": list(EPISODE_OUTCOMES),

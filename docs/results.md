@@ -33,6 +33,15 @@ The CSV and aggregate JSON retain both scheduled starts and completed episodes,
 which provide the denominator for the reported end-to-end success rate. The
 original observations and outcomes are unchanged by this reporting choice.
 
+## Cost and elapsed time
+
+The paper and page separate means over all seven task attempts from means over
+successful attempts only. Gemini has no successful-attempt cost or duration;
+a dash and asterisk mean no observed success. Failed attempts still incur costs
+and can terminate early. Per-decision latency is reported separately from full
+episode duration and physics lag. See [the cost and timing method](api-costs.md)
+for source evidence, provider reconciliation and minor accounting gaps.
+
 ## Timing and scope
 
 Only 17/58 completed episodes, including seven successes, met the recorded 100
