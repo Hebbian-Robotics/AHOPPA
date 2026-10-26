@@ -30,3 +30,7 @@ datasets/
 *.npz
 *.mp4
 *.log
+
+# Small, provenance-recorded excerpts used by the project page.
+!web/highlights/astra-inspection.mp4
+!web/highlights/opus-inspection.mp4
