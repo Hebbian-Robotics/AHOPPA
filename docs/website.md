@@ -90,3 +90,8 @@ claims. Keep the simulation scope, limited repetitions, API errors and timing
 limits visible beside the results.
 
 [google-style]: https://developers.google.com/style/highlights
+
+The Raw data button uses an original bucket SVG. The paper prints the project
+URL directly and places the shared vector overview after its abstract. Its
+table retains the primary numerical comparisons; the page includes fuller
+charts and episode observations.

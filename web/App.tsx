@@ -3,6 +3,7 @@ import overviewFigure from "../docs/figures/system-overview.svg";
 import paperPdf from "../paper/paper.pdf?url";
 import { PlaybackSpeedProvider } from "./PlaybackControls";
 import { EpisodeShowcase, StorageRound } from "./StorageRound";
+import bucketIcon from "./template/assets/bucket.svg";
 import cmuLogo from "./template/assets/cmu-logo.png";
 import paperIcon from "./template/assets/file-pdf.svg";
 import githubIcon from "./template/assets/github.svg";
@@ -81,7 +82,8 @@ function ProjectPage() {
 							className="publication-link"
 							href="https://huggingface.co/datasets/hebbianrobotics/AHOPPA"
 						>
-							Raw data
+							<img src={bucketIcon} width="16" height="16" alt="" />
+							<span>Raw data</span>
 						</a>
 						<a
 							className="publication-link publication-link-secondary"
