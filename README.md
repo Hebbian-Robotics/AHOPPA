@@ -96,8 +96,12 @@ source and the maintained package.
 - `web/`: project page, based on the Nerfies template.
 
 Selected replay videos and request images are distributed as a separate media
-asset. Full MCAP recordings, raw provider responses, credentials and installed
-simulator environments are not included. We train no new model for this study;
+asset. The [raw-record dataset](https://huggingface.co/datasets/hebbianrobotics/AHOPPA)
+provides MCAP recordings, recorded model requests and provider responses for
+exactly the 64 reported starts, with per-episode downloads and checksums.
+Its dataset card documents omissions, including upstream robot descriptions.
+Credentials and installed simulator environments are not included.
+We train no new model for this study;
 SONIC weights and simulation assets must be obtained from their upstream
 releases under their own terms. See [data availability](data/README.md).
 

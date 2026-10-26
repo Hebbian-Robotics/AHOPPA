@@ -48,6 +48,8 @@ older-model baselines and hardware trials are needed to measure reliability,
 capability gains and transfer. Identify later repetitions separately from this
 comparison.
 
-The raw episode records are retained by the authors. This release provides all
-episode-level summary rows and selected replay/request-image examples; it does
-not claim to include all raw traces or provider responses.
+The [raw-record dataset](https://huggingface.co/datasets/hebbianrobotics/AHOPPA)
+provides the retained MCAP traces, model interaction records and numerical logs
+for exactly these 64 starts. Its dataset card documents omitted files and
+metadata redactions. Episode-level summaries remain versioned in this repository;
+selected replay/request-image examples are also distributed as a media release.

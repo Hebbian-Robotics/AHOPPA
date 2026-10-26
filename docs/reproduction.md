@@ -5,8 +5,11 @@
 The maintained package contains the storage task, observations, model adapters,
 controller integration and evaluator. The released CSV and aggregate JSON
 contain every scheduled start in the initial study. Selected videos and model
-input images are a separate release asset. Full MCAP traces and raw provider
-responses are not distributed here, so this is not a complete raw-data archive.
+input images are a separate release asset. The
+[raw-record dataset](https://huggingface.co/datasets/hebbianrobotics/AHOPPA)
+distributes MCAP traces, recorded model requests and provider responses for
+exactly the 64 reported starts. Its dataset card lists omissions and metadata
+redactions; raw records are not committed to this source repository.
 
 Rerunning the protocol requires paid model API access and a separately prepared
 GPU simulator environment. API aliases and service behavior can change; a new
@@ -158,6 +161,14 @@ masks. Deploy source and retrieve results with rsync; do not rely on an
 interactive SSH session to own an experiment.
 
 ## Analyze and render
+
+Download the required episode archives from the
+[raw-record dataset](https://huggingface.co/datasets/hebbianrobotics/AHOPPA),
+verify their checksums and extract them while preserving their directory
+structure. The dataset includes a small summary archive for all 64 starts.
+The full cohort validator additionally needs the omitted upstream
+`inputs/robot.urdf`, restored with the exact hash specified in the dataset card.
+Rendering also requires the separately prepared simulator and upstream assets.
 
 When complete records are available locally:
 

@@ -28,8 +28,14 @@ independent repetitions. The initial sweep has one attempt per condition.
 - Separate media release: selected synchronized replay videos, original model
   input images and plan timelines.
 - Separate source release: the exact captured study runtime and its lockfile.
-- Not included: full MCAP recordings, raw provider responses, credentials,
-  installed environments, model weights or NVIDIA/Unitree asset bundles.
+- Separate [raw-record dataset](https://huggingface.co/datasets/hebbianrobotics/AHOPPA):
+  MCAP recordings, exact recorded requests, input images, provider responses,
+  numerical controller logs and frozen cohort manifests for exactly these
+  64 starts, including unsuccessful and API-failed starts. No additional
+  experiments are included. See its dataset card for downloads and omissions.
+- Not included: credentials, installed environments, model weights or
+  NVIDIA/Unitree asset bundles. The raw-record release also omits upstream
+  robot-description files and generated Python caches.
 
 We train no new weights. Obtain SONIC and the simulation assets from their
 upstream releases under their own terms. Model API access is required for new
