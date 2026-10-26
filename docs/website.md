@@ -50,7 +50,8 @@ The design review used the official [ReKep](https://rekep-robot.github.io/),
 demonstrations and capability-oriented sections.
 
 The estimated-cost table reads `figures/api-costs.json`, the same data used to
-generate the paper's paired cost/time columns. All-attempt means include all
+generate the paper's paired cost, episode duration and decision latency columns.
+All-attempt means include all
 seven scheduled task attempts; successful-attempt means include only completed
 tasks. A dash and asterisk indicate no observed successful attempt. The
 completion chart separately pairs model-decision latency over all and successful

@@ -236,7 +236,24 @@ class ApiCostTests(unittest.TestCase):
                 )
             summary_path = root / "summary.json"
             summary_path.write_text(
-                json.dumps({"episodes": episode_rows, "providers": {"sol-low": {}}})
+                json.dumps(
+                    {
+                        "episodes": episode_rows,
+                        "providers": {
+                            "sol-low": {
+                                "manipulation": {
+                                    "task_success": 1,
+                                    "started": 2,
+                                    "physical_completion_observed": 1,
+                                    "open_drawers_closed": 1,
+                                    "all_drawers_viewed": 1,
+                                    "declared_without_physical_completion": 0,
+                                },
+                                "control": {"task_success": 0, "started": 1},
+                            }
+                        },
+                    }
+                )
             )
             output_path = root / "costs.json"
             main(summary_path, episodes_root=root, pricing=PRICING_PATH, output=output_path)
@@ -287,6 +304,9 @@ class ApiCostTests(unittest.TestCase):
             self.assertEqual(timing["mean_successful_elapsed_seconds"], 100)
             self.assertEqual(timing["median_decision_seconds"], 25)
             self.assertEqual(timing["median_successful_decision_seconds"], 40)
+            published_table = output_path.with_suffix(".tex").read_text()
+            self.assertIn("Decision (s)", published_table)
+            self.assertIn("25.0 / 40.0", published_table)
             self.assertEqual(
                 Decimal(
                     recovered["groups"][0]["task_attempts"]["mean_cost_per_attempt"]["minimum_usd"]

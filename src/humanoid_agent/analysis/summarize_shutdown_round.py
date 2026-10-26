@@ -188,16 +188,19 @@ def latex_table(
     api_costs: dict[str, tuple[Decimal, Decimal, int]] | None = None,
     successful_api_costs: dict[str, tuple[Decimal, Decimal] | None] | None = None,
     attempt_times: dict[str, tuple[float | None, float | None]] | None = None,
+    decision_times: dict[str, tuple[float | None, float | None]] | None = None,
 ) -> str:
     """Use all starts for success rates and completed episodes for physical counts."""
+    numeric_column_count = 6 + sum(
+        column is not None for column in (api_costs, attempt_times, decision_times)
+    )
     lines = [
-        r"\begin{tabular}{lcccccccc}"
-        if attempt_times is not None
-        else (r"\begin{tabular}{lcccccc}" if api_costs is None else r"\begin{tabular}{lccccccc}"),
+        r"\begin{tabular}{l" + "c" * numeric_column_count + "}",
         r"\toprule",
         "Model & Success & Physical & Closed & Seen & False & Control"
         + (r" & Est. \$" if api_costs is not None else "")
         + (" & Episode (s)" if attempt_times is not None else "")
+        + (" & Decision (s)" if decision_times is not None else "")
         + r" \\",
         r"\midrule",
     ]
@@ -233,6 +236,13 @@ def latex_table(
             all_text = "--" if all_seconds is None else f"{all_seconds:.0f}"
             successful_text = (
                 r"--$^{*}$" if successful_seconds is None else f"{successful_seconds:.0f}"
+            )
+            cost_suffix += f" & {all_text} / {successful_text}"
+        if decision_times is not None:
+            all_decision, successful_decision = decision_times[provider]
+            all_text = "--" if all_decision is None else f"{all_decision:.1f}"
+            successful_text = (
+                r"--$^{*}$" if successful_decision is None else f"{successful_decision:.1f}"
             )
             cost_suffix += f" & {all_text} / {successful_text}"
         lines.append(

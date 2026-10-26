@@ -578,6 +578,16 @@ def main(
             }
             if include_episode_timing
             else None,
+            decision_times={
+                group.group: (
+                    group.attempt_timing.median_decision_seconds,
+                    group.attempt_timing.median_successful_decision_seconds,
+                )
+                for group in report.groups
+                if group.attempt_timing is not None
+            }
+            if include_episode_timing
+            else None,
             successful_api_costs={
                 group.group: (
                     group.successful_task_attempts.mean_cost_per_attempt.minimum_usd,

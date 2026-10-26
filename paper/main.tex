@@ -90,13 +90,14 @@ a time with pinned host placement; all starts are retained.
 \begin{table}[t]
   \centering
   \small
-  \setlength{\tabcolsep}{4pt}
+  \setlength{\tabcolsep}{3pt}
   \input{results-table.tex}
   \caption{Successes over seven scheduled task attempts; the all-closed control
   is separate. Other counts use completed episodes. \emph{Physical}: closed,
   home and upright; \emph{Seen}: all drawer fronts viewed; \emph{False}:
   declarations without physical completion. Cost and episode duration are means for
-  all / successful attempts; costs use published rates~\citep{openai2026pricing,anthropic2026pricing,google2026pricing}.
+  all / successful attempts; decision latency is the median of per-attempt
+  medians, also all / successful. Costs use published rates~\citep{openai2026pricing,anthropic2026pricing,google2026pricing}.
   $^{*}$: no successful attempt observed. API-error starts remain in denominators.}
   \label{tab:results}
 \end{table}
@@ -105,8 +106,7 @@ Fig.~\ref{fig:episode}). Every one of the 43 closures was by hand and no
 initially closed drawer was disturbed. Astra completed 6/7 episodes at both
 efforts (615 to 1492\,s), usually checking every drawer, including the two behind
 the lockers. Sol completed 4/7 and 3/7, Opus 2/7 and 3/7, and Gemini none; high
-effort lengthened decisions (median per-attempt latency 21 to 137\,s versus 9 to 32\,s) without
-consistent gains, and eight episodes ran out of time. Fifteen of 51 completed
+effort lengthened decisions without consistent gains, and eight episodes ran out of time. Fifteen of 51 completed
 episodes starting with open drawers ended in falls, one at start-up before any model command;
 four declarations were made without the physical criterion.
 In this sweep, Astra high cost less despite more output tokens because cached
