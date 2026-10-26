@@ -1,5 +1,6 @@
 import { Heading, Link, Text } from "@radix-ui/themes";
 import overviewFigure from "../docs/figures/system-overview.svg";
+import episodeSequence from "../paper/figures/storage-astra-open-a-d.png";
 import paperPdf from "../paper/paper.pdf?url";
 import { PlaybackSpeedProvider } from "./PlaybackControls";
 import { EpisodeShowcase, StorageRound } from "./StorageRound";
@@ -61,8 +62,8 @@ function ProjectPage() {
 								className="cmu-logo"
 								src={cmuLogo}
 								alt="Carnegie Mellon University"
-								width="600"
-								height="600"
+								width="380"
+								height="380"
 							/>
 						</a>
 					</div>
@@ -102,6 +103,10 @@ function ProjectPage() {
 					</Text>
 				</header>
 				<figure className="overview-figure project-overview">
+					<p className="overview-takeaway">
+						One instruction starts a room-scale inspection, with visual feedback
+						guiding each decision.
+					</p>
 					<a href={overviewFigure}>
 						<img
 							src={overviewFigure}
@@ -112,10 +117,20 @@ function ProjectPage() {
 							decoding="async"
 						/>
 					</a>
+					<a className="overview-sequence" href={episodeSequence}>
+						<img
+							src={episodeSequence}
+							alt="The map and original observations from the same successful Astra episode: D open at 98 s, D shut at 193 s, B checked at 350 s, A open at 419 s, A shut at 635 s, and the robot home at 942 s, before declaring completion at 955 s."
+							width="3448"
+							height="360"
+							decoding="async"
+						/>
+					</a>
 					<figcaption>
 						The model observes, updates its plan and sends head and hand targets
 						with locomotion commands to SONIC. New observations close the loop.
-						Scene images come from one successful GPT-6 Astra episode.
+						The overview and original observations below it come from the same
+						successful GPT-6 Astra episode, with A and D initially open.
 						<a className="figure-link" href={overviewFigure}>
 							View full-size overview
 						</a>

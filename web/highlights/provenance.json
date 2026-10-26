@@ -1,0 +1,127 @@
+{
+  "scope": "Edited excerpts from the two previously published offline pose replays of evaluated episodes. No new simulation or model calls. All segments encoded at 4x; cuts jump forward in episode time. Camera pixels are cropped from the source replay and arranged side by side; source target overlays remain in the external view. These replay frames were not model observations.",
+  "source_speed": 4,
+  "view_layout": {
+    "external_crop_xywh": [
+      0,
+      100,
+      640,
+      360
+    ],
+    "onboard_crop_xywh": [
+      640,
+      40,
+      640,
+      480
+    ]
+  },
+  "records": [
+    {
+      "provider": "astra",
+      "episode": "storage-cmp3-astra-low-open-a-d-r1",
+      "source_replay_sha256": "79a02bea95064a41ad2c7cc5bcba4fc5ba8685fc12f3ef6727f601111bdc4230",
+      "task_success": true,
+      "maximum_physics_lag_seconds": 0.031131515004659605,
+      "duration_seconds": 34.05,
+      "segments": [
+        {
+          "label": "Inspect cabinet D",
+          "source_start_seconds": 90,
+          "source_end_seconds": 106,
+          "output_start_seconds": 0,
+          "output_duration_seconds": 4.0
+        },
+        {
+          "label": "Push D and check closure",
+          "source_start_seconds": 187,
+          "source_end_seconds": 211,
+          "output_start_seconds": 4.0,
+          "output_duration_seconds": 6.0
+        },
+        {
+          "label": "Navigate around the lockers",
+          "source_start_seconds": 272,
+          "source_end_seconds": 296,
+          "output_start_seconds": 10.0,
+          "output_duration_seconds": 6.0
+        },
+        {
+          "label": "Inspect cabinet A",
+          "source_start_seconds": 420,
+          "source_end_seconds": 436,
+          "output_start_seconds": 16.0,
+          "output_duration_seconds": 4.0
+        },
+        {
+          "label": "Push A and check closure",
+          "source_start_seconds": 620,
+          "source_end_seconds": 652,
+          "output_start_seconds": 20.0,
+          "output_duration_seconds": 8.0
+        },
+        {
+          "label": "Return home",
+          "source_start_seconds": 931,
+          "source_end_seconds": 955.25,
+          "output_start_seconds": 28.0,
+          "output_duration_seconds": 6.05
+        }
+      ],
+      "outputs": {
+        "astra-inspection.mp4": "aa613efa5edfa5d394d4634d69cc6ac43314a41f718097dcaec0ab2bb6c57ef5",
+        "astra-inspection.jpg": "3399441aff9b5e840c2edce62b0a212269d241970508aae3610dbe7f95535e0b",
+        "astra-inspection.vtt": "192cb0123c8e8f644ca0c579040d53c1b9c9ebc456eda1e71e95d5b3c7452762"
+      }
+    },
+    {
+      "provider": "opus",
+      "episode": "storage-cmp3-opus-low-open-a-d-r1",
+      "source_replay_sha256": "778a9547b5ae713413a0dc6d73dfe942627e6d5e990ec1a572b3c38349aa441f",
+      "task_success": false,
+      "maximum_physics_lag_seconds": 0.18853344801112826,
+      "duration_seconds": 36.1,
+      "segments": [
+        {
+          "label": "Approach cabinet D",
+          "source_start_seconds": 245,
+          "source_end_seconds": 265,
+          "output_start_seconds": 0,
+          "output_duration_seconds": 5.0
+        },
+        {
+          "label": "Push D",
+          "source_start_seconds": 287,
+          "source_end_seconds": 319,
+          "output_start_seconds": 5.0,
+          "output_duration_seconds": 8.0
+        },
+        {
+          "label": "Navigate around the lockers",
+          "source_start_seconds": 400,
+          "source_end_seconds": 424,
+          "output_start_seconds": 13.0,
+          "output_duration_seconds": 6.0
+        },
+        {
+          "label": "Push cabinet A",
+          "source_start_seconds": 690,
+          "source_end_seconds": 734,
+          "output_start_seconds": 19.0,
+          "output_duration_seconds": 11.0
+        },
+        {
+          "label": "Approach home",
+          "source_start_seconds": 1010,
+          "source_end_seconds": 1034.45,
+          "output_start_seconds": 30.0,
+          "output_duration_seconds": 6.1
+        }
+      ],
+      "outputs": {
+        "opus-inspection.mp4": "cb9927908b069f4e1ac51cabce648f22f1699ef1c9aaf5465a97dac15a158d90",
+        "opus-inspection.jpg": "43111601f1bf33ffb30a10ccdd3a8e0b57fdc010982b66bff693cacae3af72dc",
+        "opus-inspection.vtt": "b9f061140e0bacda51bc2276da991568b0b04741f35087c3b1e395c3f847c783"
+      }
+    }
+  ]
+}

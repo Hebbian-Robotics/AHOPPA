@@ -80,8 +80,9 @@ html {
 }
 .cmu-logo {
 	display: block;
-	width: 96px;
-	height: auto;
+	width: 176px;
+	height: 104px;
+	object-fit: cover;
 }
 .affiliation-wordmark {
 	display: block;
@@ -839,7 +840,8 @@ video-skin {
 		width: 144px;
 	}
 	.cmu-logo {
-		width: 80px;
+		width: 144px;
+		height: 88px;
 	}
 }
 
@@ -859,4 +861,117 @@ video-skin {
 	.api-costs td {
 		padding-inline: 6px;
 	}
+}
+
+.overview-takeaway {
+	max-width: 64ch;
+	margin: 0 auto 24px;
+	color: var(--research-ink);
+	font-size: clamp(18px, 2vw, 23px);
+	font-weight: 550;
+	line-height: 1.5;
+	text-align: center;
+}
+.project-overview .overview-sequence {
+	display: block;
+	margin-top: 24px;
+	overflow-x: auto;
+}
+.project-overview .overview-sequence img {
+	min-width: 640px;
+}
+.featured-highlights {
+	padding: 24px 28px;
+}
+.highlight-video {
+	margin: 0;
+}
+.highlight-video video {
+	aspect-ratio: 16 / 7;
+	border-radius: 6px;
+	background: var(--research-ink);
+}
+.highlight-video figcaption {
+	max-width: 78ch;
+	margin: 12px 0 0;
+	color: var(--research-muted);
+	font-size: 12px;
+	line-height: 1.65;
+}
+.full-recording {
+	border-top: 1px solid var(--research-line);
+}
+.full-recording > summary {
+	padding: 20px 28px;
+	color: var(--research-blue);
+	font-weight: 550;
+}
+.episode-comparison {
+	margin: 40px 0 48px;
+}
+.episode-comparison > h3 {
+	margin: 0 0 12px;
+	color: var(--research-ink);
+}
+.comparison-introduction {
+	max-width: 78ch;
+	margin: 0 0 24px;
+	font-size: 15px;
+}
+.episode-comparison-grid {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 28px;
+}
+.episode-comparison-grid article {
+	min-width: 0;
+}
+.episode-comparison-grid h4 {
+	margin: 0 0 16px;
+	color: var(--research-ink);
+}
+.episode-comparison-grid p {
+	margin: 16px 0 0;
+	font-size: 14px;
+}
+.episode-comparison-grid .comparison-timing {
+	margin-top: 8px;
+	color: var(--research-muted);
+	font-size: 12px;
+}
+.results-section {
+	padding: 56px 0;
+	background: #f5f8fa;
+	box-shadow: 0 0 0 100vmax #f5f8fa;
+	clip-path: inset(0 -100vmax);
+}
+.result-chart {
+	background: #fff;
+}
+@media (max-width: 760px) {
+	.episode-comparison-grid {
+		grid-template-columns: 1fr;
+		gap: 32px;
+	}
+}
+@media (max-width: 680px) {
+	.featured-highlights,
+	.full-recording > summary {
+		padding: 18px 16px;
+	}
+	.full-recording > summary {
+		font-size: 14px;
+	}
+	.results-section {
+		padding: 36px 0;
+	}
+	.overview-takeaway {
+		text-align: left;
+	}
+}
+.episode-comparison-grid article > a {
+	display: inline-block;
+	margin-top: 12px;
+	color: var(--research-blue);
+	font-size: 13px;
 }

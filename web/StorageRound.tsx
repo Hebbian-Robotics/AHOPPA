@@ -7,9 +7,9 @@ import closeDrawerImage from "../docs/figures/storage-observations/close-d.png";
 import returnHomeImage from "../docs/figures/storage-observations/home.png";
 import inspectDrawerImage from "../docs/figures/storage-observations/inspect-d.png";
 import storageResults from "../docs/figures/storage-results.json";
-import storageStrip from "../paper/figures/storage-astra-open-a-d.png";
 import { ApiCosts } from "./ApiCosts";
 import { assetUrl } from "./assetUrl";
+import { EpisodeComparison, HighlightVideo } from "./EpisodeHighlights";
 import { ModelInputImages } from "./ModelInputImages";
 import { parseShutdownResults, ShutdownResults } from "./ShutdownResults";
 import { SimulatorCheck } from "./SimulatorCheck";
@@ -177,16 +177,31 @@ export function EpisodeShowcase() {
 			</div>
 			{featuredRecording ? (
 				<>
-					<EpisodeRecording
-						key={featuredRecording.identifier}
-						record={featuredRecording}
-					/>
+					<div className="featured-highlights">
+						<HighlightVideo provider="astra" />
+					</div>
+					<details
+						className="full-recording"
+						id={`full-episode-${featuredRecording.identifier}`}
+					>
+						<summary>
+							Watch the full Astra episode and explore its decisions
+						</summary>
+						<EpisodeRecording
+							key={featuredRecording.identifier}
+							record={featuredRecording}
+						/>
+					</details>
 					{manifest.data?.records
 						.filter(
 							(record) => record.identifier !== featuredRecording.identifier,
 						)
 						.map((record) => (
-							<details className="additional-recording" key={record.identifier}>
+							<details
+								className="additional-recording"
+								id={`full-episode-${record.identifier}`}
+								key={record.identifier}
+							>
 								<summary>{record.title}</summary>
 								<EpisodeRecording record={record} />
 							</details>
@@ -329,6 +344,7 @@ export function StorageRound() {
 						online commands to a fixed controller, without a task skill library.
 					</Text>
 				</div>
+				<EpisodeComparison />
 				<dl className="study-design">
 					<div>
 						<dt>64 scheduled episodes</dt>
@@ -352,25 +368,6 @@ export function StorageRound() {
 					identifier="storage-results-title"
 					title="Model comparison"
 					introduction="Four frontier models each attempted eight drawer conditions at low and high reasoning effort with an 1800 s budget. The conditions were none open, each single cabinet, and A+D, B+C and A+B. We froze the seeded schedule before launch. All 43 closures were by hand, and every initially closed drawer stayed closed."
-					strip={
-						<figure className="episode-strip">
-							<a href={storageStrip}>
-								<img
-									src={storageStrip}
-									width={3448}
-									height={360}
-									loading="lazy"
-									alt="Seven model-input images from a successful GPT-6 Astra cabinet inspection with cabinets A and D open: the facility map; D's drawer open at 98 s; the left hand pushing D shut at 193 s; cabinet B checked closed behind the lockers at 350 s; cabinet A found open behind the lockers at 419 s; A pushed shut at 635 s; and the robot home before declaring completion at 942 s."
-								/>
-							</a>
-							<figcaption>
-								GPT-6 Astra (low effort) checks C, closes D, walks around the
-								south end of the lockers to check B, closes A, then returns home
-								and declares completion; shown with the exact images supplied to
-								the model. Select the image to open it at full size.
-							</figcaption>
-						</figure>
-					}
 					outcomeCaption="Each bar accounts for seven scheduled task attempts with at least one drawer initially open. Success uses all seven starts, including API-error starts. It requires every drawer closed and settled, the model's completion declaration and a supported standing hold at home. API errors, falls, time limits and incorrect declarations have separate outcome categories. The all-closed control appears in the table. All recorded closures were by hand, and no initially closed drawer was disturbed. The startup fall occurred before the model's first command."
 					caveat="Lag rarely coincided with falls. The results include episodes that exceeded the timing limit. Each model, effort and condition has one attempt on one layout; repeated trials are needed to estimate reliability."
 				/>

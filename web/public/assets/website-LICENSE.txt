@@ -16,11 +16,12 @@ This license covers website presentation, not research records or other material
 served alongside it. The Hebbian Robotics and Carnegie Mellon University names and logos identify
 author affiliations and are excluded from the Creative Commons license.
 
-The Carnegie Mellon University logo is reproduced unchanged from the official
-university homepage asset:
-https://www.cmu.edu/themes/custom/cmu_base/images/wordmarksquare-red-600x600.png
+The Carnegie Mellon University logo is the unchanged public PNG preview of
+cmu-wordmark-stacked-r.png (Carnegie Red) from the official stacked-wordmark
+portal. CSS trims the preview canvas whitespace without altering the mark:
+https://cmu.widencollective.com/portals/vt1twpbe/UCM-WordmarkStacked
 Brand guidance:
-https://brand.cmu.edu/visual-identity/carnegie-mellon-trademarks/university-logo
+https://brand.cmu.edu/visual-identity/carnegie-mellon-trademarks/wordmarks
 
 The bundled Noto Sans font is licensed under the SIL Open Font License 1.1;
 see assets/Noto-Sans-OFL.txt.
