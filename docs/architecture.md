@@ -150,7 +150,8 @@ The onboard RGB-D camera uses HomeBody's released torso-to-D435 mount (position
 reconstructs the
 measured root and joint state and composes that mount with the resulting torso
 pose; requested head targets never set camera poses. The G1 has no actuated
-neck, so looking requires whole-body motion. In the storage round the fixed
+neck, so the robot changes its view through locomotion and torso posture. In
+the cabinet inspection task the fixed
 external RGB camera is high on the west wall between C and D, looking east at
 home; the lockers hide A and B and C and D sit behind it. Storage scenes have
 no wrist cameras. Calibration is virtual, and ideal depth and IMUs do not

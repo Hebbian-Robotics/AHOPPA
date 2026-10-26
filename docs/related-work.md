@@ -24,7 +24,7 @@ tracking
 and locomotion foundation here. AHOPPA's model directly updates numerical
 head/wrist references and walking commands without a task skill library.
 
-The task uses established drawer manipulation in a multi-step humanoid round.
+The task combines cabinet inspection, navigation and hand contact across a room.
 The contribution is the observed behavior of online models under this common
 interface, with independent physical scoring, retained failure categories and
 reported timing limitations. Simulation results do not establish hardware

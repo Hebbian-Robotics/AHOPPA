@@ -131,7 +131,7 @@ Success additionally requires the model's completion declaration.
 closure, disturbance, hand attribution and contact durations, plus when physical
 completion first occurred and when completion was declared. A physically
 complete episode without a declaration is never counted as success. `none-open`
-controls are reported separately from episodes requiring manipulation.
+controls are reported separately from task attempts starting with open drawers.
 
 These tolerances are local definitions for this asset. RLBench's CloseDrawer
 task is prior art for drawer closure; its thresholds are not copied.

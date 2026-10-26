@@ -43,3 +43,7 @@ agent episodes.
 
 These result tables are licensed under CC BY 4.0. Replays credit the upstream
 scene and robot assets identified in the task specification.
+
+The dataset card is maintained in [dataset-card.md](dataset-card.md) and
+published as the dataset's `README.md`. Follow
+[the publication checks](../docs/publication.md) when updating shared claims.

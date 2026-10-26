@@ -44,8 +44,8 @@ for source evidence, provider reconciliation and minor accounting gaps.
 
 ## Timing and scope
 
-Only 17/58 completed episodes, including seven successes, met the recorded 100
-ms physics-lag limit. Median peak lag was 192 ms. The results include episodes
+Only 17/58 completed episodes, including seven task successes, met the recorded
+100 ms physics-lag limit. Median peak lag was 192 ms. The results include episodes
 that exceeded this timing limit. All episodes ran in simulation.
 
 There is one attempt per model, setting and condition, on one layout. The

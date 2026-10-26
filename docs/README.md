@@ -10,3 +10,4 @@
 - [Data availability](../data/README.md)
 - [Website publication](website.md)
 - [Contributing](../CONTRIBUTING.md)
+- [Public material consistency](publication.md)

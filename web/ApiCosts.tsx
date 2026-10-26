@@ -26,8 +26,9 @@ export function ApiCosts() {
 			<Text as="p">
 				All attempts averages all seven scheduled task attempts, including
 				failures and early terminations. Successful attempts averages only
-				completed tasks. Episode duration is active elapsed time through the
-				recorded cutoff; the all-closed control is excluded.
+				attempts that met the full task success criterion. Episode duration is
+				active elapsed time through the recorded cutoff; the all-closed control
+				is excluded.
 			</Text>
 			<div className="result-table-scroll">
 				<table>

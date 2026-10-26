@@ -68,6 +68,16 @@ synchronized onboard and external videos, requested targets, the model's plan
 and the original images supplied to it. Replays are presentation derivatives;
 the additional rendered frames were not model observations.
 
+## Cost and timing
+
+The paper and project page report estimated API cost, full episode duration
+and model-decision latency for all task attempts and for successful attempts
+only. Costs use recorded and provider-reconciled token usage at published
+standard rates, rather than invoice amounts. Astra high was cheaper in this
+sweep because more of its input used cached reads. See
+[the cost and timing method](docs/api-costs.md) for definitions, evidence and
+reproduction.
+
 ## Install and check the source
 
 Use Python 3.12, uv and pnpm:

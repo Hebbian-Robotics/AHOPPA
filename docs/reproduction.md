@@ -37,7 +37,7 @@ summary values were checked after the rename.
 
 | Setting | Recorded value |
 | --- | --- |
-| Task | Four-cabinet storage round, `drawer-shutdown-v2` |
+| Task | Four-cabinet inspection, `drawer-shutdown-v2` |
 | Conditions | none-open; open-A, B, C, D, A+D, B+C, A+B |
 | Models | GPT-6.1 Sol, GPT-6 Astra, Claude Opus 5.5, Gemini 4 Argon |
 | Effort | Low and high for each model |
