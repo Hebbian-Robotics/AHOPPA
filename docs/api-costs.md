@@ -82,9 +82,9 @@ cp artifacts/api-costs-v1/summary.tex paper/results-table.tex
 ```
 
 This reads the frozen experiment evidence without changing it or making API
-requests. The raw-data release is linked at
-[hebbianrobotics/AHOPPA on Hugging Face][dataset]; the project author is handling
-the upload.
+requests. The raw records for all 64 reported starts are available from
+[hebbianrobotics/AHOPPA on Hugging Face][dataset]. The dataset card provides
+download instructions, checksums and documented omissions.
 
 [openai]: https://developers.openai.com/api/docs/pricing
 [cache]: https://developers.openai.com/api/docs/guides/prompt-caching
