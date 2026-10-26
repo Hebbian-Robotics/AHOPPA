@@ -45,11 +45,12 @@
     },
     {
       "panel": "feedback_060:external",
-      "label": "Home, declared",
+      "label": "Home",
       "source": "artifacts/storage-comparison-v3/episodes/storage-cmp3-astra-low-open-a-d-r1/operator/feedback_060/external.png",
       "sha256": "ec1d1286f6efe5d88b2b030e87517adccc8512a6b9c22d590d86e7392fb822bd",
       "elapsed_wall_seconds": 942.2797365339939
     }
   ],
-  "model_inputs_unmodified_except_resize": true
+  "model_inputs_unmodified_except_resize": true,
+  "label_font_size": 22
 }
