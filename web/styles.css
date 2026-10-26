@@ -887,7 +887,7 @@ video-skin {
 	margin: 0;
 }
 .highlight-video video {
-	aspect-ratio: 16 / 7;
+	aspect-ratio: 8 / 3;
 	border-radius: 6px;
 	background: var(--research-ink);
 }
@@ -974,4 +974,29 @@ video-skin {
 	margin-top: 12px;
 	color: var(--research-blue);
 	font-size: 13px;
+}
+
+.publication-link img.brand-icon {
+	filter: none;
+}
+.highlight-video .highlight-event {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	gap: 4px 16px;
+	margin: 12px 0 0;
+	color: var(--research-ink);
+	font-size: 13px;
+	line-height: 1.6;
+}
+.highlight-clock {
+	color: var(--research-muted);
+	font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 640px) {
+	.playback-speed-controls.compact {
+		flex-direction: column;
+		align-items: flex-start;
+	}
 }

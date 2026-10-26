@@ -33,8 +33,9 @@ workflow never runs simulations or model calls.
 
 The page retains the centered Nerfies paper header, with a sharp vector overview
 immediately below the introduction, paired with the original seven-panel
-episode strip. A 34-second edited Astra highlight reel follows; the full
-episode expands on request.
+episode strip. Edited Astra highlights follow, with playback speed controls;
+the full episode
+expands on request.
 Additional recordings expand on request. The plan, decision timeline and
 original model inputs remain available in each recording's inspector. Recording
 details contain the stable video ID and direct link; shared links open their
@@ -105,7 +106,8 @@ limits visible beside the results.
 
 [google-style]: https://developers.google.com/style/highlights
 
-The Raw data button uses an original bucket SVG. The paper prints the project
+The Raw data button uses the official Hugging Face SVG logo, linking to the
+dataset on Hugging Face. The paper prints the project
 URL directly and pairs the shared vector overview with a five-frame episode
 sequence after its abstract. Both figures use retained inputs from the evaluated
 Astra-low `open-A-D` episode. Source hashes are recorded beside the figures;
@@ -119,15 +121,19 @@ The clips derive only from the two evaluated episodes already included in the
 media release: Astra-low and Opus-low `open-A-D`. Each uses the published
 20 fps offline replay as its source. Source and output hashes, exact segment
 boundaries, output durations and physical outcomes are in
-`web/highlights/provenance.json`. The MP4 files total about 4 MB. Vite hashes
+`web/highlights/provenance.json`. The MP4 files total about 10 MB. Vite hashes
 them as separate assets; `preload="none"` keeps playback on demand.
 
 FFmpeg crops the external view at `(0, 100, 640, 360)` and the onboard view at
 `(640, 40, 640, 480)`, then arranges them side by side without stretching. It
-adds stage labels and elapsed source time, applies `setpts=PTS/4`, encodes
-H.264 at CRF 24 and 20 fps with faststart, then concatenates the segments.
-The 4× speed and cuts are labelled in the video and caption. English WebVTT
-captions describe each selected segment. No new physics or model calls are
+resets segment timestamps with `setpts=PTS-STARTPTS`, encodes H.264 at CRF 24
+and 20 fps with faststart, then concatenates the segments at real-time speed.
+Shared 1x to 32x controls select playback speed for highlights and full episodes,
+with 1x as the default. Scene labels and elapsed episode time are displayed
+below the image and follow the cuts and seek position. Native highlight
+controls remain available alongside the speed buttons. No title bar is burned
+into the video. English WebVTT captions describe each selected segment.
+No new physics or model calls are
 involved; raw recordings and original model inputs remain unchanged.
 
 The comparison reports both recorded physical outcomes and each episode's
@@ -135,3 +141,9 @@ physics timing limit. Opus's D drawer ended 2.82 cm open and its home hold
 failed; Astra met both checks. These are selected examples, with all scheduled
 starts retained in the aggregate charts. Full-episode links expand the existing
 recordings and preserve their stable video identifiers.
+
+The paper introduces the research problem before the system and keeps its
+related-work citations in a compact paragraph. It presents the model interface
+before scene details, and labels results by task completion, reasoning effort
+and efficiency, and failure modes and timing. Both images, the full result
+table and the two-page body are retained.

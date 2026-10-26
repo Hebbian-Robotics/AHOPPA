@@ -4,11 +4,11 @@ import episodeSequence from "../paper/figures/storage-astra-open-a-d.png";
 import paperPdf from "../paper/paper.pdf?url";
 import { PlaybackSpeedProvider } from "./PlaybackControls";
 import { EpisodeShowcase, StorageRound } from "./StorageRound";
-import bucketIcon from "./template/assets/bucket.svg";
 import cmuLogo from "./template/assets/cmu-logo.png";
 import paperIcon from "./template/assets/file-pdf.svg";
 import githubIcon from "./template/assets/github.svg";
 import hebbianWordmark from "./template/assets/hebbian-wordmark.svg";
+import huggingFaceIcon from "./template/assets/huggingface.svg";
 
 function ProjectPage() {
 	return (
@@ -83,7 +83,13 @@ function ProjectPage() {
 							className="publication-link"
 							href="https://huggingface.co/datasets/hebbianrobotics/AHOPPA"
 						>
-							<img src={bucketIcon} width="16" height="16" alt="" />
+							<img
+								className="brand-icon"
+								src={huggingFaceIcon}
+								width="20"
+								height="20"
+								alt=""
+							/>
 							<span>Raw data</span>
 						</a>
 						<a

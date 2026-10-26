@@ -31,3 +31,9 @@ copied from Beyond Dodge Rate with their original attribution comments.
 Copyright 2024 Fonticons, Inc. Icons are licensed under CC BY 4.0:
 https://fontawesome.com/license/free
 https://creativecommons.org/licenses/by/4.0/
+
+The Raw data button uses the official Hugging Face logo, unchanged:
+https://huggingface.co/datasets/huggingface/brand-assets/resolve/main/hf-logo.svg
+https://huggingface.co/brand
+The Hugging Face name and logo identify the dataset host and are excluded from
+the website's Creative Commons license.

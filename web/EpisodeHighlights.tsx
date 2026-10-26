@@ -1,4 +1,5 @@
 import { Heading, Text } from "@radix-ui/themes";
+import { useRef, useState } from "react";
 import successPoster from "./highlights/astra-inspection.jpg";
 import successVideo from "./highlights/astra-inspection.mp4?url";
 import successCaptions from "./highlights/astra-inspection.vtt?url";
@@ -6,6 +7,8 @@ import failurePoster from "./highlights/opus-inspection.jpg";
 import failureVideo from "./highlights/opus-inspection.mp4?url";
 import failureCaptions from "./highlights/opus-inspection.vtt?url";
 import highlightProvenance from "./highlights/provenance.json";
+import { PlaybackSpeedControls, usePlaybackSpeed } from "./PlaybackControls";
+import { useVideoPlayback } from "./useVideoPlayback";
 
 const highlightAssets = {
 	astra: {
@@ -51,19 +54,53 @@ export function HighlightVideo({
 	provider: keyof typeof highlightAssets;
 }) {
 	const assets = highlightAssets[provider];
+	const videoReference = useRef<HTMLVideoElement>(null);
+	const [playbackSeconds, setPlaybackSeconds] = useState(0);
+	const { playbackSpeed, synchronizeNativePlayback } = usePlaybackSpeed();
+	const initializePlayback = useVideoPlayback(videoReference, {
+		playbackSpeed,
+		sourcePlaybackSpeed: highlightProvenance.source_speed,
+		videoSource: assets.video,
+	});
 	const provenance = highlightProvenance.records.find(
 		(record) => record.provider === provider,
+	);
+	if (!provenance)
+		throw new Error(`Missing highlight provenance for ${provider}`);
+	const activeSegment = provenance.segments.reduce(
+		(active, segment) =>
+			segment.output_start_seconds <= playbackSeconds ? segment : active,
+		provenance.segments[0],
+	);
+	const episodeSeconds = Math.min(
+		activeSegment.source_end_seconds,
+		activeSegment.source_start_seconds +
+			Math.max(0, playbackSeconds - activeSegment.output_start_seconds) *
+				highlightProvenance.source_speed,
 	);
 	return (
 		<figure className="highlight-video">
 			<video
+				ref={videoReference}
 				src={assets.video}
 				poster={assets.poster}
 				controls
 				muted
 				playsInline
 				preload="none"
+				data-source-playback-speed={highlightProvenance.source_speed}
 				aria-label={assets.title}
+				onLoadedMetadata={(event) => {
+					initializePlayback(event.currentTarget);
+					setPlaybackSeconds(event.currentTarget.currentTime);
+				}}
+				onRateChange={(event) => synchronizeNativePlayback(event.currentTarget)}
+				onTimeUpdate={(event) =>
+					setPlaybackSeconds(event.currentTarget.currentTime)
+				}
+				onSeeked={(event) =>
+					setPlaybackSeconds(event.currentTarget.currentTime)
+				}
 			>
 				<track
 					kind="captions"
@@ -72,10 +109,17 @@ export function HighlightVideo({
 					label="Episode events"
 				/>
 			</video>
+			<p className="highlight-event">
+				<strong>{activeSegment.label}</strong>
+				<span className="highlight-clock">
+					Episode {episodeSeconds.toFixed(0)} s
+				</span>
+			</p>
+			<PlaybackSpeedControls compact />
 			<figcaption>
-				{Math.round(provenance?.duration_seconds ?? 0)} s of edited highlights,
-				encoded at 4× speed. The episode clock shows each cut. Offline pose
-				replay; these frames were not model observations.
+				Selected excerpts with cuts, shown at the selected playback speed. Left:
+				external view; right: onboard view. Offline pose replay; these frames
+				were not model observations.
 			</figcaption>
 		</figure>
 	);

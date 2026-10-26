@@ -34,7 +34,7 @@ export function useVideoPlayback(
 		const video = videoReference.current;
 		let mounted = true;
 		void customElements.whenDefined("video-skin").then(() => {
-			if (mounted && video) video.controls = false;
+			if (mounted && video?.closest("video-skin")) video.controls = false;
 		});
 		return () => {
 			mounted = false;

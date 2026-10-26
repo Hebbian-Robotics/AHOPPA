@@ -12,15 +12,14 @@
 \begin{center}\small\url{https://hebbian-robotics.github.io/AHOPPA/}\end{center}
 
 \begin{abstract}
-We report online humanoid operation results obtained in the last few weeks
-following frontier model releases. AHOPPA connects multimodal models to the
-fixed SONIC controller on a simulated Unitree G1. Using cameras, a map and a
-revisable plan, the model inspects four drawers, pushes open drawers shut and
-returns home through head/wrist and locomotion commands. Physics continues
-during inference; a simulator evaluator checks completion. Across 64 episodes
-with four models at two reasoning efforts, GPT-6 Astra succeeded in 12/14 task
-attempts, taking 615 to 1492\,s. Falls, timeouts and incorrect completion claims
-expose limits in simulation.
+Humanoid operation couples navigation, contact and completion judgments while
+physics continues during inference. We report results obtained in the last few
+weeks following frontier model releases. AHOPPA connects multimodal models to a
+fixed SONIC controller on a simulated Unitree G1. Cameras, a map and revisable
+plans guide head/wrist and locomotion commands to inspect four drawers, close
+open ones and return home. Across 64 episodes with four models at two reasoning
+efforts, GPT-6 Astra succeeded in 12/14 task attempts, taking 615 to 1492\,s.
+Independent evaluation exposes falls, timeouts and incorrect completion claims.
 \end{abstract}
 \keywords{Humanoid control, multimodal agents, online evaluation}
 
@@ -37,43 +36,38 @@ expose limits in simulation.
 \end{figure}
 
 \section{Online humanoid operation}
-We test whether frontier models can inspect cabinets, navigate, make contact
-and decide when to stop through visual feedback and numerical SONIC
-references~\citep{sonic2026}.
+Room-scale humanoid operation couples navigation, inspection, contact and
+stopping while physics continues during inference. We test frontier models
+through numerical SONIC references~\citep{sonic2026}. Prior work spans skills,
+code, feedback and spatial or learned action representations~\citep{saycan2022,homebody2026,promptplanperform2024,codeaspolicies2022,choi2026hugo,innermonologue2022,pivot2024,voxposer2023,sayplan2023,rekep2025,rt22023}.
+We measure task completion, reasoning-effort tradeoffs and failures without a
+task skill library.
 
-Prior work uses grounded skills~\citep{saycan2022,homebody2026,promptplanperform2024},
-code~\citep{codeaspolicies2022,choi2026hugo}, feedback~\citep{innermonologue2022,pivot2024},
-spatial representations~\citep{voxposer2023,sayplan2023,rekep2025} or learned
-action tokens~\citep{rt22023}.
+\section{Interface, task and evaluation}
+\textbf{Interface.} The model receives onboard RGB-D, external RGB, robot
+kinematics, depth queries, a map, a revisable plan and feedback. It sends
+head/wrist keyframes, walking/posture commands and binary hand presets to SONIC
+(Fig.~\ref{fig:overview}). Drawer joint positions, contacts and scores are
+withheld; no task skills are supplied.
 
-\section{Task, interface and evaluation}
-\textbf{Scene.} Newton~\citep{newton2025} in Isaac Lab~\citep{isaaclab2025}
-runs at 200\,Hz with SONIC at 50\,Hz. Four Sektion
-cabinets~\citep{isaaclab2026cabinet} stand in NVIDIA's Simple
-Room~\citep{nvidia2026warehouseassets,nvidia2026assetlicense}: A and B behind
-2.1\,m lockers~\citep{nvidia2026simready}, C and D behind home. No drawer front
-is visible initially. Passive drawers close through contact, with 5\,N dry
-friction and critically damped stops; the robot uses a flat ground collider.
-Eight conditions open zero, one or two drawers by 0.20\,m under the same map
-and instruction.
-
-\textbf{Interface.} Four head/wrist keyframes, walking/posture commands and
-binary hand presets drive SONIC (Fig.~\ref{fig:overview}); facing stays within
-15$^\circ$ of measured heading during turns. Decisions receive onboard RGB-D,
-external RGB, robot kinematics, depth queries, map, plan and feedback. Drawer
-joints, contacts and scores remain private; no task skills are provided.
+\textbf{Task.} Four Sektion cabinets~\citep{isaaclab2026cabinet} stand in
+NVIDIA's Simple Room~\citep{nvidia2026warehouseassets,nvidia2026assetlicense}:
+A and B behind 2.1\,m lockers~\citep{nvidia2026simready}, C and D behind home.
+No drawer front is visible initially. Newton~\citep{newton2025} in
+Isaac Lab~\citep{isaaclab2025} supplies contact physics with passive drawers
+and flat-ground support. Eight conditions vary which drawers start 0.20\,m open under the same
+instruction.
 
 \textbf{Scoring.} Closed means within 2\,cm of shut and still for 1\,s.
-Force sensors distinguish hand pushes from other contact. Success requires all
-drawers closed, a supported standing hold within 25\,cm of home and the model's
-completion declaration. We separately record physical completion, disturbed
-drawers, contact attribution, falls, timeouts, infrastructure errors and
-all-closed controls.
+Success requires all drawers closed, a supported standing hold within 25\,cm
+of home and the model's completion declaration. Force sensors distinguish hand
+pushes from other contact. We record physical completion, inspection,
+disturbance, falls, timeouts and API errors separately.
 
 \textbf{Protocol.} After pilots, we froze the setup, prompts, evaluator, source
-and 1800\,s budget. GPT-6.1 Sol, GPT-6 Astra, Claude Opus 5.5 and Gemini 4
-Argon each ran one seeded episode per condition at low and high effort, four
-at a time with pinned host placement.
+and 1800\,s budget. GPT-6.1 Sol, GPT-6 Astra, Claude Opus 5.5 and Gemini 4 Argon
+each attempted every condition once at low and high effort, following a seeded
+condition schedule.
 
 \section{Results}
 
@@ -92,19 +86,20 @@ at a time with pinned host placement.
   $^{*}$: no successful attempt observed. API-error starts stay in denominators.}
   \label{tab:results}
 \end{table}
-Table~\ref{tab:results} retains all 64 starts; Fig.~\ref{fig:overview} shows one success. All 43 closures were by hand; no
-initially closed drawer was disturbed. Astra succeeded in 6/7 tasks at each
-effort (615 to 1492\,s), usually checking every drawer. Sol succeeded in 4/7 and
-3/7, Opus 2/7 and 3/7, Gemini none. High effort lengthened decisions without
-consistent gains; eight episodes timed out. Fifteen of 51 completed task starts
-ended in falls, one before any model command; four declarations lacked physical
-completion.
-In this sweep, Astra high cost less despite more output tokens because cached
-reads covered 50\% of its input, versus 29\% at low.
+\textbf{Task completion.} Astra completed 12/14 task attempts in 615 to
+1492\,s, combining inspection, hand contact and return home
+(Fig.~\ref{fig:overview}). All 43 closures were by hand; no initially closed
+drawer was disturbed.
 
-\textbf{Timing.} Median peak physics lag was 192\,ms. Only 17/58 completed
-episodes, including 7 task successes, met the 100\,ms limit; the results retain
-timing-limited episodes. Falls rarely followed lag spikes.
+\textbf{Reasoning effort and efficiency.} High effort lengthened decisions
+without consistent success gains. Astra high cost less despite more output
+tokens: cached reads covered 50\% of its input, versus 29\% at low.
+
+\textbf{Failure modes and timing.} Fifteen of 51 completed task starts ended
+in falls, one before any model command; eight timed out and four declarations
+lacked physical completion. Only 17/58 completed episodes, including 7 task
+successes, met the 100\,ms physics-lag limit; median peak lag was 192\,ms.
+The results retain timing-limited episodes. Falls rarely followed lag spikes.
 
 \textbf{Limits.} One simulated layout, drawer interaction and trial per
 model/effort/condition limit generalization. Friction, damping and ground support
