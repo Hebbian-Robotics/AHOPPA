@@ -34,13 +34,48 @@ Sources: [OpenAI pricing][openai], [OpenAI prompt caching][cache],
 published promotional standard rates valid through November 30, 2026.
 No recorded request exceeds the context length covered by these prices.
 
-OpenAI's two write prices cover 30-minute and 12-hour caching. Saved responses
-identify cache-write tokens but do not identify their billed lifetime. The
-older `prompt_cache_retention: "24h"` request field does not resolve that
-billing category. We therefore report a range using both published write
-rates. It describes pricing uncertainty, not variation between attempts or a
-confidence interval. Calls without usage remain excluded from both endpoints;
-the range is not a bound on the actual invoice.
+## OpenAI usage reconciliation
+
+The saved OpenAI responses identify cache-write counts but omit their billed
+lifetime. We queried the organization Usage API over the experiment window,
+grouped by project, API key and model in one-minute buckets. The report contains
+one project/key pair for the two study models. Its model totals show only
+30-minute writes and zero 12-hour writes. The paper and page therefore use the
+30-minute rate for all retained OpenAI cache-write tokens, giving single
+estimates instead of the earlier price ranges.
+
+The public [usage evidence](figures/openai-usage.json) contains model totals,
+the query window, the official endpoint documentation and a SHA-256 of the
+original report. Project IDs, API key IDs, user IDs and credentials are omitted.
+The account-level original stays outside Git. The cost summarizer validates
+that the reported calls equal retained responses plus calls without responses,
+that reported token totals cover the retained records and that cache lifetimes
+are uniform before applying the confirmed rate. Mixed lifetimes or mismatched
+coverage fail validation.
+
+| Quantity | GPT-6 Astra | GPT-6.1 Sol |
+| --- | ---: | ---: |
+| Retained responses | 996 | 1,023 |
+| Usage API calls | 996 | 1,029 |
+| Calls without saved responses | 0 | 6 |
+| Reported cache-write tokens, 30-minute | 6,991,350 | 7,003,825 |
+| Reported cache-write tokens, 12-hour | 0 | 0 |
+
+Astra's request count and every token total match exactly. Sol's report has six
+additional calls, matching the six interrupted calls without saved responses.
+Those calls add 61,784 input tokens (16,030 cached reads and 45,736 writes) and
+6,328 output tokens to the provider totals, about USD 0.18 at standard rates.
+We do not allocate that aggregate difference to individual attempts. Sol's
+per-attempt estimates still exclude those calls and retain their asterisks.
+Minute buckets group provider usage differently from response creation times,
+so subtracting individual response-start buckets does not reliably assign
+interrupted-call charges.
+
+This resolves the cache-pricing ambiguity; it does not turn token-priced
+estimates into billed amounts. Calls without retained response usage remain
+excluded from per-attempt costs for all providers. Account discounts and taxes
+are not inferred from token usage. The original range calculation remains
+available when the optional reconciled usage evidence is omitted.
 
 ## Token accounting
 
@@ -64,27 +99,29 @@ by one million. Sum across all retained calls in an attempt, then divide group
 totals by seven. The JSON preserves attempt-level counts, control estimates,
 full-precision decimal costs, the pricing policy, the frozen-summary SHA-256
 and a digest of the configuration, timing and response evidence consumed.
-It contains no raw prompts, response text or account credentials.
+It contains no raw prompts, response text or account credentials. The optional
+OpenAI usage evidence is embedded in the cost JSON for reproducibility.
 
 ## Reproduce
 
 With the frozen summary and extracted episode records available locally:
 
 ```bash
-mkdir -p artifacts/api-costs-v1
+mkdir -p artifacts/api-costs-v2
 uv run python -m humanoid_agent.analysis.summarize_api_costs \
   artifacts/storage-comparison-v3/summary.json \
   --episodes-root artifacts/storage-comparison-v3/episodes \
   --pricing configs/api-token-pricing.json \
-  --output artifacts/api-costs-v1/summary.json
-cp artifacts/api-costs-v1/summary.json docs/figures/api-costs.json
-cp artifacts/api-costs-v1/summary.tex paper/results-table.tex
+  --openai-usage-evidence docs/figures/openai-usage.json \
+  --output artifacts/api-costs-v2/summary.json
+cp artifacts/api-costs-v2/summary.json docs/figures/api-costs.json
+cp artifacts/api-costs-v2/summary.tex paper/results-table.tex
 ```
 
 This reads the frozen experiment evidence without changing it or making API
-requests. The raw records for all 64 reported starts are available from
-[hebbianrobotics/AHOPPA on Hugging Face][dataset]. The dataset card provides
-download instructions, checksums and documented omissions.
+requests. The raw-data release is linked at
+[hebbianrobotics/AHOPPA on Hugging Face][dataset]. It is public and ungated,
+with all 64 episode archives, checksums and download metadata.
 
 [openai]: https://developers.openai.com/api/docs/pricing
 [cache]: https://developers.openai.com/api/docs/guides/prompt-caching

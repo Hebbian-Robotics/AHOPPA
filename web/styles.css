@@ -409,10 +409,16 @@ video-skin {
 .study-section {
 	max-width: 86ch;
 }
+.affiliation-note {
+	max-width: 80ch;
+	margin: 0 auto 28px;
+	color: var(--research-muted);
+	font-size: 12px;
+	line-height: 1.75;
+}
 .publication-footer {
 	padding: 24px;
 	background: var(--research-wash);
-	margin: 0 -24px;
 	font-size: 12px;
 	line-height: 1.75;
 }
@@ -493,7 +499,6 @@ video-skin {
 		gap: 20px;
 	}
 	.publication-footer {
-		margin: 0 -16px;
 		padding: 24px 16px;
 	}
 }

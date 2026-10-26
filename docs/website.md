@@ -51,14 +51,18 @@ demonstrations and capability-oriented sections.
 
 The estimated-cost table reads `figures/api-costs.json`, the same data used to
 generate the paper's cost column. Follow [the cost method](api-costs.md) for
-standard rates, cache-price ranges, missing usage and reproduction. The author
+standard rates, usage reconciliation, missing usage and reproduction. OpenAI
+cache-write lifetimes are confirmed by the organization Usage API; public
+evidence omits account identifiers. The author
 order is Kingston Kuan, Samuel J Chew, then Brandon Ong. Kingston and Brandon
 are at Hebbian Robotics; Samuel is at Carnegie Mellon University. His name links
 to his supplied LinkedIn profile. The affiliation row includes CMU's primary
 red square university logo from its
 official homepage alongside the Hebbian Robotics logo;
 the website license notice records its source and trademark status. A dagger
-beside CMU links to the non-endorsement note in the page footer.
+beside CMU links to the non-endorsement note at the end of the page content,
+immediately before the footer. The footer sits outside the centered main
+container, so its background spans the viewport.
 
 ## Paper and page consistency
 

@@ -25,7 +25,7 @@ export function ApiCosts() {
 						<tr>
 							<th scope="col">Model / effort</th>
 							<th scope="col">USD / attempt</th>
-							<th scope="col">Calls without usage</th>
+							<th scope="col">Calls without response usage</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -50,12 +50,10 @@ export function ApiCosts() {
 				</table>
 			</div>
 			<Text as="p" className="result-caveat">
-				* Calls without recorded usage are excluded from the estimate, so actual
-				charges may be higher. OpenAI ranges span the two published cache-write
-				rates because the saved responses do not identify the billed cache
-				lifetime. These ranges describe pricing uncertainty, not variability
-				between attempts. These are token-priced estimates, not billed amounts;
-				GPU hosting, taxes and account discounts are excluded.
+				* Calls without recorded response usage are excluded from the estimate,
+				so actual charges may be higher. OpenAI's Usage API confirms that cache
+				writes used the 30-minute rate. These are token-priced estimates, not
+				billed amounts; GPU hosting, taxes and account discounts are excluded.
 			</Text>
 			<details>
 				<summary>Pricing sources and calculation</summary>
@@ -65,7 +63,14 @@ export function ApiCosts() {
 					separately. Output includes reasoning tokens, counted once. Across all
 					64 starts, {costReport.recorded_calls.toLocaleString("en-US")}{" "}
 					responses have usage and {costReport.unreported_calls} calls have no
-					recorded usage.
+					recorded response usage.
+				</p>
+				<p>
+					Astra's Usage API totals match all 996 retained responses exactly.
+					Sol's report contains six additional calls, matching the six
+					interrupted calls without saved responses. Their aggregate usage is
+					documented, but it is excluded from per-attempt estimates because we
+					cannot assign it to individual attempts reliably.
 				</p>
 				<p>
 					Rates:{" "}

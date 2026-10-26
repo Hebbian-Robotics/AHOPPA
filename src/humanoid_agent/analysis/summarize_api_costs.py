@@ -103,9 +103,25 @@ class GroupCost(ValidatedModel):
     control: AggregateCost
 
 
+class OpenAIModelUsage(ValidatedModel):
+    model: str
+    calls: TokenCount
+    usage: TokenUsage
+
+
+class OpenAIUsageEvidence(ValidatedModel):
+    schema_version: Literal["ahoppa-openai-usage-v1"] = "ahoppa-openai-usage-v1"
+    source_url: str
+    raw_report_sha256: str
+    query_start_time: TokenCount
+    query_end_time: TokenCount
+    models: list[OpenAIModelUsage]
+
+
 class CostReport(ValidatedModel):
     schema_version: Literal["ahoppa-api-costs-v1"] = "ahoppa-api-costs-v1"
     pricing: PricingPolicy
+    openai_usage_evidence: OpenAIUsageEvidence | None = None
     summary_sha256: str
     record_manifest_sha256: str
     recorded_calls: TokenCount
@@ -214,7 +230,85 @@ def aggregate_costs(episodes: list[EpisodeCost]) -> AggregateCost:
     )
 
 
-def main(summary_path: Path, /, *, episodes_root: Path, pricing: Path, output: Path) -> None:
+def apply_openai_usage_evidence(
+    episodes: list[EpisodeCost], policy: PricingPolicy, evidence: OpenAIUsageEvidence
+) -> list[EpisodeCost]:
+    """Resolve a model's cache rate only when aggregate usage covers the retained calls."""
+    if evidence.query_end_time <= evidence.query_start_time:
+        raise ValueError("Usage evidence has an empty query window")
+    evidence_by_model = {row.model: row for row in evidence.models}
+    if len(evidence_by_model) != len(evidence.models):
+        raise ValueError("Usage evidence repeats a model")
+    confirmed_lifetimes: dict[str, Literal["30m", "12h"]] = {}
+    rates_by_provider = {rate.study_provider: rate for rate in policy.models}
+    for rate in policy.models:
+        if rate.api != "openai":
+            continue
+        retained = [
+            episode
+            for episode in episodes
+            if episode.group.partition("-")[0] == rate.study_provider
+        ]
+        if not retained:
+            continue
+        model_evidence = evidence_by_model[rate.model]
+        recorded_calls = sum(episode.recorded_calls for episode in retained)
+        missing_calls = sum(episode.unreported_calls for episode in retained)
+        if model_evidence.calls != recorded_calls + missing_calls:
+            raise ValueError(
+                f"Usage API call count does not match recorded and interrupted calls: {rate.model}"
+            )
+        reported = model_evidence.usage
+        match (reported.short_cache_write_tokens > 0, reported.long_cache_write_tokens > 0):
+            case (True, False) if reported.unspecified_cache_write_tokens == 0:
+                lifetime = "30m"
+            case (False, True) if reported.unspecified_cache_write_tokens == 0:
+                lifetime = "12h"
+            case _:
+                raise ValueError(
+                    "Mixed or unknown cache lifetimes cannot resolve per-attempt pricing"
+                )
+        additional_usage = TokenUsage(
+            input_tokens=reported.input_tokens - sum(episode.input_tokens for episode in retained),
+            cached_input_tokens=reported.cached_input_tokens
+            - sum(episode.cached_input_tokens for episode in retained),
+            unspecified_cache_write_tokens=reported.cache_write_tokens
+            - sum(episode.cache_write_tokens for episode in retained),
+            output_tokens=reported.output_tokens
+            - sum(episode.output_tokens for episode in retained),
+        )
+        if missing_calls == 0 and any(additional_usage.model_dump().values()):
+            raise ValueError("Usage API token totals differ despite complete retained responses")
+        confirmed_lifetimes[rate.study_provider] = lifetime
+    reconciled_episodes = []
+    for episode in episodes:
+        provider = episode.group.partition("-")[0]
+        if provider not in confirmed_lifetimes:
+            reconciled_episodes.append(episode)
+            continue
+        lifetime = confirmed_lifetimes[provider]
+        usage = TokenUsage(
+            input_tokens=episode.input_tokens,
+            cached_input_tokens=episode.cached_input_tokens,
+            short_cache_write_tokens=episode.cache_write_tokens if lifetime == "30m" else 0,
+            long_cache_write_tokens=episode.cache_write_tokens if lifetime == "12h" else 0,
+            output_tokens=episode.output_tokens,
+        )
+        reconciled_episodes.append(
+            episode.model_copy(update={"cost": price_usage(usage, rates_by_provider[provider])})
+        )
+    return reconciled_episodes
+
+
+def main(
+    summary_path: Path,
+    /,
+    *,
+    episodes_root: Path,
+    pricing: Path,
+    output: Path,
+    openai_usage_evidence: Path | None = None,
+) -> None:
     """Write JSON cost evidence and a LaTeX results table from retained API attempts."""
     summary = json.loads(summary_path.read_text())
     policy = PricingPolicy.model_validate_json(pricing.read_text())
@@ -276,6 +370,13 @@ def main(summary_path: Path, /, *, episodes_root: Path, pricing: Path, output: P
                 ),
             )
         )
+    usage_evidence = (
+        OpenAIUsageEvidence.model_validate_json(openai_usage_evidence.read_text())
+        if openai_usage_evidence is not None
+        else None
+    )
+    if usage_evidence is not None:
+        episode_costs = apply_openai_usage_evidence(episode_costs, policy, usage_evidence)
     grouped: dict[str, list[EpisodeCost]] = defaultdict(list)
     for episode in episode_costs:
         grouped[episode.group].append(episode)
@@ -286,6 +387,7 @@ def main(summary_path: Path, /, *, episodes_root: Path, pricing: Path, output: P
     )
     report = CostReport(
         pricing=policy,
+        openai_usage_evidence=usage_evidence,
         summary_sha256=hashlib.sha256(summary_path.read_bytes()).hexdigest(),
         record_manifest_sha256=record_manifest.hexdigest(),
         recorded_calls=sum(episode.recorded_calls for episode in episode_costs),

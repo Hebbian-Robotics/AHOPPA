@@ -7,8 +7,14 @@ from decimal import Decimal
 from pathlib import Path
 
 from humanoid_agent.analysis.summarize_api_costs import (
+    CostBounds,
+    EpisodeCost,
     ModelRate,
+    OpenAIModelUsage,
+    OpenAIUsageEvidence,
     PricingPolicy,
+    TokenUsage,
+    apply_openai_usage_evidence,
     main,
     price_usage,
     recorded_usage,
@@ -109,6 +115,68 @@ class ApiCostTests(unittest.TestCase):
                 },
                 rate,
             )
+
+    def test_usage_evidence_resolves_cache_price_without_allocating_extra_calls(self) -> None:
+        policy = PricingPolicy.model_validate_json(PRICING_PATH.read_text())
+        episode = EpisodeCost(
+            episode="retained-attempt",
+            group="sol-low",
+            condition="open-A",
+            is_task_attempt=True,
+            recorded_calls=2,
+            unreported_calls=1,
+            input_tokens=1000,
+            cached_input_tokens=600,
+            cache_write_tokens=300,
+            output_tokens=100,
+            cost=CostBounds(minimum_usd=Decimal("0.00201"), maximum_usd=Decimal("0.00276")),
+        )
+        model_usage = OpenAIModelUsage(
+            model="gpt-6.1-sol",
+            calls=3,
+            usage=TokenUsage(
+                input_tokens=1300,
+                cached_input_tokens=650,
+                short_cache_write_tokens=550,
+                output_tokens=140,
+            ),
+        )
+        evidence = OpenAIUsageEvidence(
+            source_url="https://developers.openai.com/docs/api-reference/usage",
+            raw_report_sha256="a" * 64,
+            query_start_time=0,
+            query_end_time=60,
+            models=[model_usage],
+        )
+        result = apply_openai_usage_evidence([episode], policy, evidence)[0]
+        self.assertEqual(result.cost.minimum_usd, Decimal("0.00201"))
+        self.assertEqual(result.cost.maximum_usd, Decimal("0.00201"))
+        self.assertEqual(result.unreported_calls, 1)
+        self.assertEqual(result.output_tokens, 100)
+        invalid_cases = [
+            (episode, model_usage.model_copy(update={"calls": 4}), "call count"),
+            (
+                episode,
+                model_usage.model_copy(
+                    update={
+                        "usage": model_usage.usage.model_copy(
+                            update={"short_cache_write_tokens": 300, "long_cache_write_tokens": 250}
+                        )
+                    }
+                ),
+                "Mixed",
+            ),
+            (
+                episode.model_copy(update={"unreported_calls": 0}),
+                model_usage.model_copy(update={"calls": 2}),
+                "token totals differ",
+            ),
+        ]
+        for retained, reported, message in invalid_cases:
+            with self.subTest(message=message), self.assertRaisesRegex(ValueError, message):
+                apply_openai_usage_evidence(
+                    [retained], policy, evidence.model_copy(update={"models": [reported]})
+                )
 
     def test_report_prices_native_calls_once_and_separates_controls(self) -> None:
         with tempfile.TemporaryDirectory() as temporary_directory:

@@ -1,0 +1,33 @@
+{
+  "schema_version": "ahoppa-openai-usage-v1",
+  "source_url": "https://developers.openai.com/api/reference/resources/admin/subresources/organization/subresources/usage/methods/completions",
+  "raw_report_sha256": "ce582fc354d71924344c76327eb2a62e7f3b0feb82985bf3363a035a89f2893e",
+  "query_start_time": 1792957320,
+  "query_end_time": 1792977420,
+  "models": [
+    {
+      "model": "gpt-6-astra",
+      "calls": 996,
+      "usage": {
+        "input_tokens": 11352629,
+        "cached_input_tokens": 4358291,
+        "short_cache_write_tokens": 6991350,
+        "long_cache_write_tokens": 0,
+        "unspecified_cache_write_tokens": 0,
+        "output_tokens": 731509
+      }
+    },
+    {
+      "model": "gpt-6.1-sol",
+      "calls": 1029,
+      "usage": {
+        "input_tokens": 11743832,
+        "cached_input_tokens": 4736920,
+        "short_cache_write_tokens": 7003825,
+        "long_cache_write_tokens": 0,
+        "unspecified_cache_write_tokens": 0,
+        "output_tokens": 689089
+      }
+    }
+  ]
+}
