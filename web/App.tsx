@@ -36,6 +36,11 @@ function ProjectPage() {
 				</Text>
 				<Text as="p" className="publication-affiliations">
 					<sup>1</sup>Hebbian Robotics · <sup>2</sup>Carnegie Mellon University
+					<sup>
+						<a href="#cmu-affiliation-note" aria-label="CMU affiliation note">
+							†
+						</a>
+					</sup>
 				</Text>
 				<div className="affiliation-logos">
 					<img
@@ -53,8 +58,8 @@ function ProjectPage() {
 							className="cmu-wordmark"
 							src={cmuWordmark}
 							alt="Carnegie Mellon University"
-							width="216"
-							height="19"
+							width="300"
+							height="27"
 						/>
 					</a>
 				</div>
@@ -192,6 +197,9 @@ function ProjectPage() {
 				</section>
 			</div>
 			<footer className="publication-footer">
+				<p id="cmu-affiliation-note">
+					† This project is not endorsed by Carnegie Mellon University.
+				</p>
 				<p>
 					Website adapted from the{" "}
 					<Link href="https://github.com/nerfies/nerfies.github.io">

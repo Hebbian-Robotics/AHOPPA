@@ -80,7 +80,7 @@ html {
 }
 .cmu-wordmark {
 	display: block;
-	width: 216px;
+	width: 300px;
 	height: auto;
 }
 .affiliation-wordmark {
@@ -827,4 +827,10 @@ video-skin {
 }
 .api-costs table {
 	width: 100%;
+}
+
+@media (max-width: 640px) {
+	.cmu-wordmark {
+		width: 216px;
+	}
 }
