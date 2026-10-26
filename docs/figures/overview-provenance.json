@@ -1,0 +1,169 @@
+{
+  "episode": "artifacts/storage-comparison-v3/episodes/storage-cmp3-astra-low-open-a-d-r1",
+  "request": "feedback_010",
+  "execution_request": "feedback_011",
+  "execution_view": "onboard",
+  "execution_external_crop_left_top_right_bottom": [
+    250,
+    90,
+    730,
+    450
+  ],
+  "scope": "All scene images are unmodified (resized or cropped) model inputs from one episode. The targets panel is the request's onboard image with that request's recorded head/wrist command projected through its recorded intrinsics and onboard camera kinematics; targets are drawn in the request-time pelvis frame, so the walking displacement during the chunk is not shown. Points that do not project into the onboard image are omitted. The execution panel is the next request's onboard image. The motor plot shows the recorded SONIC native position commands while this command was active; the shaded interval is the commanded chunk duration, followed by the first 2.4 s of the hold until the next command.",
+  "labels": "Task and subtask labels are shortened from the recorded prompt and model plan. Subtask status is model-reported, not an independent physical score.",
+  "source_sha256": {
+    "operator/feedback_010/prompt.json": "f3103c1401c40585ba197dccbfc6989795bb4c20548aa1205142a08e4eea0b2d",
+    "operator/feedback_010/model.response.json": "fcad1efa9efab58862581e6adb7b548f4b5352fed268d8510982f5c59b817022",
+    "operator/feedback_010/command.json": "412831180418c6f35b34d9c1a311557f564601b3d662ee9aa6c5e40d6cd4f73b",
+    "operator/feedback_010/observation.json": "1d6605e9df3bc807141a1b7b05dd509d806a529a85a71665ddf43c2c28474a31",
+    "operator/feedback_010/kinematic-feedback.json": "74ed7207ad841a7b3d6dfc7aa22f4ca4183842f35a60bb41473f7e26779856a2",
+    "operator/feedback_010/visual-history.json": "eaf7768ff54b7ec1b498a68b75c6b12eef34b67e6e178935774e4e7e19b22dc0",
+    "operator/feedback_010/rgb.png": "76dec74df6779d2a6e22d2aaadf08cc88cc746bb380b1fe6024664fde1ea5669",
+    "operator/feedback_011/rgb.png": "8f9d08315d4a4b388ca0782031b4ff1e759ba6ee3eea4e2c7e7c7a0fb7171822",
+    "operator/feedback_011/external.png": "4ba26c861718fcbb72b0a5ddb0307dc68428f0f93b2e6b5212d0373b208631e3",
+    "inputs/scene.json": "31466afee0d026d72bb85a33bbc0e46f1c2547b9d8a076a80f0f6746fdc7704e"
+  },
+  "history_pairs": [
+    {
+      "frames": [
+        {
+          "observation_id": "initial",
+          "action_id": null,
+          "role": "episode/start",
+          "captured_elapsed_seconds": 0.0,
+          "requested_elapsed_seconds": 0.0
+        }
+      ],
+      "onboard_path": "history/initial/rgb.png",
+      "external_path": "history/initial/external.png",
+      "onboard_sha256": "126d7820f7ecbafef0c7db90e7c7d81e31a5309984dffd39b011d4f63fccfa65",
+      "external_sha256": "59f1921cd57babc290fd1f2cc87a98efb5a1355eded18c695582bb390e7100c3"
+    },
+    {
+      "frames": [
+        {
+          "observation_id": "feedback_009_history_start",
+          "action_id": "feedback_009",
+          "role": "start",
+          "captured_elapsed_seconds": 174.84573691699188,
+          "requested_elapsed_seconds": 174.838093939994
+        }
+      ],
+      "onboard_path": "history/feedback_009_history_start/rgb.png",
+      "external_path": "history/feedback_009_history_start/external.png",
+      "onboard_sha256": "b04fa662372aa592486829a9b790a6639608d35a8b27ab0bba67dc7a20f124a6",
+      "external_sha256": "c805d7dc5724a6e2d4e1948417edce54fa6aa59ade1c19dc04b2fb9a89714e92"
+    },
+    {
+      "frames": [
+        {
+          "observation_id": "feedback_009_history_midpoint",
+          "action_id": "feedback_009",
+          "role": "midpoint",
+          "captured_elapsed_seconds": 175.32991350797238,
+          "requested_elapsed_seconds": 175.32171967148315
+        }
+      ],
+      "onboard_path": "history/feedback_009_history_midpoint/rgb.png",
+      "external_path": "history/feedback_009_history_midpoint/external.png",
+      "onboard_sha256": "ba37419d525a1218890e3cab6a58e4b78a35d4dcfe16a885b006fa9d38d955dc",
+      "external_sha256": "a9dd0860e95755170f16c04a6aaf3c573a234d74e6d86c9625db804b2fcb73c8"
+    },
+    {
+      "frames": [
+        {
+          "observation_id": "feedback_010",
+          "action_id": "feedback_009",
+          "role": "current/end",
+          "captured_elapsed_seconds": 175.84843333496246,
+          "requested_elapsed_seconds": 175.8053454029723
+        }
+      ],
+      "onboard_path": "rgb.png",
+      "external_path": "external.png",
+      "onboard_sha256": "76dec74df6779d2a6e22d2aaadf08cc88cc746bb380b1fe6024664fde1ea5669",
+      "external_sha256": "9475e9a2d37eb73543b7b14ff70d34c8830d612bcce79452433d6248d2b6fc6c"
+    }
+  ],
+  "motor_command_trace": {
+    "recording": "artifacts/storage-comparison-v3/episodes/storage-cmp3-astra-low-open-a-d-r1/physics/records.mcap",
+    "recording_sha256": "6228c20ba8026e06758ca64030f9eb89bb0b7650daf46411e17900eaf782ec34",
+    "command_id": "feedback_010",
+    "rows": 247,
+    "first_wall_seconds": 188.90655446896562,
+    "last_wall_seconds": 201.9883123249747,
+    "plotted_joints": [
+      "left_shoulder_pitch_joint",
+      "left_elbow_joint",
+      "left_hip_pitch_joint",
+      "left_knee_joint"
+    ],
+    "cabinet_joint_positions_first": {
+      "A": {
+        "door_left_joint": -2.481244010255068e-08,
+        "door_right_joint": 8.229165615603051e-08,
+        "drawer_bottom_joint": 0.0,
+        "drawer_top_joint": 0.20000000298023224
+      },
+      "B": {
+        "door_left_joint": -2.3886361333325112e-08,
+        "door_right_joint": 8.229165615603051e-08,
+        "drawer_bottom_joint": 0.0,
+        "drawer_top_joint": 0.0
+      },
+      "C": {
+        "door_left_joint": -2.3230008139307756e-08,
+        "door_right_joint": 8.229171299944937e-08,
+        "drawer_bottom_joint": 0.0,
+        "drawer_top_joint": 0.0
+      },
+      "D": {
+        "door_left_joint": -2.3324076892095036e-08,
+        "door_right_joint": 8.229166326145787e-08,
+        "drawer_bottom_joint": 0.0,
+        "drawer_top_joint": 0.09095809608697891
+      }
+    },
+    "cabinet_joint_positions_last": {
+      "A": {
+        "door_left_joint": -2.6033493583099698e-08,
+        "door_right_joint": 8.229165615603051e-08,
+        "drawer_bottom_joint": 0.0,
+        "drawer_top_joint": 0.20000000298023224
+      },
+      "B": {
+        "door_left_joint": -2.5139915038607796e-08,
+        "door_right_joint": 8.229165615603051e-08,
+        "drawer_bottom_joint": 0.0,
+        "drawer_top_joint": 0.0
+      },
+      "C": {
+        "door_left_joint": -2.444562419157137e-08,
+        "door_right_joint": 8.229171299944937e-08,
+        "drawer_bottom_joint": 0.0,
+        "drawer_top_joint": 0.0
+      },
+      "D": {
+        "door_left_joint": -2.4522673669480355e-08,
+        "door_right_joint": 8.229166326145787e-08,
+        "drawer_bottom_joint": 0.0,
+        "drawer_top_joint": 0.002131502376869321
+      }
+    }
+  },
+  "asset_sha256": {
+    "execution-external.png": "bd79e991799dbe330c9d01869a020df9f753408b299221769ef619eaa6a54042",
+    "execution.png": "8f9d08315d4a4b388ca0782031b4ff1e759ba6ee3eea4e2c7e7c7a0fb7171822",
+    "history-0-0.png": "126d7820f7ecbafef0c7db90e7c7d81e31a5309984dffd39b011d4f63fccfa65",
+    "history-0-1.png": "59f1921cd57babc290fd1f2cc87a98efb5a1355eded18c695582bb390e7100c3",
+    "history-1-0.png": "b04fa662372aa592486829a9b790a6639608d35a8b27ab0bba67dc7a20f124a6",
+    "history-1-1.png": "c805d7dc5724a6e2d4e1948417edce54fa6aa59ade1c19dc04b2fb9a89714e92",
+    "history-2-0.png": "ba37419d525a1218890e3cab6a58e4b78a35d4dcfe16a885b006fa9d38d955dc",
+    "history-2-1.png": "a9dd0860e95755170f16c04a6aaf3c573a234d74e6d86c9625db804b2fcb73c8",
+    "history-3-0.png": "76dec74df6779d2a6e22d2aaadf08cc88cc746bb380b1fe6024664fde1ea5669",
+    "history-3-1.png": "9475e9a2d37eb73543b7b14ff70d34c8830d612bcce79452433d6248d2b6fc6c",
+    "motor-commands.png": "bb0bae7c6e5db19d1c2c0c64560adedde869c39187ce0adf75201e15ea199bf0",
+    "targets.png": "76dec74df6779d2a6e22d2aaadf08cc88cc746bb380b1fe6024664fde1ea5669"
+  },
+  "builder_source_sha256": "fc5f530d80c20f94f7237e187cb948a030908acabfe12b1c21e37cf900193758"
+}

@@ -1,0 +1,16 @@
+name: lambda-gpu-job
+
+# Ordinary managed jobs share the registered machines, with their own containers.
+# Submit with: sky jobs launch configs/skypilot/lambda-gpu-job.yaml --yes --detach-run
+resources:
+  infra: ssh/lambda-a6000
+  accelerators: A6000:1
+  cpus: 2
+  memory: 8
+  image_id: docker:python@sha256:4766d8b510c428e595d74b9cc5bbb2fae8e26316fffb4adc89908d79aacd58a2
+
+setup: |
+  python --version
+
+run: |
+  nvidia-smi

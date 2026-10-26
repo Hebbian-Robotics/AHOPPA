@@ -1,0 +1,84 @@
+[project]
+name = "humanoid-agent"
+version = "0.0.0"
+readme = "README.md"
+license = "MIT"
+description = "Visual humanoid operation through a fixed native controller."
+requires-python = ">=3.12"
+dependencies = [
+    "mujoco==3.16.0",
+    "numpy==2.5.4",
+    "scipy==1.18.1",
+    "pillow>=13.0.0",
+    "imageio",
+    "imageio-ffmpeg",
+    "openai",
+    "matplotlib>=3.11.2",
+    "anthropic>=1.15.0",
+    "google-genai>=2.31.0",
+    "rfc8785>=0.1.4",
+    "pydantic>=2.14.1",
+    "cyclopts>=5.2.0",
+    "psutil>=7.2.2",
+    "boltons>=26.2.0",
+    "mcap>=1.5.0",
+    "foxglove-sdk>=0.29.2",
+    "pyzmq>=27.2.0",
+    "tenacity>=9.1.4",
+]
+
+[project.urls]
+Homepage = "https://hebbian-robotics.github.io/AHOPPA/"
+Repository = "https://github.com/Hebbian-Robotics/AHOPPA"
+
+[project.scripts]
+humanoid-agent = "humanoid_agent.cli:entrypoint"
+
+[build-system]
+requires = ["uv_build>=0.11,<0.13"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "ruff>=0.17.1",
+    "ty>=0.0.89",
+    # The pinned Google SDK requires websockets <17.
+    "websockets>=16.1.1,<17",
+]
+
+[tool.uv]
+exclude-newer = "7 days"
+# Dated exceptions preserve already-used runtime/SDK releases, not future releases.
+exclude-newer-package = {
+    mujoco = "2026-10-15T00:00:00Z",
+    openai = "2026-10-19T00:00:00Z",
+    anthropic = "2026-10-16T00:00:00Z",
+    google-genai = "2026-10-15T00:00:00Z",
+}
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+extend-exclude = ["artifacts", "site", "node_modules", "web/dist"]
+
+[tool.ty.src]
+exclude = ["artifacts", "site", "node_modules", "web/dist"]
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "I", "B", "C4", "UP", "ANN", "PTH", "RET", "SIM", "TID", "RUF"]
+ignore = ["E501", "B008", "C901", "RET504", "ANN401"]
+# Intentional typography in model prompts, figure labels and page copy.
+allowed-confusables = ["–", "‑", "’", "×"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+
+[tool.ty.rules]
+division-by-zero = "error"
+deprecated = "error"
+unused-ignore-comment = "error"
+possibly-unresolved-reference = "error"
+
+[tool.ty.environment]
+extra-paths = ["src"]

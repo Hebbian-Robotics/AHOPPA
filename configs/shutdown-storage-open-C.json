@@ -1,0 +1,178 @@
+{
+  "robot_start_xy_m": [
+    0.0,
+    0.0
+  ],
+  "dex3_hands": true,
+  "wrist_cameras": false,
+  "transfer": null,
+  "mobility": null,
+  "inspection": null,
+  "shutdown": {
+    "protocol": "drawer-shutdown-v2",
+    "condition": "open-C",
+    "cabinets": [
+      {
+        "identifier": "A",
+        "center_xy_m": [
+          4.623,
+          1.5
+        ],
+        "yaw_degrees": 180.0,
+        "initially_open": false
+      },
+      {
+        "identifier": "B",
+        "center_xy_m": [
+          4.623,
+          -1.5
+        ],
+        "yaw_degrees": 180.0,
+        "initially_open": false
+      },
+      {
+        "identifier": "C",
+        "center_xy_m": [
+          -1.795,
+          2.0
+        ],
+        "yaw_degrees": 0.0,
+        "initially_open": true
+      },
+      {
+        "identifier": "D",
+        "center_xy_m": [
+          -1.795,
+          -2.0
+        ],
+        "yaw_degrees": 0.0,
+        "initially_open": false
+      }
+    ],
+    "open_drawer_position_m": 0.2,
+    "drawer_damping_n_s_per_m": 1.0,
+    "drawer_static_friction_n": 5.0,
+    "drawer_limit_damping_n_s_per_m": 460.0,
+    "closed_tolerance_m": 0.02,
+    "settled_speed_m_per_s": 0.01,
+    "disturbance_tolerance_m": 0.02,
+    "hand_contact_threshold_n": 0.5,
+    "hold_seconds": 1.0,
+    "home_radius_m": 0.25
+  },
+  "assets": [
+    {
+      "name": "storage_bay",
+      "asset": "simple_room_without_table",
+      "position_m": [
+        2.15,
+        0.0,
+        0.7695705931503188
+      ],
+      "yaw_degrees": 90.0
+    },
+    {
+      "name": "storage_lockers_north",
+      "asset": "simready_locker_double_bench",
+      "position_m": [
+        1.9,
+        1.28,
+        0.0
+      ],
+      "yaw_degrees": 90.0
+    },
+    {
+      "name": "storage_lockers_center",
+      "asset": "simready_locker_double_bench",
+      "position_m": [
+        1.9,
+        0.0,
+        0.0
+      ],
+      "yaw_degrees": 90.0
+    },
+    {
+      "name": "storage_lockers_south",
+      "asset": "simready_locker_double_bench",
+      "position_m": [
+        1.9,
+        -1.28,
+        0.0
+      ],
+      "yaw_degrees": 90.0
+    }
+  ],
+  "floor_support": "flat-ground-collider",
+  "stepped_turn_tool": false,
+  "leashed_facing": true,
+  "boxes": [
+    {
+      "name": "storage_lockers_north_collider",
+      "center_m": [
+        1.9,
+        1.28,
+        1.045
+      ],
+      "full_size_m": [
+        0.83,
+        1.28,
+        2.09
+      ],
+      "color": [
+        0.4,
+        0.45,
+        0.5
+      ],
+      "finish": "hidden"
+    },
+    {
+      "name": "storage_lockers_center_collider",
+      "center_m": [
+        1.9,
+        0.0,
+        1.045
+      ],
+      "full_size_m": [
+        0.83,
+        1.28,
+        2.09
+      ],
+      "color": [
+        0.4,
+        0.45,
+        0.5
+      ],
+      "finish": "hidden"
+    },
+    {
+      "name": "storage_lockers_south_collider",
+      "center_m": [
+        1.9,
+        -1.28,
+        1.045
+      ],
+      "full_size_m": [
+        0.83,
+        1.28,
+        2.09
+      ],
+      "color": [
+        0.4,
+        0.45,
+        0.5
+      ],
+      "finish": "hidden"
+    }
+  ],
+  "button_center_m": [
+    -8.0,
+    -8.0,
+    0.8
+  ],
+  "button_radius_m": 0.035,
+  "button_color": [
+    1.0,
+    0.6,
+    0.0
+  ]
+}

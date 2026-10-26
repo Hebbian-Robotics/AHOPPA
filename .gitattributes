@@ -1,0 +1,2 @@
+# Keep the official conference template byte-identical to upstream.
+paper/vendor/* -whitespace

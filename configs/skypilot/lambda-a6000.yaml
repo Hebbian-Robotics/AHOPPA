@@ -1,0 +1,153 @@
+name: humanoid-agent-native-episode
+
+# Submit a fresh container on the shared registered machines:
+# sky jobs launch configs/skypilot/lambda-a6000.yaml --yes --detach-run ...
+
+resources:
+  infra: ssh/lambda-a6000
+  accelerators: A6000:1
+  cpus: 12
+  memory: 64
+  image_id: docker:ubuntu@sha256:0a9887931b0e38af2e3487ed39e29436b0535c4f3f52e57745baaf79d1898956
+
+# These paths belong to a prepared worker. Deploy source and retrieve evidence
+# with rsync; SkyPilot schedules the existing episode owner on that worker.
+envs:
+  HUMANOID_AGENT_WORKSPACE: /home/ubuntu/humanoid-agent-runtime-v1
+  HUMANOID_AGENT_ATTEMPT_ID: ''
+  HUMANOID_AGENT_ROLE: native-controller-check
+  HUMANOID_AGENT_PROVIDER: sol
+  HUMANOID_AGENT_PROVIDERS: ''
+  HUMANOID_AGENT_REASONING_EFFORT: low
+  HUMANOID_AGENT_EPISODE_KIND: model
+  HUMANOID_AGENT_DIAGNOSTIC_MOTION: standard
+  HUMANOID_AGENT_DIAGNOSTIC_PHASE_SECONDS: '5'
+  HUMANOID_AGENT_TASK_SCENE: configs/shutdown-storage-none-open.json
+  HUMANOID_AGENT_DECORATIVE_ASSETS: ''
+  HUMANOID_AGENT_WALL_SECONDS: '180'
+  HUMANOID_AGENT_API_REQUEST_TIMEOUT_SECONDS: '300'
+  HUMANOID_AGENT_API_RETRY_POLICY: bounded
+
+config:
+  ssh:
+    pod_config:
+      spec:
+        containers:
+          - securityContext:
+              # Allow the owner's private user/network namespace while retaining
+              # the NVIDIA runtime's device isolation for the allocated GPU.
+              privileged: false
+              seccompProfile:
+                type: Unconfined
+              appArmorProfile:
+                type: Unconfined
+            env:
+              - name: NVIDIA_DRIVER_CAPABILITIES
+                value: compute,utility,graphics,video
+            volumeMounts:
+              - name: prepared-worker
+                mountPath: /home/ubuntu
+              - name: cuda-runtime
+                mountPath: /usr/lib/x86_64-linux-gnu/libcudart.so.12
+                readOnly: true
+        volumes:
+          - name: prepared-worker
+            hostPath:
+              path: /home/ubuntu
+              type: Directory
+          - name: cuda-runtime
+            hostPath:
+              path: /usr/lib/x86_64-linux-gnu/libcudart.so.12
+              type: File
+
+setup: |
+  set -euo pipefail
+  # Repair interrupted package configuration inside this job container only.
+  sudo dpkg --configure -a
+  sudo apt-get update -qq
+  sudo apt-get install -y --no-install-recommends \
+    ffmpeg git iproute2 libegl1 libgl1 libglib2.0-0 libglfw3 libgomp1 \
+    libsm6 libxext6 libxrender1 libsodium23 libpgm-5.3-0 libnorm1 \
+    procps sudo util-linux fonts-dejavu-core
+  test -x /home/ubuntu/webolt/.venv/bin/python
+  test -x /home/ubuntu/frontier-motion-newton-v1/IsaacLab/.venv/bin/python
+  if ! getent passwd 1000 > /dev/null; then
+    useradd --uid 1000 --no-create-home --home-dir /home/ubuntu --shell /bin/bash humanoid-agent
+  fi
+  test "$(getent passwd 1000 | cut -d: -f6)" = /home/ubuntu
+  nvidia-smi
+  cd "$HUMANOID_AGENT_WORKSPACE"
+  /usr/bin/sudo -H -E -u '#1000' unshare --user --map-root-user --net true
+  # The workspace owns its locked operator environment; physics and camera
+  # workers import the hash-pinned recording closure from a per-job target.
+  /usr/bin/sudo -H -E -u '#1000' env "UV_PROJECT_ENVIRONMENT=$HUMANOID_AGENT_WORKSPACE/.venv" \
+    "$HUMANOID_AGENT_WORKSPACE/uv" sync --frozen --no-dev
+  /usr/bin/sudo -H -E -u '#1000' "$HUMANOID_AGENT_WORKSPACE/uv" --no-config pip install \
+    --python /home/ubuntu/webolt/.venv/bin/python \
+    --target "$HUMANOID_AGENT_WORKSPACE/recording-runtime/$HUMANOID_AGENT_ATTEMPT_ID" \
+    --require-hashes --no-deps -r "$HUMANOID_AGENT_WORKSPACE/configs/recording-runtime-requirements.txt"
+
+run: |
+  set -euo pipefail
+  : "${HUMANOID_AGENT_ATTEMPT_ID:?Supply a fresh attempt ID for every submission}"
+  # SkyPilot selects the isolated CUDA device. These identifiers only select
+  # its CPU profile and cache directory, not the application's GPU.
+  assigned_gpu_uuid=$(nvidia-smi --query-gpu=uuid --format=csv,noheader,nounits)
+  case "$assigned_gpu_uuid" in GPU-*) ;; *) exit 2 ;; esac
+  # NVML renumbers an isolated device to index 0. Its driver minor number
+  # retains the host identity used by the existing fourteen-CPU role profile.
+  host_gpu_minor_number=$(nvidia-smi -q -x | "$HUMANOID_AGENT_WORKSPACE/.venv/bin/python" -c '
+  import sys
+  from xml.etree import ElementTree
+  devices = ElementTree.fromstring(sys.stdin.read()).findall("gpu")
+  if len(devices) != 1:
+      raise ValueError("An episode job requires exactly one isolated GPU")
+  print(devices[0].findtext("minor_number"))
+  ')
+  [[ "$host_gpu_minor_number" =~ ^[0-9]+$ ]]
+  first_cpu_index=$((host_gpu_minor_number * 14))
+  test "$((first_cpu_index + 13))" -lt "$(getconf _NPROCESSORS_ONLN)"
+  printf 'Worker GPU %s; CPU allocation %s-%s\n' "$assigned_gpu_uuid" "$first_cpu_index" "$((first_cpu_index + 13))"
+  cd "$HUMANOID_AGENT_WORKSPACE"
+  export HUMANOID_AGENT_PROJECT_ROOT="$HUMANOID_AGENT_WORKSPACE"
+  export PYTHONPATH="$HUMANOID_AGENT_WORKSPACE/src"
+  case "$HUMANOID_AGENT_ROLE" in
+    episode|group|native-controller-check) ;;
+    *) exit 2 ;;
+  esac
+  provider_arguments=(--provider "$HUMANOID_AGENT_PROVIDER")
+  if [ "$HUMANOID_AGENT_ROLE" = group ]; then
+    : "${HUMANOID_AGENT_PROVIDERS:?Supply space-separated provider assignments}"
+    read -r -a provider_assignments <<< "$HUMANOID_AGENT_PROVIDERS"
+    test "${#provider_assignments[@]}" -gt 0
+    provider_arguments=(--providers "${provider_assignments[@]}")
+  fi
+  decorative_arguments=()
+  if [ -n "$HUMANOID_AGENT_DECORATIVE_ASSETS" ]; then
+    decorative_arguments=(--decorative-assets "$HUMANOID_AGENT_DECORATIVE_ASSETS")
+  fi
+  # Match the mounted host owner, including its protected home and API files.
+  shader_cache_path="/home/ubuntu/.cache/humanoid-agent/ovrtx/$assigned_gpu_uuid"
+  /usr/bin/sudo -H -E -u '#1000' mkdir -p "$shader_cache_path"
+  exec /usr/bin/sudo -H -E -u '#1000' env \
+    "PYTHONPATH=$HUMANOID_AGENT_WORKSPACE/src:$HUMANOID_AGENT_WORKSPACE/recording-runtime/$HUMANOID_AGENT_ATTEMPT_ID" \
+    "HUMANOID_AGENT_PROJECT_ROOT=$HUMANOID_AGENT_WORKSPACE" \
+    "OVRTX_SHADER_CACHE_PATH=$shader_cache_path" \
+    "$HUMANOID_AGENT_WORKSPACE/.venv/bin/python" -m humanoid_agent \
+    --reasoning-effort "$HUMANOID_AGENT_REASONING_EFFORT" \
+    --role "$HUMANOID_AGENT_ROLE" "${provider_arguments[@]}" \
+    --episode-kind "$HUMANOID_AGENT_EPISODE_KIND" \
+    --wall-seconds "$HUMANOID_AGENT_WALL_SECONDS" --api-request-timeout-seconds "$HUMANOID_AGENT_API_REQUEST_TIMEOUT_SECONDS" \
+    --api-retry-policy "$HUMANOID_AGENT_API_RETRY_POLICY" \
+    --diagnostic-camera on --diagnostic-phase-seconds "$HUMANOID_AGENT_DIAGNOSTIC_PHASE_SECONDS" \
+    --diagnostic-motion "$HUMANOID_AGENT_DIAGNOSTIC_MOTION" \
+    --task-scene "$HUMANOID_AGENT_WORKSPACE/$HUMANOID_AGENT_TASK_SCENE" \
+    --sonic-constants /home/ubuntu/webolt/runtime-assets/sonic_constants.json \
+    --operator-cpu-set "$first_cpu_index-$((first_cpu_index + 1))" \
+    --sdk-cpu-set "$first_cpu_index-$((first_cpu_index + 1))" \
+    --io-cpu-set "$first_cpu_index-$((first_cpu_index + 1))" \
+    --physics-cpu-set "$((first_cpu_index + 2))-$((first_cpu_index + 5))" \
+    --controller-cpu-set "$((first_cpu_index + 6))-$((first_cpu_index + 9))" \
+    --camera-cpu-set "$((first_cpu_index + 10))-$((first_cpu_index + 13))" \
+    "${decorative_arguments[@]}" \
+    --output "$HUMANOID_AGENT_WORKSPACE/artifacts/$HUMANOID_AGENT_ATTEMPT_ID"

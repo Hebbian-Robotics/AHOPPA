@@ -1,0 +1,6 @@
+{
+  "release": "initial-coverage-v1",
+  "scheduled_starts": 64,
+  "source_summary_sha256": "affe4a2076d72cd3bb059c289bda17b18f1b0d801b2d7dcc343fbf52678fa1fe",
+  "scope": "Episode-level derived summaries; machine-specific directory prefixes removed. Original records retained unchanged."
+}

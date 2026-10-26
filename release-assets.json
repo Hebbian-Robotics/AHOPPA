@@ -1,0 +1,17 @@
+{
+  "release_tag": "review-v1",
+  "frozen_runtime": {
+    "filename": "ahoppa-frozen-runtime-v3.tar.gz",
+    "url": "https://github.com/Hebbian-Robotics/AHOPPA/releases/download/review-v1/ahoppa-frozen-runtime-v3.tar.gz",
+    "sha256": "46fd73b52b30a5ee7ed487188211c4471e8d752e1aa76b61d8e033818f7fccbb"
+  },
+  "media": {
+    "filename": "ahoppa-project-media-v1.zip",
+    "url": "https://github.com/Hebbian-Robotics/AHOPPA/releases/download/review-v1/ahoppa-project-media-v1.zip",
+    "sha256": "456ea840b9de4ab41f47e93f9aa3b49ececc95cb115bc061f7d0e8d27b55985a",
+    "recordings": [
+      "684ea327-f0fd-5598-8d42-427d4486ada8",
+      "4eeec4e1-3f8b-54f6-9bcd-5220642c8893"
+    ]
+  }
+}

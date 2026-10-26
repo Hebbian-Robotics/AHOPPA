@@ -1,0 +1,327 @@
+"""Price retained API attempts without changing frozen experiment records."""
+
+from __future__ import annotations
+
+import hashlib
+import json
+from collections import defaultdict
+from decimal import Decimal
+from pathlib import Path
+from typing import Annotated, Any, Literal, Self
+
+from cyclopts import App
+from pydantic import Field, model_validator
+
+from humanoid_agent.analysis.summarize_shutdown_round import group_label, latex_table
+from humanoid_agent.artifact_io import atomic_json
+from humanoid_agent.logging_config import configure_logging
+from humanoid_agent.validated_types import ValidatedModel
+
+TokenCount = Annotated[int, Field(ge=0)]
+DollarAmount = Annotated[Decimal, Field(ge=0)]
+
+
+class ModelRate(ValidatedModel):
+    model: str
+    study_provider: str
+    api: Literal["openai", "anthropic", "google"]
+    input_per_million: DollarAmount
+    cached_input_per_million: DollarAmount
+    cache_write_short_per_million: DollarAmount
+    cache_write_long_per_million: DollarAmount
+    output_per_million: DollarAmount
+    maximum_input_tokens: Annotated[int, Field(gt=0)]
+    source_url: str
+    cache_source_url: str
+
+
+class PricingPolicy(ValidatedModel):
+    schema_version: Literal["api-token-pricing-v1"]
+    currency: Literal["USD"]
+    checked_on: str
+    models: list[ModelRate]
+
+
+class TokenUsage(ValidatedModel):
+    input_tokens: TokenCount
+    cached_input_tokens: TokenCount = 0
+    short_cache_write_tokens: TokenCount = 0
+    long_cache_write_tokens: TokenCount = 0
+    unspecified_cache_write_tokens: TokenCount = 0
+    output_tokens: TokenCount
+
+    @model_validator(mode="after")
+    def require_disjoint_input_categories(self) -> Self:
+        if self.uncached_input_tokens < 0:
+            raise ValueError("Cache reads and writes exceed total input tokens")
+        return self
+
+    @property
+    def uncached_input_tokens(self) -> int:
+        return self.input_tokens - self.cached_input_tokens - self.cache_write_tokens
+
+    @property
+    def cache_write_tokens(self) -> int:
+        return (
+            self.short_cache_write_tokens
+            + self.long_cache_write_tokens
+            + self.unspecified_cache_write_tokens
+        )
+
+
+class CostBounds(ValidatedModel):
+    minimum_usd: DollarAmount
+    maximum_usd: DollarAmount
+
+
+class EpisodeCost(ValidatedModel):
+    episode: str
+    group: str
+    condition: str
+    is_task_attempt: bool
+    recorded_calls: TokenCount
+    unreported_calls: TokenCount
+    input_tokens: TokenCount
+    cached_input_tokens: TokenCount
+    cache_write_tokens: TokenCount
+    output_tokens: TokenCount
+    cost: CostBounds
+
+
+class AggregateCost(ValidatedModel):
+    attempts: Annotated[int, Field(gt=0)]
+    recorded_calls: TokenCount
+    unreported_calls: TokenCount
+    total_cost: CostBounds
+    mean_cost_per_attempt: CostBounds
+
+
+class GroupCost(ValidatedModel):
+    group: str
+    label: str
+    task_attempts: AggregateCost
+    control: AggregateCost
+
+
+class CostReport(ValidatedModel):
+    schema_version: Literal["ahoppa-api-costs-v1"] = "ahoppa-api-costs-v1"
+    pricing: PricingPolicy
+    summary_sha256: str
+    record_manifest_sha256: str
+    recorded_calls: TokenCount
+    unreported_calls: TokenCount
+    groups: list[GroupCost]
+    episodes: list[EpisodeCost]
+
+
+def token_count(payload: dict[str, Any], field: str, *, default: int | None = None) -> int:
+    value = payload.get(field, default)
+    if type(value) is not int or value < 0:
+        raise ValueError(f"Missing or invalid token count: {field}")
+    return value
+
+
+def recorded_usage(response: dict[str, Any], rate: ModelRate) -> TokenUsage | None:
+    """Read native provider usage; normalized totals omit some billing categories."""
+    native = response.get("raw_response", response)
+    if native.get("model", response.get("model")) != rate.model:
+        raise ValueError("Recorded model differs from the pricing model")
+    usage = native.get("usage")
+    if usage is None:
+        return None
+    tier = native.get("service_tier", usage.get("service_tier"))
+    if tier not in {None, "default", "standard", "standard_only"}:
+        raise ValueError(f"Unpriced service tier: {tier}")
+    match rate.api:
+        case "openai":
+            details = usage.get("input_tokens_details") or {}
+            writes = token_count(details, "cache_write_tokens", default=0)
+            write_details = details.get("cache_write_tokens_details")
+            short_writes = long_writes = 0
+            if write_details is not None:
+                short_writes = token_count(write_details, "ttl_30m_tokens")
+                long_writes = token_count(write_details, "ttl_12h_tokens")
+                if short_writes + long_writes != writes:
+                    raise ValueError("Cache-write lifetime counts disagree with total writes")
+            result = TokenUsage(
+                input_tokens=token_count(usage, "input_tokens"),
+                cached_input_tokens=token_count(details, "cached_tokens", default=0),
+                short_cache_write_tokens=short_writes,
+                long_cache_write_tokens=long_writes,
+                unspecified_cache_write_tokens=writes - short_writes - long_writes,
+                output_tokens=token_count(usage, "output_tokens"),
+            )
+        case "anthropic":
+            cache_creation = usage.get("cache_creation") or {}
+            writes = token_count(usage, "cache_creation_input_tokens", default=0)
+            short_writes = token_count(cache_creation, "ephemeral_5m_input_tokens", default=0)
+            long_writes = token_count(cache_creation, "ephemeral_1h_input_tokens", default=0)
+            if short_writes + long_writes > writes:
+                raise ValueError("Cache-write lifetime counts exceed total writes")
+            cached_input = token_count(usage, "cache_read_input_tokens", default=0)
+            result = TokenUsage(
+                input_tokens=token_count(usage, "input_tokens") + cached_input + writes,
+                cached_input_tokens=cached_input,
+                short_cache_write_tokens=short_writes,
+                long_cache_write_tokens=long_writes,
+                unspecified_cache_write_tokens=writes - short_writes - long_writes,
+                output_tokens=token_count(usage, "output_tokens"),
+            )
+        case "google":
+            if token_count(usage, "total_tool_use_tokens", default=0):
+                raise ValueError("Hosted tool usage needs separate pricing")
+            result = TokenUsage(
+                input_tokens=token_count(usage, "total_input_tokens"),
+                cached_input_tokens=token_count(usage, "total_cached_tokens", default=0),
+                output_tokens=token_count(usage, "total_output_tokens")
+                + token_count(usage, "total_thought_tokens", default=0),
+            )
+    if result.input_tokens > rate.maximum_input_tokens:
+        raise ValueError("Request exceeds the context length covered by the recorded rate")
+    return result
+
+
+def price_usage(usage: TokenUsage, rate: ModelRate) -> CostBounds:
+    known_cost = (
+        usage.uncached_input_tokens * rate.input_per_million
+        + usage.cached_input_tokens * rate.cached_input_per_million
+        + usage.short_cache_write_tokens * rate.cache_write_short_per_million
+        + usage.long_cache_write_tokens * rate.cache_write_long_per_million
+        + usage.output_tokens * rate.output_per_million
+    )
+    write_rates = (rate.cache_write_short_per_million, rate.cache_write_long_per_million)
+    return CostBounds(
+        minimum_usd=(known_cost + usage.unspecified_cache_write_tokens * min(write_rates))
+        / 1_000_000,
+        maximum_usd=(known_cost + usage.unspecified_cache_write_tokens * max(write_rates))
+        / 1_000_000,
+    )
+
+
+def aggregate_costs(episodes: list[EpisodeCost]) -> AggregateCost:
+    if not episodes:
+        raise ValueError("Cannot report a mean cost without scheduled attempts")
+    minimum = sum((episode.cost.minimum_usd for episode in episodes), Decimal(0))
+    maximum = sum((episode.cost.maximum_usd for episode in episodes), Decimal(0))
+    return AggregateCost(
+        attempts=len(episodes),
+        recorded_calls=sum(episode.recorded_calls for episode in episodes),
+        unreported_calls=sum(episode.unreported_calls for episode in episodes),
+        total_cost=CostBounds(minimum_usd=minimum, maximum_usd=maximum),
+        mean_cost_per_attempt=CostBounds(
+            minimum_usd=minimum / len(episodes), maximum_usd=maximum / len(episodes)
+        ),
+    )
+
+
+def main(summary_path: Path, /, *, episodes_root: Path, pricing: Path, output: Path) -> None:
+    """Write JSON cost evidence and a LaTeX results table from retained API attempts."""
+    summary = json.loads(summary_path.read_text())
+    policy = PricingPolicy.model_validate_json(pricing.read_text())
+    rates_by_model = {rate.model: rate for rate in policy.models}
+    record_manifest = hashlib.sha256()
+    episode_costs = []
+    seen_episodes: set[str] = set()
+    for row in summary["episodes"]:
+        episode_name = Path(row["directory"]).name
+        if episode_name in seen_episodes:
+            raise ValueError(f"Repeated scheduled episode: {episode_name}")
+        seen_episodes.add(episode_name)
+        operator_directory = episodes_root / episode_name / "operator"
+        configuration_path = operator_directory / "operator-configuration.json"
+        configuration = json.loads(configuration_path.read_text())
+        if configuration.get("requested_service_tier") != "standard":
+            raise ValueError("Cost policy covers Standard service only")
+        rate = rates_by_model[configuration["model"]]
+        if row["provider"] != rate.study_provider:
+            raise ValueError("Episode provider differs from the priced model")
+        record_manifest.update(hashlib.sha256(configuration_path.read_bytes()).digest())
+        usage_records = []
+        bounds = []
+        unreported_calls = 0
+        for timing_path in sorted(operator_directory.glob("*/model.attempt-*.timing.json")):
+            timing = json.loads(timing_path.read_text())
+            record_manifest.update(hashlib.sha256(timing_path.read_bytes()).digest())
+            response_path = timing_path.with_name(
+                timing_path.name.removesuffix(".timing.json") + ".response.json"
+            )
+            if not response_path.exists():
+                if timing["state"] == "received":
+                    raise ValueError(f"Received response is missing: {response_path}")
+                unreported_calls += 1
+                continue
+            response_bytes = response_path.read_bytes()
+            record_manifest.update(hashlib.sha256(response_bytes).digest())
+            usage = recorded_usage(json.loads(response_bytes), rate)
+            if usage is None:
+                unreported_calls += 1
+                continue
+            usage_records.append(usage)
+            bounds.append(price_usage(usage, rate))
+        episode_costs.append(
+            EpisodeCost(
+                episode=episode_name,
+                group=row["group"],
+                condition=row["condition"],
+                is_task_attempt=row["requires_manipulation"],
+                recorded_calls=len(usage_records),
+                unreported_calls=unreported_calls,
+                input_tokens=sum(usage.input_tokens for usage in usage_records),
+                cached_input_tokens=sum(usage.cached_input_tokens for usage in usage_records),
+                cache_write_tokens=sum(usage.cache_write_tokens for usage in usage_records),
+                output_tokens=sum(usage.output_tokens for usage in usage_records),
+                cost=CostBounds(
+                    minimum_usd=sum((bound.minimum_usd for bound in bounds), Decimal(0)),
+                    maximum_usd=sum((bound.maximum_usd for bound in bounds), Decimal(0)),
+                ),
+            )
+        )
+    grouped: dict[str, list[EpisodeCost]] = defaultdict(list)
+    for episode in episode_costs:
+        grouped[episode.group].append(episode)
+    provider_order = {rate.study_provider: index for index, rate in enumerate(policy.models)}
+    ordered_groups = sorted(
+        grouped,
+        key=lambda group: (provider_order[group.partition("-")[0]], group.endswith("high")),
+    )
+    report = CostReport(
+        pricing=policy,
+        summary_sha256=hashlib.sha256(summary_path.read_bytes()).hexdigest(),
+        record_manifest_sha256=record_manifest.hexdigest(),
+        recorded_calls=sum(episode.recorded_calls for episode in episode_costs),
+        unreported_calls=sum(episode.unreported_calls for episode in episode_costs),
+        groups=[
+            GroupCost(
+                group=group,
+                label=group_label(group),
+                task_attempts=aggregate_costs(
+                    [episode for episode in grouped[group] if episode.is_task_attempt]
+                ),
+                control=aggregate_costs(
+                    [episode for episode in grouped[group] if not episode.is_task_attempt]
+                ),
+            )
+            for group in ordered_groups
+        ],
+        episodes=episode_costs,
+    )
+    output.parent.mkdir(parents=True, exist_ok=True)
+    atomic_json(output, report.model_dump(mode="json"))
+    cost_columns = {
+        group.group: (
+            group.task_attempts.mean_cost_per_attempt.minimum_usd,
+            group.task_attempts.mean_cost_per_attempt.maximum_usd,
+            group.task_attempts.unreported_calls,
+        )
+        for group in report.groups
+    }
+    output.with_suffix(".tex").write_text(
+        latex_table(
+            {group: summary["providers"][group] for group in ordered_groups}, api_costs=cost_columns
+        )
+    )
+
+
+if __name__ == "__main__":
+    configure_logging()
+    App(default_command=main, help=__doc__, suppress_keyboard_interrupt=False)()

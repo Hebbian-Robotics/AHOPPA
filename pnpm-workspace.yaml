@@ -1,0 +1,38 @@
+# Exact existing-version exceptions preserve the viewer and documentation tools.
+minimumReleaseAge: 10080
+minimumReleaseAgeExclude:
+- '@oxc-project/types@0.154.0'
+- '@rolldown/binding-android-arm-eabi@1.2.14'
+- '@rolldown/binding-android-arm64@1.2.14'
+- '@rolldown/binding-darwin-arm64@1.2.14'
+- '@rolldown/binding-darwin-x64@1.2.14'
+- '@rolldown/binding-freebsd-x64@1.2.14'
+- '@rolldown/binding-linux-arm-gnueabihf@1.2.14'
+- '@rolldown/binding-linux-arm64-gnu@1.2.14'
+- '@rolldown/binding-linux-arm64-musl@1.2.14'
+- '@rolldown/binding-linux-ppc64-gnu@1.2.14'
+- '@rolldown/binding-linux-s390x-gnu@1.2.14'
+- '@rolldown/binding-linux-x64-gnu@1.2.14'
+- '@rolldown/binding-linux-x64-musl@1.2.14'
+- '@rolldown/binding-openharmony-arm64@1.2.14'
+- '@rolldown/binding-win32-arm64-msvc@1.2.14'
+- '@rolldown/binding-win32-x64-msvc@1.2.14'
+- '@rolldown/pluginutils@1.0.1'
+- '@tanstack/query-core@5.104.4'
+- '@tanstack/react-query@5.104.4'
+- '@videojs/core@10.1.0'
+- '@videojs/element@10.1.0'
+- '@videojs/html@10.1.0'
+- '@videojs/media@10.1.0'
+- '@videojs/native-hls-video@10.1.0'
+- '@videojs/spf@10.1.0'
+- '@videojs/store@10.1.0'
+- '@videojs/utils@10.1.0'
+- '@vitejs/plugin-react@6.1.2'
+- argparse@3.0.3
+- react-dom@19.3.1
+- react@19.3.1
+- rolldown@1.2.14
+- vite@8.3.4
+allowBuilds:
+  esbuild: true

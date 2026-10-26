@@ -1,0 +1,332 @@
+@misc{embodiedfirstexam2026,
+  title = {Embodied First Exam},
+  author = {Wang, Kangrui and Chen, Changhe and Wang, Qineng and Zhang, Pingyue and Gui, Chi and Wang, Feishi and Chen, Canyu and Xiao, Wenli and Huang, Xiaoyu and Zhang, Tonghe and Li, Linjie and Sun, Yiyou and Deng, Mingkai and Hou, Jinyu and Xing, Eric P. and Yao, Huaxiu and Fan, Zhiwen and Liu, Yuejiang and Wu, Jiajun and Zhu, Yuke and Shi, Guanya and Zhang, Ruohan and Li, Manling},
+  year = {2026},
+  url = {https://github.com/mll-lab-nu/embodied-first-exam},
+  annote = {Software and project release, announced October 19, 2026. Implementation reviewed at revision ce96d0f0ad5ae48c818deb1ad770cf5d89abb08b.}
+}
+
+@inproceedings{sayplan2023,
+  title = {{SayPlan}: Grounding Large Language Models using {3D} Scene Graphs for Scalable Robot Task Planning},
+  author = {Rana, Krishan and Haviland, Jesse and Garg, Sourav and Abou-Chakra, Jad and Reid, Ian and Suenderhauf, Niko},
+  booktitle = {Proceedings of The 7th Conference on Robot Learning},
+  series = {Proceedings of Machine Learning Research},
+  volume = {229},
+  pages = {23--72},
+  year = {2023},
+  publisher = {PMLR},
+  url = {https://proceedings.mlr.press/v229/rana23a.html},
+  annote = {Metadata checked against the publisher's BibTeX on October 23, 2026. Uses hierarchical scene graphs and a classical path planner; not an interface adopted by AHOPPA.}
+}
+
+@manual{siemens2015localinterface,
+  title = {{SIPROCESS GA700}: Operating with the Local User Interface},
+  author = {{Siemens AG}},
+  organization = {Siemens AG},
+  year = {2015},
+  number = {A5E31930478-03},
+  url = {https://support.industry.siemens.com/cs/attachments/109478692/A5E31930478-03_SIPROCESS_GA700_LUI_BHB_en_en-US.pdf},
+  annote = {Manufacturer operating manual, May 2015. The message-acknowledgement section states that messages remain pending while the underlying cause persists. This is an industrial workflow reference, not a robotics benchmark or safety standard.}
+}
+
+@manual{nvidia2026warehouseassets,
+  title = {Environment Assets},
+  author = {{NVIDIA}},
+  organization = {NVIDIA},
+  year = {2026},
+  url = {https://docs.isaacsim.omniverse.nvidia.com/latest/assets/usd_assets_environments.html},
+  annote = {Official Isaac Sim asset catalogue, checked October 23, 2026. Lists the Small Warehouse USD at Isaac/Environments/Simple_Warehouse/warehouse.usd. Catalogue availability does not establish compatibility with the pinned Newton runtime.}
+}
+
+@manual{isaaclab2026cabinet,
+  title = {Available Environments: Isaac-Open-Drawer-Franka-v0},
+  author = {{Isaac Lab Project Developers}},
+  year = {2026},
+  url = {https://isaac-sim.github.io/IsaacLab/main/source/overview/environments.html},
+  annote = {Official environment catalogue, checked October 24, 2026. The pinned runtime's cabinet configuration (isaaclab_tasks/core/cabinet/cabinet_env_cfg.py at e3f7d9f) spawns NVIDIA's Sektion cabinet USD; AHOPPA reuses that articulation configuration, not the Franka task's policy, observations or rewards.}
+}
+
+@manual{nvidia2026simready,
+  title = {{SimReady} Assets},
+  author = {{NVIDIA}},
+  organization = {NVIDIA},
+  year = {2026},
+  url = {https://huggingface.co/datasets/nvidia/simready-assets},
+  annote = {SimReady Central asset dataset, revision 524747d9b5e1f21b5b18b56041788c01d745f1a1, CC-BY-4.0; checked October 24, 2026. AHOPPA uses storage_locker_double_bench_b03 as visual-only geometry with box colliders.}
+}
+
+@manual{nvidia2026assetlicense,
+  title = {{NVIDIA Isaac Sim} Additional Software and Materials License},
+  author = {{NVIDIA}},
+  organization = {NVIDIA},
+  year = {2025},
+  url = {https://www.nvidia.com/en-us/agreements/enterprise-software/isaac-sim-additional-software-and-materials-license/},
+  annote = {License covering Isaac Sim's 3D models and textures, last modified June 9, 2025; checked October 24, 2026. The room and cabinet assets are runtime dependencies and are not redistributed in the repository.}
+}
+
+@manual{nvidia2026conveyorassets,
+  title = {Conveyor Belt Utility},
+  author = {{NVIDIA}},
+  organization = {NVIDIA},
+  year = {2026},
+  url = {https://docs.isaacsim.omniverse.nvidia.com/6.1.0/assets/asset_utilities/ext_isaacsim_asset_gen_conveyor.html},
+  annote = {Official Isaac Sim 6.1 documentation, checked October 23, 2026. Lists prebuilt conveyor USD pieces under Isaac/Props/Conveyors. Its conveyor extension is not evidence of Newton conveyor-drive support.}
+}
+
+@manual{rockwell2026hmi,
+  title = {Human Machine Interface},
+  author = {{Rockwell Automation}},
+  organization = {Rockwell Automation},
+  year = {2026},
+  url = {https://www.rockwellautomation.com/en-us/products/hardware/hmi.html},
+  annote = {Manufacturer product documentation, checked October 24, 2026. Describes panel-mounted machine interfaces and remote access. Establishes available interface categories, not deployment prevalence or a requirement for equipment-mounted displays.}
+}
+
+@article{rlbench2020,
+  title = {{RLBench}: The Robot Learning Benchmark \& Learning Environment},
+  author = {James, Stephen and Ma, Zicong and Rovick Arrojo, David and Davison, Andrew J.},
+  journal = {IEEE Robotics and Automation Letters},
+  year = {2020},
+  url = {https://github.com/stepjam/RLBench},
+  annote = {Bibliographic fields copied from the official repository citation on October 24, 2026. CloseDrawer implementation inspected at d4d8fc590f2810878d1491871a55d12a4e82b0da; uses a drawer joint success condition. This does not establish G1/SONIC feasibility or Newton compatibility.}
+}
+
+@misc{choi2026hugo,
+  title = {{HuGo}: {LLMs} as Whole-Body Policy Code Designers for Humanoid Loco-Manipulation},
+  author = {Choi, Seoyeon and Ye, Shizhao and Bui, Nicholas and Shrivastava, Aayushi and Ryu, Kanghyun and Tirumala, Dhruva and Wulfmeier, Markus and Mehr, Negar},
+  year = {2026},
+  eprint = {2609.30594},
+  archivePrefix = {arXiv},
+  primaryClass = {cs.RO},
+  url = {https://arxiv.org/abs/2609.30594},
+  annote = {Preprint; version 2, September 29, 2026. Author project page describes code as coming soon at the October 19 review.}
+}
+
+@article{sonic2026,
+  title = {{SONIC}: Supersizing motion tracking for natural humanoid whole-body control},
+  author = {Luo, Zhengyi and Yuan, Ye and Wang, Tingwu and Li, Chenran and Casta{\~n}eda, Fernando and Chen, Sirui and Cao, Zi-Ang and Li, Jiefeng and Minor, David and Ben, Qingwei and Park, Jinhyung and Sami, David and Wang, Zi and Da, Xingye and Ding, Runyu and Hogg, Cyrus and Song, Lina and Lim, Edy and Jeong, Eugene and He, Tairan and Xue, Haoru and Xiao, Wenli and Yuen, Simon and Kautz, Jan and Chang, Yan and Iqbal, Umar and Fan, Linxi and Zhu, Yuke},
+  journal = {Science Robotics},
+  volume = {11},
+  number = {117},
+  pages = {eaed4592},
+  year = {2026},
+  doi = {10.1126/scirobotics.aed4592},
+  url = {https://nvlabs.github.io/GEAR-SONIC/},
+  annote = {Bibliographic metadata checked against the author project page on October 22, 2026.}
+}
+
+@misc{anybody2026,
+      title={{AnyBody: Free-Form Whole-Body Humanoid Control from Arbitrary Keypoint Guidance}},
+      author={Shuning Li and Sikai Li and Jiachen Li and Mingyu Ding},
+      year={2026},
+      eprint={2606.29209},
+      archivePrefix={arXiv},
+      primaryClass={cs.RO},
+      url={https://arxiv.org/abs/2606.29209},
+}
+
+@misc{aspire2026,
+      title={{ASPIRE: Agentic /Skills Discovery for Robotics}},
+      author={Runyu Lu and Yubo Wu and Ethan Kou and Haotian Lin and Letian Fu and Wenli Xiao and Ajay Mandlekar and Yinzhen Xu and Guanya Shi and Ken Goldberg and Ang Chen and Mosharaf Chowdhury and Jan Kautz and Yuke Zhu and Linxi "Jim" Fan and Guanzhi Wang},
+      year={2026},
+      eprint={2607.00272},
+      archivePrefix={arXiv},
+      primaryClass={cs.RO},
+      url={https://arxiv.org/abs/2607.00272},
+}
+
+@misc{codeaspolicies2022,
+      title={{Code as Policies: Language Model Programs for Embodied Control}},
+      author={Jacky Liang and Wenlong Huang and Fei Xia and Peng Xu and Karol Hausman and Brian Ichter and Pete Florence and Andy Zeng},
+      year={2023},
+      eprint={2209.07753},
+      archivePrefix={arXiv},
+      primaryClass={cs.RO},
+      url={https://arxiv.org/abs/2209.07753},
+}
+
+@misc{echo2026,
+      title={{ECHO: Edge-Cloud Humanoid Orchestration for Language-to-Motion Control}},
+      author={Haozhe Jia and Jianfei Song and Yuan Zhang and Honglei Jin and Youcheng Fan and Wenshuo Chen and Wei Zhang and Yutao Yue},
+      year={2026},
+      eprint={2603.16188},
+      archivePrefix={arXiv},
+      primaryClass={cs.CV},
+      url={https://arxiv.org/abs/2603.16188},
+}
+
+@misc{enpire2026,
+      title={{ENPIRE: Agentic Robot Policy Self-Improvement in the Real World}},
+      author={Wenli Xiao and Jia Xie and Tonghe Zhang and Haotian Lin and Letian "Max" Fu and Haoru Xue and Jalen Lu and Yi Yang and Cunxi Dai and Zi Wang and Jimmy Wu and Guanzhi Wang and S. Shankar Sastry and Ken Goldberg and Linxi "Jim" Fan and Yuke Zhu and Guanya Shi},
+      year={2026},
+      eprint={2606.19980},
+      archivePrefix={arXiv},
+      primaryClass={cs.AI},
+      url={https://arxiv.org/abs/2606.19980},
+}
+
+@misc{gentrack2026,
+      title={{GenTrack: Physical Alignment for Robot-Native Motion Generation and Zero-Shot Humanoid Tracking}},
+      author={Zeyu Ling and Xinyao Yu and Renye Yan and Jikang Cheng and Zhanke Wang and Qing Shuai and Changqing Zou},
+      year={2026},
+      eprint={2608.01410},
+      archivePrefix={arXiv},
+      primaryClass={cs.RO},
+      url={https://arxiv.org/abs/2608.01410},
+}
+
+@misc{innermonologue2022,
+      title={{Inner Monologue: Embodied Reasoning through Planning with Language Models}},
+      author={Wenlong Huang and Fei Xia and Ted Xiao and Harris Chan and Jacky Liang and Pete Florence and Andy Zeng and Jonathan Tompson and Igor Mordatch and Yevgen Chebotar and Pierre Sermanet and Noah Brown and Tomas Jackson and Linda Luu and Sergey Levine and Karol Hausman and Brian Ichter},
+      year={2022},
+      eprint={2207.05608},
+      archivePrefix={arXiv},
+      primaryClass={cs.RO},
+      url={https://arxiv.org/abs/2207.05608},
+}
+
+@misc{isaaclab2025,
+      title={{Isaac Lab: A GPU-Accelerated Simulation Framework for Multi-Modal Robot Learning}},
+      author={Mayank Mittal and Pascal Roth and James Tigue and Antoine Richard and Octi Zhang and Peter Du and Antonio Serrano-Muñoz and Xinjie Yao and René Zurbrügg and Nikita Rudin and Lukasz Wawrzyniak and Milad Rakhsha and Alain Denzler and Eric Heiden and Ales Borovicka and Ossama Ahmed and Iretiayo Akinola and Abrar Anwar and Mark T. Carlson and Ji Yuan Feng and Animesh Garg and Renato Gasoto and Lionel Gulich and Yijie Guo and M. Gussert and Alex Hansen and Mihir Kulkarni and Chenran Li and Wei Liu and Viktor Makoviychuk and Grzegorz Malczyk and Hammad Mazhar and Masoud Moghani and Adithyavairavan Murali and Michael Noseworthy and Alexander Poddubny and Nathan Ratliff and Welf Rehberg and Clemens Schwarke and Ritvik Singh and James Latham Smith and Bingjie Tang and Ruchik Thaker and Matthew Trepte and Karl Van Wyk and Fangzhou Yu and Alex Millane and Vikram Ramasamy and Remo Steiner and Sangeeta Subramanian and Clemens Volk and CY Chen and Neel Jawale and Ashwin Varghese Kuruttukulam and Michael A. Lin and Ajay Mandlekar and Karsten Patzwaldt and John Welsh and Huihua Zhao and Fatima Anes and Jean-Francois Lafleche and Nicolas Moënne-Loccoz and Soowan Park and Rob Stepinski and Dirk Van Gelder and Chris Amevor and Jan Carius and Jumyung Chang and Anka He Chen and Pablo de Heras Ciechomski and Gilles Daviet and Mohammad Mohajerani and Julia von Muralt and Viktor Reutskyy and Michael Sauter and Simon Schirm and Eric L. Shi and Pierre Terdiman and Kenny Vilella and Tobias Widmer and Gordon Yeoman and Tiffany Chen and Sergey Grizan and Cathy Li and Lotus Li and Connor Smith and Rafael Wiltz and Kostas Alexis and Yan Chang and David Chu and Linxi "Jim" Fan and Farbod Farshidian and Ankur Handa and Spencer Huang and Marco Hutter and Yashraj Narang and Soha Pouya and Shiwei Sheng and Yuke Zhu and Miles Macklin and Adam Moravanszky and Philipp Reist and Yunrong Guo and David Hoeller and Gavriel State},
+      year={2025},
+      eprint={2511.04831},
+      archivePrefix={arXiv},
+      primaryClass={cs.RO},
+      url={https://arxiv.org/abs/2511.04831},
+}
+
+@misc{maestro2025,
+      title={{Maestro: Orchestrating Robotics Modules with Vision-Language Models for Zero-Shot Generalist Robots}},
+      author={Junyao Shi and Rujia Yang and Kaitian Chao and Selina Bingqing Wan and Yifei Shao and Jiahui Lei and Jianing Qian and Long Le and Pratik Chaudhari and Kostas Daniilidis and Chuan Wen and Dinesh Jayaraman},
+      year={2025},
+      eprint={2511.00917},
+      archivePrefix={arXiv},
+      primaryClass={cs.RO},
+      url={https://arxiv.org/abs/2511.00917},
+}
+
+@misc{saycan2022,
+      title={{Do As I Can, Not As I Say: Grounding Language in Robotic Affordances}},
+      author={Michael Ahn and Anthony Brohan and Noah Brown and Yevgen Chebotar and Omar Cortes and Byron David and Chelsea Finn and Chuyuan Fu and Keerthana Gopalakrishnan and Karol Hausman and Alex Herzog and Daniel Ho and Jasmine Hsu and Julian Ibarz and Brian Ichter and Alex Irpan and Eric Jang and Rosario Jauregui Ruano and Kyle Jeffrey and Sally Jesmonth and Nikhil J Joshi and Ryan Julian and Dmitry Kalashnikov and Yuheng Kuang and Kuang-Huei Lee and Sergey Levine and Yao Lu and Linda Luu and Carolina Parada and Peter Pastor and Jornell Quiambao and Kanishka Rao and Jarek Rettinghouse and Diego Reyes and Pierre Sermanet and Nicolas Sievers and Clayton Tan and Alexander Toshev and Vincent Vanhoucke and Fei Xia and Ted Xiao and Peng Xu and Sichun Xu and Mengyuan Yan and Andy Zeng},
+      year={2022},
+      eprint={2204.01691},
+      archivePrefix={arXiv},
+      primaryClass={cs.RO},
+      url={https://arxiv.org/abs/2204.01691},
+}
+
+@misc{voxposer2023,
+      title={{VoxPoser: Composable 3D Value Maps for Robotic Manipulation with Language Models}},
+      author={Wenlong Huang and Chen Wang and Ruohan Zhang and Yunzhu Li and Jiajun Wu and Li Fei-Fei},
+      year={2023},
+      eprint={2307.05973},
+      archivePrefix={arXiv},
+      primaryClass={cs.RO},
+      url={https://arxiv.org/abs/2307.05973},
+}
+
+@misc{homebody2026,
+  title = {{HomeBody}: A Humanoid That Explores, Remembers, and Acts on Its Own},
+  author = {Huh, Gio and Gu, Cayden and Truong, Takara E. and Liu, C. Karen and Tevet, Guy},
+  year = {2026},
+  url = {https://tml.stanford.edu/homebody/},
+  annote = {Author project and software release; camera/scene source inspected at c09fcf39468e7bab43d744458a53ef1b1265cd6b. No archival publication status inferred.}
+}
+
+@misc{newton2025,
+  title = {{Newton}: {GPU}-accelerated physics simulation for robotics and simulation research},
+  author = {{The Newton Contributors}},
+  year = {2025},
+  url = {https://github.com/newton-physics/newton},
+  annote = {Official CITATION.cff metadata checked October 23, 2026.}
+}
+
+@misc{fromw12026,
+      title={{FRoM-W1: Towards General Humanoid Whole-Body Control with Language Instructions}},
+      author={Peng Li and Zihan Zhuang and Yangfan Gao and Yi Dong and Sixian Li and Changhao Jiang and Shihan Dou and Zhiheng Xi and Enyu Zhou and Jixuan Huang and Hui Li and Jingjing Gong and Xingjun Ma and Tao Gui and Zuxuan Wu and Qi Zhang and Xuanjing Huang and Yu-Gang Jiang and Xipeng Qiu},
+      year={2026},
+      eprint={2601.12799},
+      archivePrefix={arXiv},
+      primaryClass={cs.RO},
+      url={https://arxiv.org/abs/2601.12799},
+}
+
+@misc{humanoidlla2026,
+      title={{Commanding Humanoid by Free-form Language: A Large Language Action Model with Unified Motion Vocabulary}},
+      author={Zhirui Liu and Kaiyang Ji and Ke Yang and Yahao Fan and Jingyi Yu and Ye Shi and Jingya Wang},
+      year={2026},
+      eprint={2511.22963},
+      archivePrefix={arXiv},
+      primaryClass={cs.RO},
+      url={https://arxiv.org/abs/2511.22963},
+}
+
+@misc{promptplanperform2024,
+      title={{Prompt, Plan, Perform: LLM-based Humanoid Control via Quantized Imitation Learning}},
+      author={Jingkai Sun and Qiang Zhang and Yiqun Duan and Xiaoyang Jiang and Chong Cheng and Renjing Xu},
+      year={2024},
+      eprint={2309.11359},
+      archivePrefix={arXiv},
+      primaryClass={cs.RO},
+      url={https://arxiv.org/abs/2309.11359},
+}
+
+@inproceedings{pivot2024,
+  title = {{PIVOT}: Iterative Visual Prompting Elicits Actionable Knowledge for {VLM}s},
+  author = {Nasiriany, Soroush and Xia, Fei and Yu, Wenhao and Xiao, Ted and Liang, Jacky and Dasgupta, Ishita and Xie, Annie and Driess, Danny and Wahid, Ayzaan and Xu, Zhuo and Vuong, Quan and Zhang, Tingnan and Lee, Tsang-Wei Edward and Lee, Kuang-Huei and Xu, Peng and Kirmani, Sean and Zhu, Yuke and Zeng, Andy and Hausman, Karol and Heess, Nicolas and Finn, Chelsea and Levine, Sergey and Ichter, Brian},
+  booktitle = {Proceedings of the 41st International Conference on Machine Learning},
+  series = {Proceedings of Machine Learning Research},
+  volume = {235},
+  pages = {37321--37341},
+  year = {2024},
+  publisher = {PMLR},
+  url = {https://proceedings.mlr.press/v235/nasiriany24a.html},
+  annote = {Metadata checked against the publisher's BibTeX on October 24, 2026.}
+}
+
+@inproceedings{rekep2025,
+  title = {ReKep: Spatio-Temporal Reasoning of Relational Keypoint Constraints for Robotic Manipulation},
+  author = {Huang, Wenlong and Wang, Chen and Li, Yunzhu and Zhang, Ruohan and Fei-Fei, Li},
+  booktitle = {Proceedings of The 8th Conference on Robot Learning},
+  series = {Proceedings of Machine Learning Research},
+  volume = {270},
+  pages = {4573--4602},
+  year = {2025},
+  publisher = {PMLR},
+  url = {https://proceedings.mlr.press/v270/huang25g.html},
+  annote = {Metadata checked against the publisher's BibTeX on October 24, 2026.}
+}
+
+@inproceedings{rt22023,
+  title = {RT-2: Vision-Language-Action Models Transfer Web Knowledge to Robotic Control},
+  author = {Zitkovich, Brianna and Yu, Tianhe and Xu, Sichun and Xu, Peng and Xiao, Ted and Xia, Fei and Wu, Jialin and Wohlhart, Paul and Welker, Stefan and Wahid, Ayzaan and Vuong, Quan and Vanhoucke, Vincent and Tran, Huong and Soricut, Radu and Singh, Anikait and Singh, Jaspiar and Sermanet, Pierre and Sanketi, Pannag R. and Salazar, Grecia and Ryoo, Michael S. and Reymann, Krista and Rao, Kanishka and Pertsch, Karl and Mordatch, Igor and Michalewski, Henryk and Lu, Yao and Levine, Sergey and Lee, Lisa and Lee, Tsang-Wei Edward and Leal, Isabel and Kuang, Yuheng and Kalashnikov, Dmitry and Julian, Ryan and Joshi, Nikhil J. and Irpan, Alex and Ichter, Brian and Hsu, Jasmine and Herzog, Alexander and Hausman, Karol and Gopalakrishnan, Keerthana and Fu, Chuyuan and Florence, Pete and Finn, Chelsea and Dubey, Kumar Avinava and Driess, Danny and Ding, Tianli and Choromanski, Krzysztof Marcin and Chen, Xi and Chebotar, Yevgen and Carbajal, Justice and Brown, Noah and Brohan, Anthony and Arenas, Montserrat Gonzalez and Han, Kehang},
+  booktitle = {Proceedings of The 7th Conference on Robot Learning},
+  series = {Proceedings of Machine Learning Research},
+  volume = {229},
+  pages = {2165--2183},
+  year = {2023},
+  publisher = {PMLR},
+  url = {https://proceedings.mlr.press/v229/zitkovich23a.html},
+  annote = {Metadata checked against the publisher's BibTeX on October 24, 2026.}
+}
+
+@misc{openai2026pricing,
+  author = {{OpenAI}},
+  title = {{API Pricing and Prompt Caching}},
+  year = {2026},
+  url = {https://developers.openai.com/api/docs/pricing}
+}
+
+@misc{anthropic2026pricing,
+  author = {{Anthropic}},
+  title = {{Claude Opus 5.5: Pricing}},
+  year = {2026},
+  url = {https://platform.claude.com/docs/en/models/opus-5-5/overview}
+}
+
+@misc{google2026pricing,
+  author = {{Google}},
+  title = {{Gemini API Pricing}},
+  year = {2026},
+  url = {https://ai.google.dev/gemini-api/docs/pricing}
+}

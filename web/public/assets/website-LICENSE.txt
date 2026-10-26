@@ -1,0 +1,30 @@
+Website attribution and licenses
+
+The AHOPPA presentation is adapted from the Beyond Dodge Rate website
+and the Nerfies project website (revision 657409a62d59a93163872c0e4921cf651b987810):
+https://github.com/nerfies/nerfies.github.io
+
+The template and adapted presentation are licensed under Creative Commons
+Attribution-ShareAlike 4.0 International:
+https://creativecommons.org/licenses/by-sa/4.0/
+
+Original Nerfies index.css is retained in web/template/nerfies.css. AHOPPA
+adapts the centered header, typography, section layouts, and affiliation branding
+from Beyond Dodge Rate while retaining its React experiment viewer.
+
+This license covers website presentation, not research records or other materials
+served alongside it. The Hebbian Robotics and Carnegie Mellon University names and logos identify
+author affiliations and are excluded from the Creative Commons license.
+
+The Carnegie Mellon University wordmark is reproduced from the university's
+official homepage SVG (https://www.cmu.edu/). Brand guidance:
+https://brand.cmu.edu/visual-identity/carnegie-mellon-trademarks/wordmarks
+
+The bundled Noto Sans font is licensed under the SIL Open Font License 1.1;
+see assets/Noto-Sans-OFL.txt.
+
+The PDF and GitHub icons are Font Awesome Free 6.7.2 by Fonticons, Inc.,
+copied from Beyond Dodge Rate with their original attribution comments.
+Copyright 2024 Fonticons, Inc. Icons are licensed under CC BY 4.0:
+https://fontawesome.com/license/free
+https://creativecommons.org/licenses/by/4.0/

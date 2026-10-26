@@ -1,0 +1,55 @@
+{
+  "episode": "artifacts/storage-comparison-v3/episodes/storage-cmp3-astra-low-open-a-d-r1",
+  "panels": [
+    {
+      "panel": "map",
+      "label": "Facility map",
+      "source": "artifacts/storage-comparison-v3/episodes/storage-cmp3-astra-low-open-a-d-r1/inputs/facility-map.png",
+      "sha256": "2f8993afcf826519ce14c8427cb4404ea3b2e9803c51ee960558df41643b8bbf",
+      "elapsed_wall_seconds": null
+    },
+    {
+      "panel": "feedback_005:onboard",
+      "label": "D open",
+      "source": "artifacts/storage-comparison-v3/episodes/storage-cmp3-astra-low-open-a-d-r1/operator/feedback_005/rgb.png",
+      "sha256": "1b4fa7e0d813a6242c35c3ee61d25c3834ac38f2f5fa218af5b5f8f95d0d0f0c",
+      "elapsed_wall_seconds": 97.64606764097698
+    },
+    {
+      "panel": "feedback_011:onboard",
+      "label": "D pushed shut",
+      "source": "artifacts/storage-comparison-v3/episodes/storage-cmp3-astra-low-open-a-d-r1/operator/feedback_011/rgb.png",
+      "sha256": "8f9d08315d4a4b388ca0782031b4ff1e759ba6ee3eea4e2c7e7c7a0fb7171822",
+      "elapsed_wall_seconds": 192.89341419696575
+    },
+    {
+      "panel": "feedback_022:onboard",
+      "label": "B closed, behind lockers",
+      "source": "artifacts/storage-comparison-v3/episodes/storage-cmp3-astra-low-open-a-d-r1/operator/feedback_022/rgb.png",
+      "sha256": "29c9e89caa1179b5e7fa0ff89786236a3984522faef860313868a7f3da1b4263",
+      "elapsed_wall_seconds": 349.6190703919856
+    },
+    {
+      "panel": "feedback_027:onboard",
+      "label": "A open, behind lockers",
+      "source": "artifacts/storage-comparison-v3/episodes/storage-cmp3-astra-low-open-a-d-r1/operator/feedback_027/rgb.png",
+      "sha256": "0228378c807fe75eb9da36f4748c51f952c1f5e8c9281365e1dc570aa0c3b4f5",
+      "elapsed_wall_seconds": 419.3151530990144
+    },
+    {
+      "panel": "feedback_040:onboard",
+      "label": "A pushed shut",
+      "source": "artifacts/storage-comparison-v3/episodes/storage-cmp3-astra-low-open-a-d-r1/operator/feedback_040/rgb.png",
+      "sha256": "41fdcc7f95e71e5de6c4e6d042ff11cd5754cf0e659451c8643ac988eda82c47",
+      "elapsed_wall_seconds": 635.0799122059834
+    },
+    {
+      "panel": "feedback_060:external",
+      "label": "Home, declared",
+      "source": "artifacts/storage-comparison-v3/episodes/storage-cmp3-astra-low-open-a-d-r1/operator/feedback_060/external.png",
+      "sha256": "ec1d1286f6efe5d88b2b030e87517adccc8512a6b9c22d590d86e7392fb822bd",
+      "elapsed_wall_seconds": 942.2797365339939
+    }
+  ],
+  "model_inputs_unmodified_except_resize": true
+}

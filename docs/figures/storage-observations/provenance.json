@@ -1,0 +1,24 @@
+{
+  "episode": "storage-cmp3-astra-low-open-a-d-r1",
+  "scope": "Unmodified model-input images already selected for the paper episode strip.",
+  "images": [
+    {
+      "file": "inspect-d.png",
+      "request": "feedback_005:onboard",
+      "elapsed_wall_seconds": 97.64606764097698,
+      "sha256": "1b4fa7e0d813a6242c35c3ee61d25c3834ac38f2f5fa218af5b5f8f95d0d0f0c"
+    },
+    {
+      "file": "close-d.png",
+      "request": "feedback_011:onboard",
+      "elapsed_wall_seconds": 192.89341419696575,
+      "sha256": "8f9d08315d4a4b388ca0782031b4ff1e759ba6ee3eea4e2c7e7c7a0fb7171822"
+    },
+    {
+      "file": "home.png",
+      "request": "feedback_060:external",
+      "elapsed_wall_seconds": 942.2797365339939,
+      "sha256": "ec1d1286f6efe5d88b2b030e87517adccc8512a6b9c22d590d86e7392fb822bd"
+    }
+  ]
+}

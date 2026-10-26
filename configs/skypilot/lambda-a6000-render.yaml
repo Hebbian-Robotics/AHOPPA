@@ -1,0 +1,112 @@
+name: humanoid-agent-replay-render
+
+# Offline pose replay of one recorded episode: no task physics or model calls.
+# sky jobs launch configs/skypilot/lambda-a6000-render.yaml --yes --detach-run \
+#   --name replay-NAME --env HUMANOID_AGENT_ATTEMPT_ID=replay-NAME-v1 \
+#   --env HUMANOID_AGENT_WORKSPACE=/home/ubuntu/humanoid-agent-storage-v1 \
+#   --env HUMANOID_AGENT_RENDER_EPISODE=storage-cmp-astra-low-open-c-r1
+
+resources:
+  infra: ssh/lambda-a6000
+  accelerators: A6000:1
+  cpus: 12
+  memory: 64
+  image_id: docker:ubuntu@sha256:0a9887931b0e38af2e3487ed39e29436b0535c4f3f52e57745baaf79d1898956
+
+# The workspace must be the episode's own frozen deployment, which holds the
+# episode under artifacts/. Renders are written to renders/<episode>.
+envs:
+  HUMANOID_AGENT_WORKSPACE: ''
+  HUMANOID_AGENT_ATTEMPT_ID: ''
+  HUMANOID_AGENT_RENDER_EPISODE: ''
+  HUMANOID_AGENT_RENDER_FRAMES_PER_SECOND: '20'
+
+config:
+  ssh:
+    pod_config:
+      spec:
+        containers:
+          - securityContext:
+              privileged: false
+              seccompProfile:
+                type: Unconfined
+              appArmorProfile:
+                type: Unconfined
+            env:
+              - name: NVIDIA_DRIVER_CAPABILITIES
+                value: compute,utility,graphics,video
+            volumeMounts:
+              - name: prepared-worker
+                mountPath: /home/ubuntu
+              - name: cuda-runtime
+                mountPath: /usr/lib/x86_64-linux-gnu/libcudart.so.12
+                readOnly: true
+        volumes:
+          - name: prepared-worker
+            hostPath:
+              path: /home/ubuntu
+              type: Directory
+          - name: cuda-runtime
+            hostPath:
+              path: /usr/lib/x86_64-linux-gnu/libcudart.so.12
+              type: File
+
+setup: |
+  set -euo pipefail
+  : "${HUMANOID_AGENT_WORKSPACE:?Supply the episode's frozen workspace}"
+  : "${HUMANOID_AGENT_ATTEMPT_ID:?Supply a fresh attempt ID for every submission}"
+  # Repair interrupted package configuration inside this job container only.
+  sudo dpkg --configure -a
+  sudo apt-get update -qq
+  sudo apt-get install -y --no-install-recommends \
+    ffmpeg git iproute2 libegl1 libgl1 libglib2.0-0 libglfw3 libgomp1 \
+    libsm6 libxext6 libxrender1 libsodium23 libpgm-5.3-0 libnorm1 \
+    procps sudo util-linux fonts-dejavu-core
+  test -x /home/ubuntu/webolt/.venv/bin/python
+  test -x /home/ubuntu/frontier-motion-newton-v1/IsaacLab/.venv/bin/python
+  if ! getent passwd 1000 > /dev/null; then
+    useradd --uid 1000 --no-create-home --home-dir /home/ubuntu --shell /bin/bash humanoid-agent
+  fi
+  test "$(getent passwd 1000 | cut -d: -f6)" = /home/ubuntu
+  nvidia-smi
+  cd "$HUMANOID_AGENT_WORKSPACE"
+  /usr/bin/sudo -H -E -u '#1000' env "UV_PROJECT_ENVIRONMENT=$HUMANOID_AGENT_WORKSPACE/.venv" \
+    "$HUMANOID_AGENT_WORKSPACE/uv" sync --frozen --no-dev
+  # The compositor's pinned recording packages, installed per attempt.
+  /usr/bin/sudo -H -E -u '#1000' "$HUMANOID_AGENT_WORKSPACE/uv" --no-config pip install \
+    --python /home/ubuntu/webolt/.venv/bin/python \
+    --target "$HUMANOID_AGENT_WORKSPACE/recording-runtime/$HUMANOID_AGENT_ATTEMPT_ID" --require-hashes --no-deps \
+    -r "$HUMANOID_AGENT_WORKSPACE/configs/recording-runtime-requirements.txt"
+
+run: |
+  set -euo pipefail
+  : "${HUMANOID_AGENT_RENDER_EPISODE:?Supply the episode directory name under artifacts/}"
+  test -f "$HUMANOID_AGENT_WORKSPACE/artifacts/$HUMANOID_AGENT_RENDER_EPISODE/episode.json"
+  test ! -e "$HUMANOID_AGENT_WORKSPACE/renders/$HUMANOID_AGENT_RENDER_EPISODE"
+  assigned_gpu_uuid=$(nvidia-smi --query-gpu=uuid --format=csv,noheader,nounits)
+  case "$assigned_gpu_uuid" in GPU-*) ;; *) exit 2 ;; esac
+  # NVML renumbers an isolated device to index 0. Its driver minor number
+  # retains the host identity used by the fourteen-CPU role profile.
+  host_gpu_minor_number=$(nvidia-smi -q -x | "$HUMANOID_AGENT_WORKSPACE/.venv/bin/python" -c '
+  import sys
+  from xml.etree import ElementTree
+  devices = ElementTree.fromstring(sys.stdin.read()).findall("gpu")
+  if len(devices) != 1:
+      raise ValueError("An episode job requires exactly one isolated GPU")
+  print(devices[0].findtext("minor_number"))
+  ')
+  [[ "$host_gpu_minor_number" =~ ^[0-9]+$ ]]
+  first_cpu_index=$((host_gpu_minor_number * 14))
+  test "$((first_cpu_index + 13))" -lt "$(getconf _NPROCESSORS_ONLN)"
+  cd "$HUMANOID_AGENT_WORKSPACE"
+  shader_cache_path="/home/ubuntu/.cache/humanoid-agent/ovrtx/$assigned_gpu_uuid"
+  /usr/bin/sudo -H -E -u '#1000' mkdir -p "$shader_cache_path"
+  exec /usr/bin/sudo -H -E -u '#1000' env \
+    "PYTHONPATH=$HUMANOID_AGENT_WORKSPACE/src:$HUMANOID_AGENT_WORKSPACE/recording-runtime/$HUMANOID_AGENT_ATTEMPT_ID" \
+    "HUMANOID_AGENT_PROJECT_ROOT=$HUMANOID_AGENT_WORKSPACE" "OVRTX_SHADER_CACHE_PATH=$shader_cache_path" \
+    taskset -c "$first_cpu_index-$((first_cpu_index + 13))" \
+    "$HUMANOID_AGENT_WORKSPACE/.venv/bin/python" -m humanoid_agent --role render \
+    --episode-directory "$HUMANOID_AGENT_WORKSPACE/artifacts/$HUMANOID_AGENT_RENDER_EPISODE" \
+    --output "$HUMANOID_AGENT_WORKSPACE/renders/$HUMANOID_AGENT_RENDER_EPISODE" \
+    --frames-per-second "$HUMANOID_AGENT_RENDER_FRAMES_PER_SECOND" \
+    --sonic-constants /home/ubuntu/webolt/runtime-assets/sonic_constants.json

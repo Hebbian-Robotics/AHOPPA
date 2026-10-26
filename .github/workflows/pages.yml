@@ -1,0 +1,68 @@
+name: Build and publish project page
+
+on:
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: Publish the reviewed page
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: project-pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: blacksmith-4vcpu-ubuntu-2404
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      pages: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: '24'
+      - uses: pnpm/action-setup@f40ffcd9367d9f12939873eb1018b921a783ffaa # v4
+        with:
+          version: 12.11.2
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm check
+      - name: Build for the repository Pages path
+        run: HUMANOID_AGENT_SITE_BASE="/${GITHUB_REPOSITORY##*/}/" pnpm exec vite build
+      - name: Download the reviewed media asset
+        shell: bash
+        run: |
+          set -euo pipefail
+          media_url=$(python3 -c 'import json; print(json.load(open("release-assets.json"))["media"]["url"])')
+          media_sha256=$(python3 -c 'import json; print(json.load(open("release-assets.json"))["media"]["sha256"])')
+          curl --fail --location --retry 3 "$media_url" --output /tmp/ahoppa-media.zip
+          printf '%s  /tmp/ahoppa-media.zip\n' "$media_sha256" | sha256sum --check -
+          unzip -q /tmp/ahoppa-media.zip -d web/dist
+      - name: Configure Pages
+        if: inputs.publish && github.event.repository.private == false
+        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
+      - name: Prepare site artifact
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: web/dist
+
+  deploy:
+    if: inputs.publish && github.event.repository.private == false
+    needs: build
+    runs-on: blacksmith-4vcpu-ubuntu-2404
+    timeout-minutes: 10
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy the reviewed site
+        id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1

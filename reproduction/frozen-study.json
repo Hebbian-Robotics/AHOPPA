@@ -1,0 +1,72 @@
+{
+  "source_commit": "b1f28c3956a4f6880ca67a633a26425e4afe080b",
+  "seed": 20261025,
+  "condition_blocks": [
+    "open-B",
+    "open-D",
+    "none-open",
+    "open-A-B",
+    "open-A-D",
+    "open-A",
+    "open-C",
+    "open-B-C"
+  ],
+  "providers": [
+    "sol",
+    "astra",
+    "opus",
+    "gemini"
+  ],
+  "reasoning_efforts": [
+    "low",
+    "high"
+  ],
+  "wall_seconds": 1800.0,
+  "scene_sha256": {
+    "none-open": "a5c241cf6169bbea70583fd4726ab0dfbdbea9c780aa9f36c46ddf5d5207e397",
+    "open-A": "25c31be7f562eddab8f0bd23ab9cb8b2655b2c25290ec2e96293271c780687f7",
+    "open-A-B": "39368c810f3b45ab9be4e70500caa962de3421e15c6597d86367f1157962dc17",
+    "open-A-D": "31466afee0d026d72bb85a33bbc0e46f1c2547b9d8a076a80f0f6746fdc7704e",
+    "open-B": "8872c40f178924840637fbf9870f8b9d88847f5bbfb3293a498beec0a7ebc31e",
+    "open-B-C": "1752ff7b0516c8d4469a0f8b9d07e130af80c117172252fc21cc004f0d7450f2",
+    "open-C": "85bd8f9cefa648cadda26b78f9438326b025a320dddf115b810e735fddb716b9",
+    "open-D": "006754e7626a03db8a6942837807238953575d2101a5eb7a53aa0020fa9ff33d"
+  },
+  "protocol": {
+    "source_manifest_sha256": "7c4fac46cf5ac8458be3a2cf2a4d3caf310cc5afcf420c058d8b1cb362debcbc",
+    "scene_sha256": "31466afee0d026d72bb85a33bbc0e46f1c2547b9d8a076a80f0f6746fdc7704e",
+    "appearance_manifest_sha256": null,
+    "task_instruction_sha256": "3dd4eae2593d7e11da6a8fc980e088308197e396c9e3efa7d6736bd4f8f3bec0",
+    "facility_map_sha256": "2f8993afcf826519ce14c8427cb4404ea3b2e9803c51ee960558df41643b8bbf",
+    "wall_seconds": 1800.0,
+    "execution_topology": "single-robot",
+    "gpu_scheduling": "driver-default",
+    "sensor_protocol": "egocentric-rgbd-wrist-rgb-kinematics-depth-tools-v4",
+    "observation_interface_protocol": "paired-action-history-initial-reference-v2",
+    "recording_protocol": "webolt-recording-v1",
+    "recording_runtime_sha256": "5e85c595650a3e6818705c88c52a17571e636bf754a85fcd9e427c347b8f2340",
+    "command_protocol": "sonic-native-planner-v3",
+    "completion_protocol": "agent-declaration-then-independent-verification-v1",
+    "balance_contact_protocol": "ground-reaching-filtered-floor-contact-v2",
+    "clock_policy": "wall-clock-lag-v1",
+    "sonic_constants_sha256": "63eb8c87ba42d086afbc3d305a9920867d7d5a4e651a8e665cdd000e6b384285",
+    "robot_urdf_sha256": "6e107391d015ab27438026bb953b21ef8fa6a02305e65393985908941d7fd98d",
+    "exploratory_composite_rationale": null,
+    "reasoning_effort": "low",
+    "model_max_output_tokens": 12000,
+    "api_service_tier": "standard",
+    "api_request_timeout_seconds": 120.0,
+    "project_lock_sha256": "4061090894969a4bf0e75e38daf27dac9e71afb192e47de63d2731aa2f2d45e9",
+    "physics_lock_sha256": "2d39902630e1424ce00093d0576a2689b3606572f8b9a531330a8d8abeb1eb60"
+  },
+  "model_identifiers": {
+    "sol": "gpt-6.1-sol",
+    "astra": "gpt-6-astra",
+    "opus": "claude-opus-5-5",
+    "gemini": "gemini-4-argon"
+  },
+  "leashed_facing": true,
+  "recorded_source_files": 136,
+  "package_at_execution": "webolt",
+  "maintained_package": "humanoid_agent"
+}

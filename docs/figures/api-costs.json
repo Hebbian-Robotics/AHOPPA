@@ -1,0 +1,1334 @@
+{
+  "schema_version": "ahoppa-api-costs-v1",
+  "pricing": {
+    "schema_version": "api-token-pricing-v1",
+    "currency": "USD",
+    "checked_on": "2026-10-26",
+    "models": [
+      {
+        "model": "gpt-6-astra",
+        "study_provider": "astra",
+        "api": "openai",
+        "input_per_million": "10",
+        "cached_input_per_million": "1",
+        "cache_write_short_per_million": "12.5",
+        "cache_write_long_per_million": "25",
+        "output_per_million": "50",
+        "maximum_input_tokens": 272000,
+        "source_url": "https://developers.openai.com/api/docs/pricing",
+        "cache_source_url": "https://developers.openai.com/api/docs/guides/prompt-caching"
+      },
+      {
+        "model": "gpt-6.1-sol",
+        "study_provider": "sol",
+        "api": "openai",
+        "input_per_million": "2",
+        "cached_input_per_million": "0.1",
+        "cache_write_short_per_million": "2.5",
+        "cache_write_long_per_million": "5",
+        "output_per_million": "10",
+        "maximum_input_tokens": 272000,
+        "source_url": "https://developers.openai.com/api/docs/pricing",
+        "cache_source_url": "https://developers.openai.com/api/docs/guides/prompt-caching"
+      },
+      {
+        "model": "claude-opus-5-5",
+        "study_provider": "opus",
+        "api": "anthropic",
+        "input_per_million": "4",
+        "cached_input_per_million": "0.2",
+        "cache_write_short_per_million": "5",
+        "cache_write_long_per_million": "8",
+        "output_per_million": "20",
+        "maximum_input_tokens": 1000000,
+        "source_url": "https://platform.claude.com/docs/en/models/opus-5-5/overview",
+        "cache_source_url": "https://platform.claude.com/docs/en/models/opus-5-5/overview"
+      },
+      {
+        "model": "gemini-4-argon",
+        "study_provider": "gemini",
+        "api": "google",
+        "input_per_million": "2",
+        "cached_input_per_million": "0.1",
+        "cache_write_short_per_million": "0",
+        "cache_write_long_per_million": "0",
+        "output_per_million": "10",
+        "maximum_input_tokens": 1000000,
+        "source_url": "https://ai.google.dev/gemini-api/docs/pricing#gemini-4-argon",
+        "cache_source_url": "https://ai.google.dev/gemini-api/docs/pricing#gemini-4-argon"
+      }
+    ]
+  },
+  "summary_sha256": "affe4a2076d72cd3bb059c289bda17b18f1b0d801b2d7dcc343fbf52678fa1fe",
+  "record_manifest_sha256": "512c37bb4bffcd1c59576ab944e333530bcb7b4107c1e3719d76f4843f464378",
+  "recorded_calls": 3677,
+  "unreported_calls": 24,
+  "groups": [
+    {
+      "group": "astra-low",
+      "label": "GPT-6 Astra (low)",
+      "task_attempts": {
+        "attempts": 7,
+        "recorded_calls": 479,
+        "unreported_calls": 0,
+        "total_cost": {
+          "minimum_usd": "65.0791685",
+          "maximum_usd": "112.861531"
+        },
+        "mean_cost_per_attempt": {
+          "minimum_usd": "9.297024071428571428571428571",
+          "maximum_usd": "16.12307585714285714285714286"
+        }
+      },
+      "control": {
+        "attempts": 1,
+        "recorded_calls": 54,
+        "unreported_calls": 0,
+        "total_cost": {
+          "minimum_usd": "8.0499930",
+          "maximum_usd": "14.021143"
+        },
+        "mean_cost_per_attempt": {
+          "minimum_usd": "8.0499930",
+          "maximum_usd": "14.021143"
+        }
+      }
+    },
+    {
+      "group": "astra-high",
+      "label": "GPT-6 Astra (high)",
+      "task_attempts": {
+        "attempts": 7,
+        "recorded_calls": 448,
+        "unreported_calls": 0,
+        "total_cost": {
+          "minimum_usd": "53.5307630",
+          "maximum_usd": "86.109838"
+        },
+        "mean_cost_per_attempt": {
+          "minimum_usd": "7.647251857142857142857142857",
+          "maximum_usd": "12.30140542857142857142857143"
+        }
+      },
+      "control": {
+        "attempts": 1,
+        "recorded_calls": 15,
+        "unreported_calls": 0,
+        "total_cost": {
+          "minimum_usd": "1.6955715",
+          "maximum_usd": "2.754859"
+        },
+        "mean_cost_per_attempt": {
+          "minimum_usd": "1.6955715",
+          "maximum_usd": "2.754859"
+        }
+      }
+    },
+    {
+      "group": "sol-low",
+      "label": "GPT-6.1 Sol (low)",
+      "task_attempts": {
+        "attempts": 7,
+        "recorded_calls": 467,
+        "unreported_calls": 1,
+        "total_cost": {
+          "minimum_usd": "11.9962051",
+          "maximum_usd": "20.9440876"
+        },
+        "mean_cost_per_attempt": {
+          "minimum_usd": "1.713743585714285714285714286",
+          "maximum_usd": "2.992012514285714285714285714"
+        }
+      },
+      "control": {
+        "attempts": 1,
+        "recorded_calls": 4,
+        "unreported_calls": 1,
+        "total_cost": {
+          "minimum_usd": "0.1021031",
+          "maximum_usd": "0.1761556"
+        },
+        "mean_cost_per_attempt": {
+          "minimum_usd": "0.1021031",
+          "maximum_usd": "0.1761556"
+        }
+      }
+    },
+    {
+      "group": "sol-high",
+      "label": "GPT-6.1 Sol (high)",
+      "task_attempts": {
+        "attempts": 7,
+        "recorded_calls": 525,
+        "unreported_calls": 4,
+        "total_cost": {
+          "minimum_usd": "12.0351213",
+          "maximum_usd": "20.0323913"
+        },
+        "mean_cost_per_attempt": {
+          "minimum_usd": "1.719303042857142857142857143",
+          "maximum_usd": "2.861770185714285714285714286"
+        }
+      },
+      "control": {
+        "attempts": 1,
+        "recorded_calls": 27,
+        "unreported_calls": 0,
+        "total_cost": {
+          "minimum_usd": "0.5676300",
+          "maximum_usd": "0.9436475"
+        },
+        "mean_cost_per_attempt": {
+          "minimum_usd": "0.5676300",
+          "maximum_usd": "0.9436475"
+        }
+      }
+    },
+    {
+      "group": "opus-low",
+      "label": "Claude Opus 5.5 (low)",
+      "task_attempts": {
+        "attempts": 7,
+        "recorded_calls": 369,
+        "unreported_calls": 2,
+        "total_cost": {
+          "minimum_usd": "33.290008",
+          "maximum_usd": "33.290008"
+        },
+        "mean_cost_per_attempt": {
+          "minimum_usd": "4.755715428571428571428571429",
+          "maximum_usd": "4.755715428571428571428571429"
+        }
+      },
+      "control": {
+        "attempts": 1,
+        "recorded_calls": 67,
+        "unreported_calls": 0,
+        "total_cost": {
+          "minimum_usd": "6.252716",
+          "maximum_usd": "6.252716"
+        },
+        "mean_cost_per_attempt": {
+          "minimum_usd": "6.252716",
+          "maximum_usd": "6.252716"
+        }
+      }
+    },
+    {
+      "group": "opus-high",
+      "label": "Claude Opus 5.5 (high)",
+      "task_attempts": {
+        "attempts": 7,
+        "recorded_calls": 457,
+        "unreported_calls": 1,
+        "total_cost": {
+          "minimum_usd": "50.508092",
+          "maximum_usd": "50.508092"
+        },
+        "mean_cost_per_attempt": {
+          "minimum_usd": "7.215441714285714285714285714",
+          "maximum_usd": "7.215441714285714285714285714"
+        }
+      },
+      "control": {
+        "attempts": 1,
+        "recorded_calls": 48,
+        "unreported_calls": 0,
+        "total_cost": {
+          "minimum_usd": "5.191264",
+          "maximum_usd": "5.191264"
+        },
+        "mean_cost_per_attempt": {
+          "minimum_usd": "5.191264",
+          "maximum_usd": "5.191264"
+        }
+      }
+    },
+    {
+      "group": "gemini-low",
+      "label": "Gemini 4 Argon (low)",
+      "task_attempts": {
+        "attempts": 7,
+        "recorded_calls": 417,
+        "unreported_calls": 7,
+        "total_cost": {
+          "minimum_usd": "9.0450631",
+          "maximum_usd": "9.0450631"
+        },
+        "mean_cost_per_attempt": {
+          "minimum_usd": "1.292151871428571428571428571",
+          "maximum_usd": "1.292151871428571428571428571"
+        }
+      },
+      "control": {
+        "attempts": 1,
+        "recorded_calls": 9,
+        "unreported_calls": 1,
+        "total_cost": {
+          "minimum_usd": "0.1792307",
+          "maximum_usd": "0.1792307"
+        },
+        "mean_cost_per_attempt": {
+          "minimum_usd": "0.1792307",
+          "maximum_usd": "0.1792307"
+        }
+      }
+    },
+    {
+      "group": "gemini-high",
+      "label": "Gemini 4 Argon (high)",
+      "task_attempts": {
+        "attempts": 7,
+        "recorded_calls": 283,
+        "unreported_calls": 6,
+        "total_cost": {
+          "minimum_usd": "11.1292937",
+          "maximum_usd": "11.1292937"
+        },
+        "mean_cost_per_attempt": {
+          "minimum_usd": "1.5898991",
+          "maximum_usd": "1.5898991"
+        }
+      },
+      "control": {
+        "attempts": 1,
+        "recorded_calls": 8,
+        "unreported_calls": 1,
+        "total_cost": {
+          "minimum_usd": "0.3437105",
+          "maximum_usd": "0.3437105"
+        },
+        "mean_cost_per_attempt": {
+          "minimum_usd": "0.3437105",
+          "maximum_usd": "0.3437105"
+        }
+      }
+    }
+  ],
+  "episodes": [
+    {
+      "episode": "storage-cmp3-sol-low-none-open-r1",
+      "group": "sol-low",
+      "condition": "none-open",
+      "is_task_attempt": false,
+      "recorded_calls": 4,
+      "unreported_calls": 1,
+      "input_tokens": 31999,
+      "cached_input_tokens": 2366,
+      "cache_write_tokens": 29621,
+      "output_tokens": 2779,
+      "cost": {
+        "minimum_usd": "0.1021031",
+        "maximum_usd": "0.1761556"
+      }
+    },
+    {
+      "episode": "storage-cmp3-astra-low-none-open-r1",
+      "group": "astra-low",
+      "condition": "none-open",
+      "is_task_attempt": false,
+      "recorded_calls": 54,
+      "unreported_calls": 0,
+      "input_tokens": 601527,
+      "cached_input_tokens": 123673,
+      "cache_write_tokens": 477692,
+      "output_tokens": 39071,
+      "cost": {
+        "minimum_usd": "8.0499930",
+        "maximum_usd": "14.021143"
+      }
+    },
+    {
+      "episode": "storage-cmp3-opus-low-none-open-r1",
+      "group": "opus-low",
+      "condition": "none-open",
+      "is_task_attempt": false,
+      "recorded_calls": 67,
+      "unreported_calls": 0,
+      "input_tokens": 1154344,
+      "cached_input_tokens": 0,
+      "cache_write_tokens": 0,
+      "output_tokens": 81767,
+      "cost": {
+        "minimum_usd": "6.252716",
+        "maximum_usd": "6.252716"
+      }
+    },
+    {
+      "episode": "storage-cmp3-gemini-low-none-open-r1",
+      "group": "gemini-low",
+      "condition": "none-open",
+      "is_task_attempt": false,
+      "recorded_calls": 9,
+      "unreported_calls": 1,
+      "input_tokens": 151214,
+      "cached_input_tokens": 85467,
+      "cache_write_tokens": 0,
+      "output_tokens": 3919,
+      "cost": {
+        "minimum_usd": "0.1792307",
+        "maximum_usd": "0.1792307"
+      }
+    },
+    {
+      "episode": "storage-cmp3-sol-low-open-a-b-r1",
+      "group": "sol-low",
+      "condition": "open-A-B",
+      "is_task_attempt": true,
+      "recorded_calls": 80,
+      "unreported_calls": 0,
+      "input_tokens": 904380,
+      "cached_input_tokens": 316940,
+      "cache_write_tokens": 587200,
+      "output_tokens": 47782,
+      "cost": {
+        "minimum_usd": "1.9779940",
+        "maximum_usd": "3.4459940"
+      }
+    },
+    {
+      "episode": "storage-cmp3-astra-low-open-a-b-r1",
+      "group": "astra-low",
+      "condition": "open-A-B",
+      "is_task_attempt": true,
+      "recorded_calls": 86,
+      "unreported_calls": 0,
+      "input_tokens": 972344,
+      "cached_input_tokens": 293909,
+      "cache_write_tokens": 678177,
+      "output_tokens": 55875,
+      "cost": {
+        "minimum_usd": "11.5674515",
+        "maximum_usd": "20.044664"
+      }
+    },
+    {
+      "episode": "storage-cmp3-opus-low-open-a-b-r1",
+      "group": "opus-low",
+      "condition": "open-A-B",
+      "is_task_attempt": true,
+      "recorded_calls": 20,
+      "unreported_calls": 1,
+      "input_tokens": 334511,
+      "cached_input_tokens": 0,
+      "cache_write_tokens": 0,
+      "output_tokens": 25469,
+      "cost": {
+        "minimum_usd": "1.847424",
+        "maximum_usd": "1.847424"
+      }
+    },
+    {
+      "episode": "storage-cmp3-gemini-low-open-a-b-r1",
+      "group": "gemini-low",
+      "condition": "open-A-B",
+      "is_task_attempt": true,
+      "recorded_calls": 83,
+      "unreported_calls": 1,
+      "input_tokens": 1821971,
+      "cached_input_tokens": 1028355,
+      "cache_write_tokens": 0,
+      "output_tokens": 56320,
+      "cost": {
+        "minimum_usd": "2.2532675",
+        "maximum_usd": "2.2532675"
+      }
+    },
+    {
+      "episode": "storage-cmp3-sol-low-open-a-d-r1",
+      "group": "sol-low",
+      "condition": "open-A-D",
+      "is_task_attempt": true,
+      "recorded_calls": 91,
+      "unreported_calls": 0,
+      "input_tokens": 1038204,
+      "cached_input_tokens": 450637,
+      "cache_write_tokens": 587294,
+      "output_tokens": 48712,
+      "cost": {
+        "minimum_usd": "2.0009647",
+        "maximum_usd": "3.4691997"
+      }
+    },
+    {
+      "episode": "storage-cmp3-astra-low-open-a-d-r1",
+      "group": "astra-low",
+      "condition": "open-A-D",
+      "is_task_attempt": true,
+      "recorded_calls": 85,
+      "unreported_calls": 0,
+      "input_tokens": 964842,
+      "cached_input_tokens": 332611,
+      "cache_write_tokens": 631976,
+      "output_tokens": 52964,
+      "cost": {
+        "minimum_usd": "10.8830610",
+        "maximum_usd": "18.782761"
+      }
+    },
+    {
+      "episode": "storage-cmp3-opus-low-open-a-d-r1",
+      "group": "opus-low",
+      "condition": "open-A-D",
+      "is_task_attempt": true,
+      "recorded_calls": 74,
+      "unreported_calls": 0,
+      "input_tokens": 1283269,
+      "cached_input_tokens": 0,
+      "cache_write_tokens": 0,
+      "output_tokens": 76517,
+      "cost": {
+        "minimum_usd": "6.663416",
+        "maximum_usd": "6.663416"
+      }
+    },
+    {
+      "episode": "storage-cmp3-gemini-low-open-a-d-r1",
+      "group": "gemini-low",
+      "condition": "open-A-D",
+      "is_task_attempt": true,
+      "recorded_calls": 10,
+      "unreported_calls": 1,
+      "input_tokens": 161996,
+      "cached_input_tokens": 49106,
+      "cache_write_tokens": 0,
+      "output_tokens": 10282,
+      "cost": {
+        "minimum_usd": "0.3335106",
+        "maximum_usd": "0.3335106"
+      }
+    },
+    {
+      "episode": "storage-cmp3-sol-low-open-a-r1",
+      "group": "sol-low",
+      "condition": "open-A",
+      "is_task_attempt": true,
+      "recorded_calls": 75,
+      "unreported_calls": 0,
+      "input_tokens": 843857,
+      "cached_input_tokens": 248601,
+      "cache_write_tokens": 595031,
+      "output_tokens": 48369,
+      "cost": {
+        "minimum_usd": "1.9965776",
+        "maximum_usd": "3.4841551"
+      }
+    },
+    {
+      "episode": "storage-cmp3-astra-low-open-a-r1",
+      "group": "astra-low",
+      "condition": "open-A",
+      "is_task_attempt": true,
+      "recorded_calls": 11,
+      "unreported_calls": 0,
+      "input_tokens": 110928,
+      "cached_input_tokens": 10647,
+      "cache_write_tokens": 100248,
+      "output_tokens": 8240,
+      "cost": {
+        "minimum_usd": "1.6760770",
+        "maximum_usd": "2.929177"
+      }
+    },
+    {
+      "episode": "storage-cmp3-opus-low-open-a-r1",
+      "group": "opus-low",
+      "condition": "open-A",
+      "is_task_attempt": true,
+      "recorded_calls": 50,
+      "unreported_calls": 0,
+      "input_tokens": 864873,
+      "cached_input_tokens": 0,
+      "cache_write_tokens": 0,
+      "output_tokens": 50897,
+      "cost": {
+        "minimum_usd": "4.477432",
+        "maximum_usd": "4.477432"
+      }
+    },
+    {
+      "episode": "storage-cmp3-gemini-low-open-a-r1",
+      "group": "gemini-low",
+      "condition": "open-A",
+      "is_task_attempt": true,
+      "recorded_calls": 174,
+      "unreported_calls": 1,
+      "input_tokens": 15156318,
+      "cached_input_tokens": 14489332,
+      "cache_write_tokens": 0,
+      "output_tokens": 28607,
+      "cost": {
+        "minimum_usd": "3.0689752",
+        "maximum_usd": "3.0689752"
+      }
+    },
+    {
+      "episode": "storage-cmp3-sol-low-open-b-c-r1",
+      "group": "sol-low",
+      "condition": "open-B-C",
+      "is_task_attempt": true,
+      "recorded_calls": 8,
+      "unreported_calls": 1,
+      "input_tokens": 76961,
+      "cached_input_tokens": 26542,
+      "cache_write_tokens": 50395,
+      "output_tokens": 3565,
+      "cost": {
+        "minimum_usd": "0.1643397",
+        "maximum_usd": "0.2903272"
+      }
+    },
+    {
+      "episode": "storage-cmp3-astra-low-open-b-c-r1",
+      "group": "astra-low",
+      "condition": "open-B-C",
+      "is_task_attempt": true,
+      "recorded_calls": 100,
+      "unreported_calls": 0,
+      "input_tokens": 1133249,
+      "cached_input_tokens": 380275,
+      "cache_write_tokens": 752674,
+      "output_tokens": 59458,
+      "cost": {
+        "minimum_usd": "12.7646000",
+        "maximum_usd": "22.173025"
+      }
+    },
+    {
+      "episode": "storage-cmp3-opus-low-open-b-c-r1",
+      "group": "opus-low",
+      "condition": "open-B-C",
+      "is_task_attempt": true,
+      "recorded_calls": 2,
+      "unreported_calls": 1,
+      "input_tokens": 19038,
+      "cached_input_tokens": 0,
+      "cache_write_tokens": 0,
+      "output_tokens": 1990,
+      "cost": {
+        "minimum_usd": "0.115952",
+        "maximum_usd": "0.115952"
+      }
+    },
+    {
+      "episode": "storage-cmp3-gemini-low-open-b-c-r1",
+      "group": "gemini-low",
+      "condition": "open-B-C",
+      "is_task_attempt": true,
+      "recorded_calls": 38,
+      "unreported_calls": 1,
+      "input_tokens": 769604,
+      "cached_input_tokens": 472852,
+      "cache_write_tokens": 0,
+      "output_tokens": 21599,
+      "cost": {
+        "minimum_usd": "0.8567792",
+        "maximum_usd": "0.8567792"
+      }
+    },
+    {
+      "episode": "storage-cmp3-sol-low-open-b-r1",
+      "group": "sol-low",
+      "condition": "open-B",
+      "is_task_attempt": true,
+      "recorded_calls": 76,
+      "unreported_calls": 0,
+      "input_tokens": 851000,
+      "cached_input_tokens": 240157,
+      "cache_write_tokens": 610615,
+      "output_tokens": 46310,
+      "cost": {
+        "minimum_usd": "2.0141092",
+        "maximum_usd": "3.5406467"
+      }
+    },
+    {
+      "episode": "storage-cmp3-astra-low-open-b-r1",
+      "group": "astra-low",
+      "condition": "open-B",
+      "is_task_attempt": true,
+      "recorded_calls": 54,
+      "unreported_calls": 0,
+      "input_tokens": 605229,
+      "cached_input_tokens": 174557,
+      "cache_write_tokens": 430510,
+      "output_tokens": 36136,
+      "cost": {
+        "minimum_usd": "7.3643520",
+        "maximum_usd": "12.745727"
+      }
+    },
+    {
+      "episode": "storage-cmp3-opus-low-open-b-r1",
+      "group": "opus-low",
+      "condition": "open-B",
+      "is_task_attempt": true,
+      "recorded_calls": 83,
+      "unreported_calls": 0,
+      "input_tokens": 1441317,
+      "cached_input_tokens": 0,
+      "cache_write_tokens": 0,
+      "output_tokens": 85363,
+      "cost": {
+        "minimum_usd": "7.472528",
+        "maximum_usd": "7.472528"
+      }
+    },
+    {
+      "episode": "storage-cmp3-gemini-low-open-b-r1",
+      "group": "gemini-low",
+      "condition": "open-B",
+      "is_task_attempt": true,
+      "recorded_calls": 99,
+      "unreported_calls": 1,
+      "input_tokens": 2195784,
+      "cached_input_tokens": 1455245,
+      "cache_write_tokens": 0,
+      "output_tokens": 47212,
+      "cost": {
+        "minimum_usd": "2.0987225",
+        "maximum_usd": "2.0987225"
+      }
+    },
+    {
+      "episode": "storage-cmp3-sol-low-open-c-r1",
+      "group": "sol-low",
+      "condition": "open-C",
+      "is_task_attempt": true,
+      "recorded_calls": 81,
+      "unreported_calls": 0,
+      "input_tokens": 908888,
+      "cached_input_tokens": 245180,
+      "cache_write_tokens": 663465,
+      "output_tokens": 54612,
+      "cost": {
+        "minimum_usd": "2.2297865",
+        "maximum_usd": "3.8884490"
+      }
+    },
+    {
+      "episode": "storage-cmp3-astra-low-open-c-r1",
+      "group": "astra-low",
+      "condition": "open-C",
+      "is_task_attempt": true,
+      "recorded_calls": 83,
+      "unreported_calls": 0,
+      "input_tokens": 934114,
+      "cached_input_tokens": 207036,
+      "cache_write_tokens": 726829,
+      "output_tokens": 60273,
+      "cost": {
+        "minimum_usd": "12.3085385",
+        "maximum_usd": "21.393901"
+      }
+    },
+    {
+      "episode": "storage-cmp3-opus-low-open-c-r1",
+      "group": "opus-low",
+      "condition": "open-C",
+      "is_task_attempt": true,
+      "recorded_calls": 86,
+      "unreported_calls": 0,
+      "input_tokens": 1490217,
+      "cached_input_tokens": 0,
+      "cache_write_tokens": 0,
+      "output_tokens": 87750,
+      "cost": {
+        "minimum_usd": "7.715868",
+        "maximum_usd": "7.715868"
+      }
+    },
+    {
+      "episode": "storage-cmp3-gemini-low-open-c-r1",
+      "group": "gemini-low",
+      "condition": "open-C",
+      "is_task_attempt": true,
+      "recorded_calls": 3,
+      "unreported_calls": 1,
+      "input_tokens": 33562,
+      "cached_input_tokens": 0,
+      "cache_write_tokens": 0,
+      "output_tokens": 2094,
+      "cost": {
+        "minimum_usd": "0.088064",
+        "maximum_usd": "0.088064"
+      }
+    },
+    {
+      "episode": "storage-cmp3-sol-low-open-d-r1",
+      "group": "sol-low",
+      "condition": "open-D",
+      "is_task_attempt": true,
+      "recorded_calls": 56,
+      "unreported_calls": 0,
+      "input_tokens": 620970,
+      "cached_input_tokens": 135649,
+      "cache_write_tokens": 485153,
+      "output_tokens": 38565,
+      "cost": {
+        "minimum_usd": "1.6124334",
+        "maximum_usd": "2.8253159"
+      }
+    },
+    {
+      "episode": "storage-cmp3-astra-low-open-d-r1",
+      "group": "astra-low",
+      "condition": "open-D",
+      "is_task_attempt": true,
+      "recorded_calls": 60,
+      "unreported_calls": 0,
+      "input_tokens": 672706,
+      "cached_input_tokens": 170351,
+      "cache_write_tokens": 502175,
+      "output_tokens": 41315,
+      "cost": {
+        "minimum_usd": "8.5150885",
+        "maximum_usd": "14.792276"
+      }
+    },
+    {
+      "episode": "storage-cmp3-opus-low-open-d-r1",
+      "group": "opus-low",
+      "condition": "open-D",
+      "is_task_attempt": true,
+      "recorded_calls": 54,
+      "unreported_calls": 0,
+      "input_tokens": 928312,
+      "cached_input_tokens": 0,
+      "cache_write_tokens": 0,
+      "output_tokens": 64207,
+      "cost": {
+        "minimum_usd": "4.997388",
+        "maximum_usd": "4.997388"
+      }
+    },
+    {
+      "episode": "storage-cmp3-gemini-low-open-d-r1",
+      "group": "gemini-low",
+      "condition": "open-D",
+      "is_task_attempt": true,
+      "recorded_calls": 10,
+      "unreported_calls": 1,
+      "input_tokens": 166574,
+      "cached_input_tokens": 49381,
+      "cache_write_tokens": 0,
+      "output_tokens": 10642,
+      "cost": {
+        "minimum_usd": "0.3457441",
+        "maximum_usd": "0.3457441"
+      }
+    },
+    {
+      "episode": "storage-cmp3-sol-high-none-open-r1",
+      "group": "sol-high",
+      "condition": "none-open",
+      "is_task_attempt": false,
+      "recorded_calls": 27,
+      "unreported_calls": 0,
+      "input_tokens": 303293,
+      "cached_input_tokens": 152805,
+      "cache_write_tokens": 150407,
+      "output_tokens": 17617,
+      "cost": {
+        "minimum_usd": "0.5676300",
+        "maximum_usd": "0.9436475"
+      }
+    },
+    {
+      "episode": "storage-cmp3-astra-high-none-open-r1",
+      "group": "astra-high",
+      "condition": "none-open",
+      "is_task_attempt": false,
+      "recorded_calls": 15,
+      "unreported_calls": 0,
+      "input_tokens": 161872,
+      "cached_input_tokens": 77084,
+      "cache_write_tokens": 84743,
+      "output_tokens": 11175,
+      "cost": {
+        "minimum_usd": "1.6955715",
+        "maximum_usd": "2.754859"
+      }
+    },
+    {
+      "episode": "storage-cmp3-opus-high-none-open-r1",
+      "group": "opus-high",
+      "condition": "none-open",
+      "is_task_attempt": false,
+      "recorded_calls": 48,
+      "unreported_calls": 0,
+      "input_tokens": 881331,
+      "cached_input_tokens": 0,
+      "cache_write_tokens": 0,
+      "output_tokens": 83297,
+      "cost": {
+        "minimum_usd": "5.191264",
+        "maximum_usd": "5.191264"
+      }
+    },
+    {
+      "episode": "storage-cmp3-gemini-high-none-open-r1",
+      "group": "gemini-high",
+      "condition": "none-open",
+      "is_task_attempt": false,
+      "recorded_calls": 8,
+      "unreported_calls": 1,
+      "input_tokens": 129828,
+      "cached_input_tokens": 61045,
+      "cache_write_tokens": 0,
+      "output_tokens": 20004,
+      "cost": {
+        "minimum_usd": "0.3437105",
+        "maximum_usd": "0.3437105"
+      }
+    },
+    {
+      "episode": "storage-cmp3-sol-high-open-a-b-r1",
+      "group": "sol-high",
+      "condition": "open-A-B",
+      "is_task_attempt": true,
+      "recorded_calls": 117,
+      "unreported_calls": 1,
+      "input_tokens": 1363150,
+      "cached_input_tokens": 658249,
+      "cache_write_tokens": 704550,
+      "output_tokens": 79006,
+      "cost": {
+        "minimum_usd": "2.6179619",
+        "maximum_usd": "4.3793369"
+      }
+    },
+    {
+      "episode": "storage-cmp3-astra-high-open-a-b-r1",
+      "group": "astra-high",
+      "condition": "open-A-B",
+      "is_task_attempt": true,
+      "recorded_calls": 73,
+      "unreported_calls": 0,
+      "input_tokens": 848124,
+      "cached_input_tokens": 393169,
+      "cache_write_tokens": 454736,
+      "output_tokens": 63779,
+      "cost": {
+        "minimum_usd": "9.2685090",
+        "maximum_usd": "14.952709"
+      }
+    },
+    {
+      "episode": "storage-cmp3-opus-high-open-a-b-r1",
+      "group": "opus-high",
+      "condition": "open-A-B",
+      "is_task_attempt": true,
+      "recorded_calls": 74,
+      "unreported_calls": 0,
+      "input_tokens": 1462509,
+      "cached_input_tokens": 0,
+      "cache_write_tokens": 0,
+      "output_tokens": 144139,
+      "cost": {
+        "minimum_usd": "8.732816",
+        "maximum_usd": "8.732816"
+      }
+    },
+    {
+      "episode": "storage-cmp3-gemini-high-open-a-b-r1",
+      "group": "gemini-high",
+      "condition": "open-A-B",
+      "is_task_attempt": true,
+      "recorded_calls": 27,
+      "unreported_calls": 1,
+      "input_tokens": 572222,
+      "cached_input_tokens": 285702,
+      "cache_write_tokens": 0,
+      "output_tokens": 61718,
+      "cost": {
+        "minimum_usd": "1.2187902",
+        "maximum_usd": "1.2187902"
+      }
+    },
+    {
+      "episode": "storage-cmp3-sol-high-open-a-d-r1",
+      "group": "sol-high",
+      "condition": "open-A-D",
+      "is_task_attempt": true,
+      "recorded_calls": 110,
+      "unreported_calls": 1,
+      "input_tokens": 1274423,
+      "cached_input_tokens": 584681,
+      "cache_write_tokens": 689412,
+      "output_tokens": 78703,
+      "cost": {
+        "minimum_usd": "2.5696881",
+        "maximum_usd": "4.2932181"
+      }
+    },
+    {
+      "episode": "storage-cmp3-astra-high-open-a-d-r1",
+      "group": "astra-high",
+      "condition": "open-A-D",
+      "is_task_attempt": true,
+      "recorded_calls": 103,
+      "unreported_calls": 0,
+      "input_tokens": 1212594,
+      "cached_input_tokens": 642736,
+      "cache_write_tokens": 569549,
+      "output_tokens": 76139,
+      "cost": {
+        "minimum_usd": "11.5721385",
+        "maximum_usd": "18.691501"
+      }
+    },
+    {
+      "episode": "storage-cmp3-opus-high-open-a-d-r1",
+      "group": "opus-high",
+      "condition": "open-A-D",
+      "is_task_attempt": true,
+      "recorded_calls": 87,
+      "unreported_calls": 0,
+      "input_tokens": 1647228,
+      "cached_input_tokens": 0,
+      "cache_write_tokens": 0,
+      "output_tokens": 140874,
+      "cost": {
+        "minimum_usd": "9.406392",
+        "maximum_usd": "9.406392"
+      }
+    },
+    {
+      "episode": "storage-cmp3-gemini-high-open-a-d-r1",
+      "group": "gemini-high",
+      "condition": "open-A-D",
+      "is_task_attempt": true,
+      "recorded_calls": 16,
+      "unreported_calls": 0,
+      "input_tokens": 359708,
+      "cached_input_tokens": 229657,
+      "cache_write_tokens": 0,
+      "output_tokens": 30759,
+      "cost": {
+        "minimum_usd": "0.5906577",
+        "maximum_usd": "0.5906577"
+      }
+    },
+    {
+      "episode": "storage-cmp3-sol-high-open-a-r1",
+      "group": "sol-high",
+      "condition": "open-A",
+      "is_task_attempt": true,
+      "recorded_calls": 47,
+      "unreported_calls": 0,
+      "input_tokens": 541701,
+      "cached_input_tokens": 250381,
+      "cache_write_tokens": 291179,
+      "output_tokens": 35831,
+      "cost": {
+        "minimum_usd": "1.1115776",
+        "maximum_usd": "1.8395251"
+      }
+    },
+    {
+      "episode": "storage-cmp3-astra-high-open-a-r1",
+      "group": "astra-high",
+      "condition": "open-A",
+      "is_task_attempt": true,
+      "recorded_calls": 66,
+      "unreported_calls": 0,
+      "input_tokens": 764679,
+      "cached_input_tokens": 381919,
+      "cache_write_tokens": 382562,
+      "output_tokens": 55989,
+      "cost": {
+        "minimum_usd": "7.9653740",
+        "maximum_usd": "12.747399"
+      }
+    },
+    {
+      "episode": "storage-cmp3-opus-high-open-a-r1",
+      "group": "opus-high",
+      "condition": "open-A",
+      "is_task_attempt": true,
+      "recorded_calls": 41,
+      "unreported_calls": 0,
+      "input_tokens": 776493,
+      "cached_input_tokens": 0,
+      "cache_write_tokens": 0,
+      "output_tokens": 84498,
+      "cost": {
+        "minimum_usd": "4.795932",
+        "maximum_usd": "4.795932"
+      }
+    },
+    {
+      "episode": "storage-cmp3-gemini-high-open-a-r1",
+      "group": "gemini-high",
+      "condition": "open-A",
+      "is_task_attempt": true,
+      "recorded_calls": 49,
+      "unreported_calls": 1,
+      "input_tokens": 1120046,
+      "cached_input_tokens": 661490,
+      "cache_write_tokens": 0,
+      "output_tokens": 109765,
+      "cost": {
+        "minimum_usd": "2.0809110",
+        "maximum_usd": "2.0809110"
+      }
+    },
+    {
+      "episode": "storage-cmp3-sol-high-open-b-c-r1",
+      "group": "sol-high",
+      "condition": "open-B-C",
+      "is_task_attempt": true,
+      "recorded_calls": 68,
+      "unreported_calls": 0,
+      "input_tokens": 782323,
+      "cached_input_tokens": 373148,
+      "cache_write_tokens": 408971,
+      "output_tokens": 47213,
+      "cost": {
+        "minimum_usd": "1.5322803",
+        "maximum_usd": "2.5547078"
+      }
+    },
+    {
+      "episode": "storage-cmp3-astra-high-open-b-c-r1",
+      "group": "astra-high",
+      "condition": "open-B-C",
+      "is_task_attempt": true,
+      "recorded_calls": 8,
+      "unreported_calls": 0,
+      "input_tokens": 77919,
+      "cached_input_tokens": 36759,
+      "cache_write_tokens": 41136,
+      "output_tokens": 6076,
+      "cost": {
+        "minimum_usd": "0.8549990",
+        "maximum_usd": "1.369199"
+      }
+    },
+    {
+      "episode": "storage-cmp3-opus-high-open-b-c-r1",
+      "group": "opus-high",
+      "condition": "open-B-C",
+      "is_task_attempt": true,
+      "recorded_calls": 90,
+      "unreported_calls": 0,
+      "input_tokens": 1668428,
+      "cached_input_tokens": 0,
+      "cache_write_tokens": 0,
+      "output_tokens": 148224,
+      "cost": {
+        "minimum_usd": "9.638192",
+        "maximum_usd": "9.638192"
+      }
+    },
+    {
+      "episode": "storage-cmp3-gemini-high-open-b-c-r1",
+      "group": "gemini-high",
+      "condition": "open-B-C",
+      "is_task_attempt": true,
+      "recorded_calls": 57,
+      "unreported_calls": 1,
+      "input_tokens": 1325364,
+      "cached_input_tokens": 756971,
+      "cache_write_tokens": 0,
+      "output_tokens": 90374,
+      "cost": {
+        "minimum_usd": "2.1162231",
+        "maximum_usd": "2.1162231"
+      }
+    },
+    {
+      "episode": "storage-cmp3-sol-high-open-b-r1",
+      "group": "sol-high",
+      "condition": "open-B",
+      "is_task_attempt": true,
+      "recorded_calls": 0,
+      "unreported_calls": 1,
+      "input_tokens": 0,
+      "cached_input_tokens": 0,
+      "cache_write_tokens": 0,
+      "output_tokens": 0,
+      "cost": {
+        "minimum_usd": "0",
+        "maximum_usd": "0"
+      }
+    },
+    {
+      "episode": "storage-cmp3-astra-high-open-b-r1",
+      "group": "astra-high",
+      "condition": "open-B",
+      "is_task_attempt": true,
+      "recorded_calls": 58,
+      "unreported_calls": 0,
+      "input_tokens": 670114,
+      "cached_input_tokens": 347421,
+      "cache_write_tokens": 322519,
+      "output_tokens": 48052,
+      "cost": {
+        "minimum_usd": "6.7832485",
+        "maximum_usd": "10.814736"
+      }
+    },
+    {
+      "episode": "storage-cmp3-opus-high-open-b-r1",
+      "group": "opus-high",
+      "condition": "open-B",
+      "is_task_attempt": true,
+      "recorded_calls": 55,
+      "unreported_calls": 0,
+      "input_tokens": 1029669,
+      "cached_input_tokens": 0,
+      "cache_write_tokens": 0,
+      "output_tokens": 95973,
+      "cost": {
+        "minimum_usd": "6.038136",
+        "maximum_usd": "6.038136"
+      }
+    },
+    {
+      "episode": "storage-cmp3-gemini-high-open-b-r1",
+      "group": "gemini-high",
+      "condition": "open-B",
+      "is_task_attempt": true,
+      "recorded_calls": 61,
+      "unreported_calls": 1,
+      "input_tokens": 1396964,
+      "cached_input_tokens": 895207,
+      "cache_write_tokens": 0,
+      "output_tokens": 102474,
+      "cost": {
+        "minimum_usd": "2.1177747",
+        "maximum_usd": "2.1177747"
+      }
+    },
+    {
+      "episode": "storage-cmp3-sol-high-open-c-r1",
+      "group": "sol-high",
+      "condition": "open-C",
+      "is_task_attempt": true,
+      "recorded_calls": 93,
+      "unreported_calls": 0,
+      "input_tokens": 1084361,
+      "cached_input_tokens": 517924,
+      "cache_write_tokens": 566158,
+      "output_tokens": 66263,
+      "cost": {
+        "minimum_usd": "2.1303754",
+        "maximum_usd": "3.5457704"
+      }
+    },
+    {
+      "episode": "storage-cmp3-astra-high-open-c-r1",
+      "group": "astra-high",
+      "condition": "open-C",
+      "is_task_attempt": true,
+      "recorded_calls": 72,
+      "unreported_calls": 0,
+      "input_tokens": 831830,
+      "cached_input_tokens": 387384,
+      "cache_write_tokens": 444230,
+      "output_tokens": 61764,
+      "cost": {
+        "minimum_usd": "9.0306190",
+        "maximum_usd": "14.583494"
+      }
+    },
+    {
+      "episode": "storage-cmp3-opus-high-open-c-r1",
+      "group": "opus-high",
+      "condition": "open-C",
+      "is_task_attempt": true,
+      "recorded_calls": 90,
+      "unreported_calls": 0,
+      "input_tokens": 1681355,
+      "cached_input_tokens": 0,
+      "cache_write_tokens": 0,
+      "output_tokens": 145880,
+      "cost": {
+        "minimum_usd": "9.643020",
+        "maximum_usd": "9.643020"
+      }
+    },
+    {
+      "episode": "storage-cmp3-gemini-high-open-c-r1",
+      "group": "gemini-high",
+      "condition": "open-C",
+      "is_task_attempt": true,
+      "recorded_calls": 53,
+      "unreported_calls": 1,
+      "input_tokens": 1259315,
+      "cached_input_tokens": 726212,
+      "cache_write_tokens": 0,
+      "output_tokens": 110596,
+      "cost": {
+        "minimum_usd": "2.2447872",
+        "maximum_usd": "2.2447872"
+      }
+    },
+    {
+      "episode": "storage-cmp3-sol-high-open-d-r1",
+      "group": "sol-high",
+      "condition": "open-D",
+      "is_task_attempt": true,
+      "recorded_calls": 90,
+      "unreported_calls": 1,
+      "input_tokens": 1056538,
+      "cached_input_tokens": 517630,
+      "cache_write_tokens": 538638,
+      "output_tokens": 67434,
+      "cost": {
+        "minimum_usd": "2.0732380",
+        "maximum_usd": "3.4198330"
+      }
+    },
+    {
+      "episode": "storage-cmp3-astra-high-open-d-r1",
+      "group": "astra-high",
+      "condition": "open-D",
+      "is_task_attempt": true,
+      "recorded_calls": 68,
+      "unreported_calls": 0,
+      "input_tokens": 790558,
+      "cached_input_tokens": 398760,
+      "cache_write_tokens": 391594,
+      "output_tokens": 55203,
+      "cost": {
+        "minimum_usd": "8.0558750",
+        "maximum_usd": "12.950800"
+      }
+    },
+    {
+      "episode": "storage-cmp3-opus-high-open-d-r1",
+      "group": "opus-high",
+      "condition": "open-D",
+      "is_task_attempt": true,
+      "recorded_calls": 20,
+      "unreported_calls": 1,
+      "input_tokens": 359426,
+      "cached_input_tokens": 0,
+      "cache_write_tokens": 0,
+      "output_tokens": 40795,
+      "cost": {
+        "minimum_usd": "2.253604",
+        "maximum_usd": "2.253604"
+      }
+    },
+    {
+      "episode": "storage-cmp3-gemini-high-open-d-r1",
+      "group": "gemini-high",
+      "condition": "open-D",
+      "is_task_attempt": true,
+      "recorded_calls": 20,
+      "unreported_calls": 1,
+      "input_tokens": 403970,
+      "cached_input_tokens": 209858,
+      "cache_write_tokens": 0,
+      "output_tokens": 35094,
+      "cost": {
+        "minimum_usd": "0.7601498",
+        "maximum_usd": "0.7601498"
+      }
+    }
+  ]
+}
