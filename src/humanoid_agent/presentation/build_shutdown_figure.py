@@ -32,7 +32,7 @@ def panel_source(episode: Path, panel: str) -> tuple[Path, float | None]:
     return directory / filename, float(observation["elapsed_wall_seconds"])
 
 
-def main(episode: Path, /, *panel_labels: str, output: Path) -> None:
+def main(episode: Path, /, *panel_labels: str, output: Path, label_font_size: int = 22) -> None:
     """Write OUTPUT (PNG) and OUTPUT.provenance.json from ``SOURCE=LABEL`` panels."""
     if output.exists():
         raise FileExistsError(output)
@@ -47,7 +47,7 @@ def main(episode: Path, /, *panel_labels: str, output: Path) -> None:
         width = round(image.width * PANEL_HEIGHT / image.height)
         image = image.resize((width, PANEL_HEIGHT), Image.Resampling.LANCZOS)
         draw = ImageDraw.Draw(image)
-        font = ImageFont.load_default(size=22)
+        font = ImageFont.load_default(size=label_font_size)
         text = label if elapsed is None else f"{label}  t={elapsed:.0f} s"
         box = draw.textbbox((10, 8), text, font=font)
         draw.rectangle((box[0] - 6, box[1] - 4, box[2] + 6, box[3] + 4), fill=(255, 255, 255))
@@ -80,6 +80,7 @@ def main(episode: Path, /, *panel_labels: str, output: Path) -> None:
             "episode": str(episode),
             "panels": provenance,
             "model_inputs_unmodified_except_resize": True,
+            "label_font_size": label_font_size,
         },
     )
 

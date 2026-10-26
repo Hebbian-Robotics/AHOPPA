@@ -92,6 +92,9 @@ limits visible beside the results.
 [google-style]: https://developers.google.com/style/highlights
 
 The Raw data button uses an original bucket SVG. The paper prints the project
-URL directly and places the shared vector overview after its abstract. Its
-table retains the primary numerical comparisons; the page includes fuller
-charts and episode observations.
+URL directly and pairs the shared vector overview with a five-frame episode
+sequence after its abstract. Both figures use retained inputs from the evaluated
+Astra-low `open-A-D` episode. Source hashes are recorded beside the figures;
+the strip uses larger labels at paper width. Its last observation is at 942 s,
+preceding the completion declaration at 955 s. The table retains the primary
+numerical comparisons; the page includes fuller charts and episode observations.
