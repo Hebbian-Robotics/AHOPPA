@@ -1,0 +1,122 @@
+\begin{thebibliography}{21}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Luo et~al.(2026)Luo, Yuan, Wang, Li, Casta{\~n}eda, Chen, Cao, Li, Minor, Ben, Park, Sami, Wang, Da, Ding, Hogg, Song, Lim, Jeong, He, Xue, Xiao, Yuen, Kautz, Chang, Iqbal, Fan, and Zhu]{sonic2026}
+Z.~Luo, Y.~Yuan, T.~Wang, C.~Li, F.~Casta{\~n}eda, S.~Chen, Z.-A. Cao, J.~Li, D.~Minor, Q.~Ben, J.~Park, D.~Sami, Z.~Wang, X.~Da, R.~Ding, C.~Hogg, L.~Song, E.~Lim, E.~Jeong, T.~He, H.~Xue, W.~Xiao, S.~Yuen, J.~Kautz, Y.~Chang, U.~Iqbal, L.~Fan, and Y.~Zhu.
+\newblock {SONIC}: Supersizing motion tracking for natural humanoid whole-body control.
+\newblock \emph{Science Robotics}, 11\penalty0 (117):\penalty0 eaed4592, 2026.
+\newblock \doi{10.1126/scirobotics.aed4592}.
+\newblock URL \url{https://nvlabs.github.io/GEAR-SONIC/}.
+
+\bibitem[Ahn et~al.(2022)Ahn, Brohan, Brown, Chebotar, Cortes, David, Finn, Fu, Gopalakrishnan, Hausman, Herzog, Ho, Hsu, Ibarz, Ichter, Irpan, Jang, Ruano, Jeffrey, Jesmonth, Joshi, Julian, Kalashnikov, Kuang, Lee, Levine, Lu, Luu, Parada, Pastor, Quiambao, Rao, Rettinghouse, Reyes, Sermanet, Sievers, Tan, Toshev, Vanhoucke, Xia, Xiao, Xu, Xu, Yan, and Zeng]{saycan2022}
+M.~Ahn, A.~Brohan, N.~Brown, Y.~Chebotar, O.~Cortes, B.~David, C.~Finn, C.~Fu, K.~Gopalakrishnan, K.~Hausman, A.~Herzog, D.~Ho, J.~Hsu, J.~Ibarz, B.~Ichter, A.~Irpan, E.~Jang, R.~J. Ruano, K.~Jeffrey, S.~Jesmonth, N.~J. Joshi, R.~Julian, D.~Kalashnikov, Y.~Kuang, K.-H. Lee, S.~Levine, Y.~Lu, L.~Luu, C.~Parada, P.~Pastor, J.~Quiambao, K.~Rao, J.~Rettinghouse, D.~Reyes, P.~Sermanet, N.~Sievers, C.~Tan, A.~Toshev, V.~Vanhoucke, F.~Xia, T.~Xiao, P.~Xu, S.~Xu, M.~Yan, and A.~Zeng.
+\newblock {Do As I Can, Not As I Say: Grounding Language in Robotic Affordances}, 2022.
+\newblock URL \url{https://arxiv.org/abs/2204.01691}.
+
+\bibitem[Huh et~al.(2026)Huh, Gu, Truong, Liu, and Tevet]{homebody2026}
+G.~Huh, C.~Gu, T.~E. Truong, C.~K. Liu, and G.~Tevet.
+\newblock {HomeBody}: A humanoid that explores, remembers, and acts on its own, 2026.
+\newblock URL \url{https://tml.stanford.edu/homebody/}.
+
+\bibitem[Sun et~al.(2024)Sun, Zhang, Duan, Jiang, Cheng, and Xu]{promptplanperform2024}
+J.~Sun, Q.~Zhang, Y.~Duan, X.~Jiang, C.~Cheng, and R.~Xu.
+\newblock {Prompt, Plan, Perform: LLM-based Humanoid Control via Quantized Imitation Learning}, 2024.
+\newblock URL \url{https://arxiv.org/abs/2309.11359}.
+
+\bibitem[Liang et~al.(2023)Liang, Huang, Xia, Xu, Hausman, Ichter, Florence, and Zeng]{codeaspolicies2022}
+J.~Liang, W.~Huang, F.~Xia, P.~Xu, K.~Hausman, B.~Ichter, P.~Florence, and A.~Zeng.
+\newblock {Code as Policies: Language Model Programs for Embodied Control}, 2023.
+\newblock URL \url{https://arxiv.org/abs/2209.07753}.
+
+\bibitem[Choi et~al.(2026)Choi, Ye, Bui, Shrivastava, Ryu, Tirumala, Wulfmeier, and Mehr]{choi2026hugo}
+S.~Choi, S.~Ye, N.~Bui, A.~Shrivastava, K.~Ryu, D.~Tirumala, M.~Wulfmeier, and N.~Mehr.
+\newblock {HuGo}: {LLMs} as whole-body policy code designers for humanoid loco-manipulation, 2026.
+\newblock URL \url{https://arxiv.org/abs/2609.30594}.
+
+\bibitem[Huang et~al.(2022)Huang, Xia, Xiao, Chan, Liang, Florence, Zeng, Tompson, Mordatch, Chebotar, Sermanet, Brown, Jackson, Luu, Levine, Hausman, and Ichter]{innermonologue2022}
+W.~Huang, F.~Xia, T.~Xiao, H.~Chan, J.~Liang, P.~Florence, A.~Zeng, J.~Tompson, I.~Mordatch, Y.~Chebotar, P.~Sermanet, N.~Brown, T.~Jackson, L.~Luu, S.~Levine, K.~Hausman, and B.~Ichter.
+\newblock {Inner Monologue: Embodied Reasoning through Planning with Language Models}, 2022.
+\newblock URL \url{https://arxiv.org/abs/2207.05608}.
+
+\bibitem[Nasiriany et~al.(2024)Nasiriany, Xia, Yu, Xiao, Liang, Dasgupta, Xie, Driess, Wahid, Xu, Vuong, Zhang, Lee, Lee, Xu, Kirmani, Zhu, Zeng, Hausman, Heess, Finn, Levine, and Ichter]{pivot2024}
+S.~Nasiriany, F.~Xia, W.~Yu, T.~Xiao, J.~Liang, I.~Dasgupta, A.~Xie, D.~Driess, A.~Wahid, Z.~Xu, Q.~Vuong, T.~Zhang, T.-W.~E. Lee, K.-H. Lee, P.~Xu, S.~Kirmani, Y.~Zhu, A.~Zeng, K.~Hausman, N.~Heess, C.~Finn, S.~Levine, and B.~Ichter.
+\newblock {PIVOT}: Iterative visual prompting elicits actionable knowledge for {VLM}s.
+\newblock In \emph{Proceedings of the 41st International Conference on Machine Learning}, volume 235 of \emph{Proceedings of Machine Learning Research}, pages 37321--37341. PMLR, 2024.
+\newblock URL \url{https://proceedings.mlr.press/v235/nasiriany24a.html}.
+
+\bibitem[Huang et~al.(2023)Huang, Wang, Zhang, Li, Wu, and Fei-Fei]{voxposer2023}
+W.~Huang, C.~Wang, R.~Zhang, Y.~Li, J.~Wu, and L.~Fei-Fei.
+\newblock {VoxPoser: Composable 3D Value Maps for Robotic Manipulation with Language Models}, 2023.
+\newblock URL \url{https://arxiv.org/abs/2307.05973}.
+
+\bibitem[Rana et~al.(2023)Rana, Haviland, Garg, Abou-Chakra, Reid, and Suenderhauf]{sayplan2023}
+K.~Rana, J.~Haviland, S.~Garg, J.~Abou-Chakra, I.~Reid, and N.~Suenderhauf.
+\newblock {SayPlan}: Grounding large language models using {3D} scene graphs for scalable robot task planning.
+\newblock In \emph{Proceedings of The 7th Conference on Robot Learning}, volume 229 of \emph{Proceedings of Machine Learning Research}, pages 23--72. PMLR, 2023.
+\newblock URL \url{https://proceedings.mlr.press/v229/rana23a.html}.
+
+\bibitem[Huang et~al.(2025)Huang, Wang, Li, Zhang, and Fei-Fei]{rekep2025}
+W.~Huang, C.~Wang, Y.~Li, R.~Zhang, and L.~Fei-Fei.
+\newblock Rekep: Spatio-temporal reasoning of relational keypoint constraints for robotic manipulation.
+\newblock In \emph{Proceedings of The 8th Conference on Robot Learning}, volume 270 of \emph{Proceedings of Machine Learning Research}, pages 4573--4602. PMLR, 2025.
+\newblock URL \url{https://proceedings.mlr.press/v270/huang25g.html}.
+
+\bibitem[Zitkovich et~al.(2023)Zitkovich, Yu, Xu, Xu, Xiao, Xia, Wu, Wohlhart, Welker, Wahid, Vuong, Vanhoucke, Tran, Soricut, Singh, Singh, Sermanet, Sanketi, Salazar, Ryoo, Reymann, Rao, Pertsch, Mordatch, Michalewski, Lu, Levine, Lee, Lee, Leal, Kuang, Kalashnikov, Julian, Joshi, Irpan, Ichter, Hsu, Herzog, Hausman, Gopalakrishnan, Fu, Florence, Finn, Dubey, Driess, Ding, Choromanski, Chen, Chebotar, Carbajal, Brown, Brohan, Arenas, and Han]{rt22023}
+B.~Zitkovich, T.~Yu, S.~Xu, P.~Xu, T.~Xiao, F.~Xia, J.~Wu, P.~Wohlhart, S.~Welker, A.~Wahid, Q.~Vuong, V.~Vanhoucke, H.~Tran, R.~Soricut, A.~Singh, J.~Singh, P.~Sermanet, P.~R. Sanketi, G.~Salazar, M.~S. Ryoo, K.~Reymann, K.~Rao, K.~Pertsch, I.~Mordatch, H.~Michalewski, Y.~Lu, S.~Levine, L.~Lee, T.-W.~E. Lee, I.~Leal, Y.~Kuang, D.~Kalashnikov, R.~Julian, N.~J. Joshi, A.~Irpan, B.~Ichter, J.~Hsu, A.~Herzog, K.~Hausman, K.~Gopalakrishnan, C.~Fu, P.~Florence, C.~Finn, K.~A. Dubey, D.~Driess, T.~Ding, K.~M. Choromanski, X.~Chen, Y.~Chebotar, J.~Carbajal, N.~Brown, A.~Brohan, M.~G. Arenas, and K.~Han.
+\newblock Rt-2: Vision-language-action models transfer web knowledge to robotic control.
+\newblock In \emph{Proceedings of The 7th Conference on Robot Learning}, volume 229 of \emph{Proceedings of Machine Learning Research}, pages 2165--2183. PMLR, 2023.
+\newblock URL \url{https://proceedings.mlr.press/v229/zitkovich23a.html}.
+
+\bibitem[{Isaac Lab Project Developers}(2026)]{isaaclab2026cabinet}
+{Isaac Lab Project Developers}.
+\newblock \emph{Available Environments: Isaac-Open-Drawer-Franka-v0}, 2026.
+\newblock URL \url{https://isaac-sim.github.io/IsaacLab/main/source/overview/environments.html}.
+
+\bibitem[{NVIDIA}(2026)]{nvidia2026warehouseassets}
+{NVIDIA}.
+\newblock \emph{Environment Assets}.
+\newblock NVIDIA, 2026.
+\newblock URL \url{https://docs.isaacsim.omniverse.nvidia.com/latest/assets/usd_assets_environments.html}.
+
+\bibitem[{NVIDIA}(2025)]{nvidia2026assetlicense}
+{NVIDIA}.
+\newblock \emph{{NVIDIA Isaac Sim} Additional Software and Materials License}.
+\newblock NVIDIA, 2025.
+\newblock URL \url{https://www.nvidia.com/en-us/agreements/enterprise-software/isaac-sim-additional-software-and-materials-license/}.
+
+\bibitem[{NVIDIA}(2026)]{nvidia2026simready}
+{NVIDIA}.
+\newblock \emph{{SimReady} Assets}.
+\newblock NVIDIA, 2026.
+\newblock URL \url{https://huggingface.co/datasets/nvidia/simready-assets}.
+
+\bibitem[{The Newton Contributors}(2025)]{newton2025}
+{The Newton Contributors}.
+\newblock {Newton}: {GPU}-accelerated physics simulation for robotics and simulation research, 2025.
+\newblock URL \url{https://github.com/newton-physics/newton}.
+
+\bibitem[Mittal et~al.(2025)Mittal, Roth, Tigue, Richard, Zhang, Du, Serrano-Muñoz, Yao, Zurbrügg, Rudin, Wawrzyniak, Rakhsha, Denzler, Heiden, Borovicka, Ahmed, Akinola, Anwar, Carlson, Feng, Garg, Gasoto, Gulich, Guo, Gussert, Hansen, Kulkarni, Li, Liu, Makoviychuk, Malczyk, Mazhar, Moghani, Murali, Noseworthy, Poddubny, Ratliff, Rehberg, Schwarke, Singh, Smith, Tang, Thaker, Trepte, Wyk, Yu, Millane, Ramasamy, Steiner, Subramanian, Volk, Chen, Jawale, Kuruttukulam, Lin, Mandlekar, Patzwaldt, Welsh, Zhao, Anes, Lafleche, Moënne-Loccoz, Park, Stepinski, Gelder, Amevor, Carius, Chang, Chen, de~Heras~Ciechomski, Daviet, Mohajerani, von Muralt, Reutskyy, Sauter, Schirm, Shi, Terdiman, Vilella, Widmer, Yeoman, Chen, Grizan, Li, Li, Smith, Wiltz, Alexis, Chang, Chu, Fan, Farshidian, Handa, Huang, Hutter, Narang, Pouya, Sheng, Zhu, Macklin, Moravanszky, Reist, Guo, Hoeller, and State]{isaaclab2025}
+M.~Mittal, P.~Roth, J.~Tigue, A.~Richard, O.~Zhang, P.~Du, A.~Serrano-Muñoz, X.~Yao, R.~Zurbrügg, N.~Rudin, L.~Wawrzyniak, M.~Rakhsha, A.~Denzler, E.~Heiden, A.~Borovicka, O.~Ahmed, I.~Akinola, A.~Anwar, M.~T. Carlson, J.~Y. Feng, A.~Garg, R.~Gasoto, L.~Gulich, Y.~Guo, M.~Gussert, A.~Hansen, M.~Kulkarni, C.~Li, W.~Liu, V.~Makoviychuk, G.~Malczyk, H.~Mazhar, M.~Moghani, A.~Murali, M.~Noseworthy, A.~Poddubny, N.~Ratliff, W.~Rehberg, C.~Schwarke, R.~Singh, J.~L. Smith, B.~Tang, R.~Thaker, M.~Trepte, K.~V. Wyk, F.~Yu, A.~Millane, V.~Ramasamy, R.~Steiner, S.~Subramanian, C.~Volk, C.~Chen, N.~Jawale, A.~V. Kuruttukulam, M.~A. Lin, A.~Mandlekar, K.~Patzwaldt, J.~Welsh, H.~Zhao, F.~Anes, J.-F. Lafleche, N.~Moënne-Loccoz, S.~Park, R.~Stepinski, D.~V. Gelder, C.~Amevor, J.~Carius, J.~Chang, A.~H. Chen, P.~de~Heras~Ciechomski, G.~Daviet, M.~Mohajerani, J.~von Muralt, V.~Reutskyy, M.~Sauter, S.~Schirm, E.~L. Shi, P.~Terdiman, K.~Vilella, T.~Widmer, G.~Yeoman, T.~Chen, S.~Grizan, C.~Li, L.~Li, C.~Smith, R.~Wiltz, K.~Alexis, Y.~Chang, D.~Chu, L.~J. Fan, F.~Farshidian, A.~Handa, S.~Huang, M.~Hutter, Y.~Narang, S.~Pouya, S.~Sheng, Y.~Zhu, M.~Macklin, A.~Moravanszky, P.~Reist, Y.~Guo, D.~Hoeller, and G.~State.
+\newblock {Isaac Lab: A GPU-Accelerated Simulation Framework for Multi-Modal Robot Learning}, 2025.
+\newblock URL \url{https://arxiv.org/abs/2511.04831}.
+
+\bibitem[{OpenAI}(2026)]{openai2026pricing}
+{OpenAI}.
+\newblock {API Pricing and Prompt Caching}, 2026.
+\newblock URL \url{https://developers.openai.com/api/docs/pricing}.
+
+\bibitem[{Anthropic}(2026)]{anthropic2026pricing}
+{Anthropic}.
+\newblock {Claude Opus 5.5: Pricing}, 2026.
+\newblock URL \url{https://platform.claude.com/docs/en/models/opus-5-5/overview}.
+
+\bibitem[{Google}(2026)]{google2026pricing}
+{Google}.
+\newblock {Gemini API Pricing}, 2026.
+\newblock URL \url{https://ai.google.dev/gemini-api/docs/pricing}.
+
+\end{thebibliography}
