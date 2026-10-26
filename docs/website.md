@@ -54,8 +54,9 @@ generate the paper's cost column. Follow [the cost method](api-costs.md) for
 standard rates, cache-price ranges, missing usage and reproduction. The author
 order is Kingston Kuan, Samuel J Chew, then Brandon Ong. Kingston and Brandon
 are at Hebbian Robotics; Samuel is at Carnegie Mellon University. His name links
-to his supplied LinkedIn profile. The affiliation row includes CMU's official
-horizontal wordmark from its homepage alongside the Hebbian Robotics logo;
+to his supplied LinkedIn profile. The affiliation row includes CMU's primary
+red square university logo from its
+official homepage alongside the Hebbian Robotics logo;
 the website license notice records its source and trademark status. A dagger
 beside CMU links to the non-endorsement note in the page footer.
 

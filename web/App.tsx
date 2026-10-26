@@ -3,7 +3,7 @@ import overviewFigure from "../docs/figures/system-overview.svg";
 import paperPdf from "../paper/paper.pdf?url";
 import { PlaybackSpeedProvider } from "./PlaybackControls";
 import { EpisodeShowcase, StorageRound } from "./StorageRound";
-import cmuWordmark from "./template/assets/cmu-wordmark.svg";
+import cmuLogo from "./template/assets/cmu-logo.png";
 import paperIcon from "./template/assets/file-pdf.svg";
 import githubIcon from "./template/assets/github.svg";
 import hebbianWordmark from "./template/assets/hebbian-wordmark.svg";
@@ -55,11 +55,11 @@ function ProjectPage() {
 						aria-label="Carnegie Mellon University"
 					>
 						<img
-							className="cmu-wordmark"
-							src={cmuWordmark}
+							className="cmu-logo"
+							src={cmuLogo}
 							alt="Carnegie Mellon University"
-							width="300"
-							height="27"
+							width="600"
+							height="600"
 						/>
 					</a>
 				</div>

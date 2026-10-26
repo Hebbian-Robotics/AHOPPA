@@ -78,14 +78,14 @@ html {
 	display: block;
 	line-height: 0;
 }
-.cmu-wordmark {
+.cmu-logo {
 	display: block;
-	width: 300px;
+	width: 96px;
 	height: auto;
 }
 .affiliation-wordmark {
 	display: block;
-	width: 112px;
+	width: 180px;
 	max-width: 100%;
 	height: auto;
 }
@@ -830,7 +830,10 @@ video-skin {
 }
 
 @media (max-width: 640px) {
-	.cmu-wordmark {
-		width: 216px;
+	.affiliation-wordmark {
+		width: 144px;
+	}
+	.cmu-logo {
+		width: 80px;
 	}
 }
