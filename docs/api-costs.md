@@ -156,7 +156,9 @@ The remaining nine interruptions and two timeouts stay unresolved.
 The generated `paper/results-table.tex` is a detailed companion table. The
 compact table in `paper/paper.tex` is maintained from the same summary and cost
 JSON: it omits inspection counts and successful-only decision latency, adds fall
-counts, and gives observed-outcome denominators explicitly. Update that table
+counts, and gives task-outcome availability beside success over all seven
+starts. Physical completion, false declarations and falls are plain counts
+within episodes with task outcomes; these counts can overlap. Update the table
 when its source metrics change. Cost per success divides all task-attempt
 spending by successful task attempts, including the spending on failures. It is
 distinct from mean cost conditional on success.

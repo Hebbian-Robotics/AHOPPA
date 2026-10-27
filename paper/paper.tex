@@ -47,8 +47,8 @@ Our approach uses numerical commands without predefined task skills,
 generated policy code, value maps or keypoint constraints.
 
 \section{Interface, task and evaluation}
-\textbf{Interface.} Inputs are onboard RGB-D, external RGB, robot kinematics,
-depth queries, a map, the plan and feedback (Fig.~\ref{fig:overview}). SONIC's
+\textbf{Interface.} Inputs: onboard RGB-D, external RGB, robot kinematics,
+depth queries, a map, plan and feedback (Fig.~\ref{fig:overview}). SONIC's
 gamepad commands set walking speed, direction, facing and posture; three-point
 tracking follows head/wrist positions and orientations. Four pose keyframes
 span a chosen duration; hand presets are optional. Drawer states,
@@ -60,7 +60,7 @@ drawers~\citep{isaaclab2026cabinet} occupy Simple
 Room~\citep{nvidia2026warehouseassets,nvidia2026assetlicense}: A/B behind
 lockers~\citep{nvidia2026simready}, C/D behind home; all fronts are initially hidden.
 Eight initializations: none (control), A, B, C, D, A+B, A+D or B+C open;
-all open drawers start at 0.20\,m under the same instruction. Newton~\citep{newton2025}
+Open drawers start at 0.20\,m; the instruction is fixed. Newton~\citep{newton2025}
 in Isaac Lab~\citep{isaaclab2025} runs at 200\,Hz.
 
 \textbf{Evaluation.} Success requires all drawers within 2\,cm of shut at
@@ -75,30 +75,29 @@ four concurrently.
   \centering
   \small
   \setlength{\tabcolsep}{3pt}
-  \begin{tabular}{lccccccc}
+  \begin{tabular}{lcccccccc}
     \toprule
-    Model / effort & Success & \shortstack{Physical\\completion} &
+    Model / effort & Success & \shortstack{Task\\outcomes} & \shortstack{Physical\\completion} &
     \shortstack{False\\declarations} & Falls &
-    \shortstack{Mean API\\cost (\$)} & \shortstack{Episode\\time (s)} & \shortstack{Decision\\latency (s)} \\
+    \shortstack{Est. API\\cost (\$)} & \shortstack{Episode\\time (s)} & \shortstack{Decision\\latency (s)} \\
     \midrule
-    Astra / low & 6/7 & 6/7 & 0/7 & 1/7 & 9.30 / 10.57 & 817 / 926 & 9.2 \\
-    Astra / high & 6/7 & 6/7 & 0/7 & 1/7 & 7.65 / 8.78 & 998 / 1145 & 21.4 \\
-    Sol / low & 4/7 & 4/7 & 1/7 & 2/7 & 1.72 / 1.96 & 829 / 940 & 10.4 \\
-    Sol / high & 3/7 & 5/7 & 0/7 & 2/7 & 1.74 / 1.59 & 1235 / 1162 & 21.5 \\
-    Opus / low & 2/7 & 3/7 & 2/7 & 3/7 & 4.78 / 6.23 & 762 / 1028 & 13.2 \\
-    Opus / high & 3/7 & 3/7 & 1/7 & 2/7 & 7.22 / 8.36 & 1392 / 1563 & 36.1 \\
-    Gemini / low & 0/7 & 0/4 & 0/4 & 3/4 & 1.29$^{*}$ / -- & 737 / -- & 32.3 \\
-    Gemini / high & 0/7 & 0/5 & 0/5 & 1/5 & 1.59$^{*}$ / -- & 1332 / -- & 136.7 \\
+    Astra / low & 6/7 & 7 & 6 & 0 & 1 & 9.30 / 10.57 & 817 / 926 & 9.2 \\
+    Astra / high & 6/7 & 7 & 6 & 0 & 1 & 7.65 / 8.78 & 998 / 1145 & 21.4 \\
+    Sol / low & 4/7 & 7 & 4 & 1 & 2 & 1.72 / 1.96 & 829 / 940 & 10.4 \\
+    Sol / high & 3/7 & 7 & 5 & 0 & 2 & 1.74 / 1.59 & 1235 / 1162 & 21.5 \\
+    Opus / low & 2/7 & 7 & 3 & 2 & 3 & 4.78 / 6.23 & 762 / 1028 & 13.2 \\
+    Opus / high & 3/7 & 7 & 3 & 1 & 2 & 7.22 / 8.36 & 1392 / 1563 & 36.1 \\
+    Gemini / low & 0/7 & 4 & 0 & 0 & 3 & 1.29$^{*}$ / -- & 737 / -- & 32.3 \\
+    Gemini / high & 0/7 & 5 & 0 & 0 & 1 & 1.59$^{*}$ / -- & 1332 / -- & 136.7 \\
     \bottomrule
   \end{tabular}
-  \caption{Seven scheduled task attempts per row. Physical completion: goal reached
-  at least once; false declarations: goal unmet when claimed. API errors remain
-  in success denominators only. Gemini: three low-effort filter rejections,
-  two high-effort timeouts.
-  Cost/time: all/successful means through termination. Costs: usage at published
-  rates~\citep{openai2026pricing,anthropic2026pricing,google2026pricing};
-  GPU costs excluded; $^{*}$ excludes unresolved usage; --: no success.
-  Latency: median of per-attempt medians for completed decisions.}
+  \caption{Success: all seven starts. Task outcomes: starts without API errors.
+  Physical, false and fall counts overlap. Physical: closed, home, upright at least once;
+  false: goal unmet when claimed. Gemini API errors: three low-effort filter
+  rejections, two high-effort timeouts. Cost/time: all/successful means through
+  termination. Costs: published rates~\citep{openai2026pricing,anthropic2026pricing,google2026pricing};
+  GPU excluded; $^{*}$ excludes unresolved usage; --: no success.
+  Latency: median per-attempt median completed-decision time.}
   \label{tab:results}
 \end{table}
 \textbf{Performance.} Astra led (6/7 each); 11/12 successes viewed all four drawer
@@ -124,7 +123,8 @@ Successful runs cost less for Sol high (\$1.59 vs.\ \$1.96), but including failu
 Sol low spent less per success (\$3.00 vs.\ \$4.06).
 
 \textbf{Limitations.} One layout and one trial per model/effort/condition limit
-generalization; 41/58 completed episodes exceeded 100\,ms peak physics lag.
+generalization; 41/58 completed episodes exceeded 100\,ms peak physics lag
+(simulated time falling behind wall time).
 Reliability and transfer need repeated trials and hardware tests.
 
 \clearpage
