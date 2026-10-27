@@ -51,11 +51,19 @@ reliability and capability gains.
 
 Every model had seven scheduled task attempts at each setting. The success
 rates above include API-error starts. Gemini had three low-effort and two
-high-effort API errors, plus one in the all-closed control. The chart reports
-API errors separately from falls, time limits and incorrect completion claims.
+high-effort API errors, plus one in the all-closed control. The project-page
+charts report API errors separately from falls, time limits and incorrect
+completion claims.
 All 43 drawer closures were by hand; no initially closed drawer was disturbed.
 
-Only 17 of 58 completed episodes met the recorded 100 ms physics-lag limit;
+Higher reasoning effort increased decision latency roughly two to four times
+without consistent success gains. Sol high reached physical completion in 5/7
+attempts versus 4/7 at low, but two completions went undeclared before a timeout
+or fall, leaving fewer successes: 3/7 versus 4/7. Across all conditions, 16 of
+19 falls had no recorded drawer contact; other collisions remain possible.
+
+Only 17 of 58 completed episodes met the recorded 100 ms physics-lag limit
+(simulated time falling behind wall time);
 median peak lag was 192 ms. The results include episodes that exceeded this
 timing limit. Hardware performance and safety require separate experiments. See
 [results and limitations](docs/results.md).
@@ -70,11 +78,15 @@ the additional rendered frames were not model observations.
 
 ## Cost and timing
 
-The paper and project page report estimated API cost, full episode duration
-and model-decision latency for all task attempts and for successful attempts
-only. Costs use recorded and provider-reconciled token usage at published
-standard rates, rather than invoice amounts. Astra high was cheaper in this
-sweep because more of its input used cached reads. See
+The paper and project page report estimated API cost and full episode duration
+for all task attempts and for successful attempts only. The paper reports
+overall model-decision latency; the page also shows successful-only latency.
+Costs use recorded and provider-reconciled token usage at published standard
+rates, rather than invoice amounts. Astra high was cheaper in this
+sweep because more of its input used cached reads. It matched low effort's
+success at an 18% lower mean cost. Sol high had a lower mean cost among
+successful attempts ($1.59 versus $1.96), while Sol low spent less per success
+when failed-attempt spending was included ($3.00 versus $4.06). See
 [the cost and timing method](docs/api-costs.md) for definitions, evidence and
 reproduction.
 
