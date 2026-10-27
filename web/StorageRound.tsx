@@ -333,6 +333,7 @@ export function StorageRound() {
 						Successful task attempts took 615 to 1492 seconds. The model chose
 						inspection routes, pushed drawers shut and returned home through
 						online commands to a fixed controller, without a task skill library.
+						Eleven of its twelve successes viewed all four drawer fronts.
 					</Text>
 				</div>
 				<dl className="study-design">
@@ -361,6 +362,33 @@ export function StorageRound() {
 					outcomeCaption="Each bar accounts for seven scheduled task attempts with at least one drawer initially open. Success uses all seven starts, including API-error starts. It requires every drawer closed and settled, the model's completion declaration and a supported standing hold at home. API errors, falls, time limits and incorrect declarations have separate outcome categories. The all-closed control appears in the table. All recorded closures were by hand, and no initially closed drawer was disturbed. The startup fall occurred before the model's first command."
 					caveat="Lag rarely coincided with falls. The results include episodes that exceeded the timing limit. Each model, effort and condition has one attempt on one layout; repeated trials are needed to estimate reliability."
 				/>
+				<div className="result-finding">
+					<Heading as="h3" size="5">
+						Higher effort can improve progress without improving success
+					</Heading>
+					<Text as="p">
+						Sol high closed 9 of 10 initially open drawers, compared with 4 at
+						low effort, and reached physical completion in 5 of 7 attempts
+						versus 4. Two physical completions went unreported before a timeout
+						or fall, leaving fewer successful attempts: 3 versus 4. Higher
+						effort increased decision latency roughly two to four times across
+						models in this comparison.
+					</Text>
+				</div>
+				<div className="result-finding">
+					<Heading as="h3" size="5">
+						Falls also occurred without recorded drawer contact
+					</Heading>
+					<Text as="p">
+						Among eight all-closed controls, three succeeded, four fell and one
+						had an API error. Across all conditions, 16 of 19 falls had no
+						recorded drawer contact; other collisions remain possible. Eleven of
+						18 post-command falls ended in holds commanding zero translational
+						speed with retained pose and facing targets. Prolonged target holds
+						during inference may contribute to instability; this is a
+						hypothesis, not a demonstrated cause.
+					</Text>
+				</div>
 				<ApiCosts />
 			</section>
 		</>

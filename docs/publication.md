@@ -11,7 +11,7 @@ The frozen runtime release reproduces the study; maintained code can differ.
 
 | Material | Source |
 | --- | --- |
-| Paper download and manuscript | `paper/main.tex`, `paper/results-table.tex`, `paper/paper.pdf` |
+| Paper download and manuscript | `paper/paper.tex`, `paper/paper.pdf`; detailed companion: `paper/results-table.tex` |
 | Project page | `web/`, shared paper PDF and `docs/figures/` |
 | Initial outcomes | `data/episodes.csv`, `data/summary.json`, `data/provenance.json` |
 | Cost and timing | `docs/figures/api-costs.json`, `docs/api-costs.md` |
@@ -35,8 +35,12 @@ Each model and effort has seven scheduled task attempts and one separate
 all-closed control. Success includes API-error starts in its denominator.
 The paper table and website charts match the summary and cost report. API
 cost and episode duration use means; decision latency uses the median of
-per-attempt medians for completed decisions. Each distinguishes all task
-attempts from successful attempts. Costs are standard-rate estimates,
+per-attempt medians for completed decisions. Cost and episode time distinguish
+all task attempts from successful attempts.
+The paper keeps all-attempt decision latency; the website additionally reports
+successful-attempt latency. The inline paper table is the compact presentation;
+`paper/results-table.tex` remains a detailed generated companion. Costs are
+standard-rate estimates,
 including uniquely reconciled usage, rather than itemized invoice amounts.
 
 All 43 drawer closures were by hand, with no initially closed drawer disturbed.

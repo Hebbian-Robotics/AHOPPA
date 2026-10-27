@@ -1,0 +1,162 @@
+{
+  "source_summary_sha256": "affe4a2076d72cd3bb059c289bda17b18f1b0d801b2d7dcc343fbf52678fa1fe",
+  "method": "Select robot_fell episodes. Drawer contact means any positive hand_contact_seconds or other_body_contact_seconds in the episode task_outcome.shutdown.drawers. For post-command falls, inspect the final physics/executed-inputs.jsonl record: endpoint_hold true, speed_m_per_s zero, nonempty vr_position_body_frame and facing_direction_world. Exclude the startup fall from post-command hold counts.",
+  "falls": 19,
+  "without_recorded_drawer_contact": 16,
+  "post_command_falls": 18,
+  "post_command_zero_speed_pose_holds": 11,
+  "episodes": [
+    {
+      "episode": "storage-cmp3-sol-low-none-open-r1",
+      "drawer_contact": false,
+      "startup_fall": false,
+      "endpoint_hold": true,
+      "zero_speed_pose_hold": true,
+      "last_command": "feedback_002"
+    },
+    {
+      "episode": "storage-cmp3-opus-low-open-a-b-r1",
+      "drawer_contact": false,
+      "startup_fall": false,
+      "endpoint_hold": true,
+      "zero_speed_pose_hold": true,
+      "last_command": "feedback_014"
+    },
+    {
+      "episode": "storage-cmp3-sol-low-open-a-d-r1",
+      "drawer_contact": true,
+      "startup_fall": false,
+      "endpoint_hold": false,
+      "zero_speed_pose_hold": false,
+      "last_command": "feedback_055"
+    },
+    {
+      "episode": "storage-cmp3-gemini-low-open-a-d-r1",
+      "drawer_contact": false,
+      "startup_fall": false,
+      "endpoint_hold": true,
+      "zero_speed_pose_hold": true,
+      "last_command": "feedback_002"
+    },
+    {
+      "episode": "storage-cmp3-astra-low-open-a-r1",
+      "drawer_contact": false,
+      "startup_fall": false,
+      "endpoint_hold": false,
+      "zero_speed_pose_hold": false,
+      "last_command": "feedback_009"
+    },
+    {
+      "episode": "storage-cmp3-opus-low-open-a-r1",
+      "drawer_contact": true,
+      "startup_fall": false,
+      "endpoint_hold": false,
+      "zero_speed_pose_hold": false,
+      "last_command": "feedback_033"
+    },
+    {
+      "episode": "storage-cmp3-sol-low-open-b-c-r1",
+      "drawer_contact": false,
+      "startup_fall": false,
+      "endpoint_hold": true,
+      "zero_speed_pose_hold": true,
+      "last_command": "feedback_003"
+    },
+    {
+      "episode": "storage-cmp3-opus-low-open-b-c-r1",
+      "drawer_contact": false,
+      "startup_fall": false,
+      "endpoint_hold": true,
+      "zero_speed_pose_hold": true,
+      "last_command": "feedback_000"
+    },
+    {
+      "episode": "storage-cmp3-gemini-low-open-c-r1",
+      "drawer_contact": false,
+      "startup_fall": false,
+      "endpoint_hold": true,
+      "zero_speed_pose_hold": true,
+      "last_command": "feedback_000"
+    },
+    {
+      "episode": "storage-cmp3-gemini-low-open-d-r1",
+      "drawer_contact": false,
+      "startup_fall": false,
+      "endpoint_hold": true,
+      "zero_speed_pose_hold": true,
+      "last_command": "feedback_002"
+    },
+    {
+      "episode": "storage-cmp3-sol-high-none-open-r1",
+      "drawer_contact": false,
+      "startup_fall": false,
+      "endpoint_hold": false,
+      "zero_speed_pose_hold": false,
+      "last_command": "feedback_013"
+    },
+    {
+      "episode": "storage-cmp3-astra-high-none-open-r1",
+      "drawer_contact": false,
+      "startup_fall": false,
+      "endpoint_hold": false,
+      "zero_speed_pose_hold": false,
+      "last_command": "feedback_007"
+    },
+    {
+      "episode": "storage-cmp3-gemini-high-none-open-r1",
+      "drawer_contact": false,
+      "startup_fall": false,
+      "endpoint_hold": true,
+      "zero_speed_pose_hold": true,
+      "last_command": "feedback_000"
+    },
+    {
+      "episode": "storage-cmp3-gemini-high-open-a-d-r1",
+      "drawer_contact": false,
+      "startup_fall": false,
+      "endpoint_hold": false,
+      "zero_speed_pose_hold": false,
+      "last_command": "feedback_002"
+    },
+    {
+      "episode": "storage-cmp3-opus-high-open-a-r1",
+      "drawer_contact": false,
+      "startup_fall": false,
+      "endpoint_hold": true,
+      "zero_speed_pose_hold": true,
+      "last_command": "feedback_017"
+    },
+    {
+      "episode": "storage-cmp3-astra-high-open-b-c-r1",
+      "drawer_contact": false,
+      "startup_fall": false,
+      "endpoint_hold": false,
+      "zero_speed_pose_hold": false,
+      "last_command": "feedback_003"
+    },
+    {
+      "episode": "storage-cmp3-sol-high-open-b-r1",
+      "drawer_contact": false,
+      "startup_fall": true,
+      "endpoint_hold": true,
+      "zero_speed_pose_hold": false,
+      "last_command": null
+    },
+    {
+      "episode": "storage-cmp3-sol-high-open-d-r1",
+      "drawer_contact": true,
+      "startup_fall": false,
+      "endpoint_hold": true,
+      "zero_speed_pose_hold": true,
+      "last_command": "feedback_048"
+    },
+    {
+      "episode": "storage-cmp3-opus-high-open-d-r1",
+      "drawer_contact": false,
+      "startup_fall": false,
+      "endpoint_hold": true,
+      "zero_speed_pose_hold": true,
+      "last_command": "feedback_009"
+    }
+  ]
+}

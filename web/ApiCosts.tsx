@@ -104,7 +104,13 @@ export function ApiCosts() {
 			<Text as="p" className="result-caveat">
 				Astra high cost less in these runs despite generating more output
 				tokens: cached reads covered about 50% of its input, compared with 29%
-				at low.
+				at low. This matched low effort's success at an 18% lower mean cost.
+			</Text>
+			<Text as="p" className="result-caveat">
+				Successful Sol high attempts cost less on average ($1.59 versus $1.96).
+				Including spending on failed attempts, Sol low spent less per success:
+				$3.00 versus $4.06. Cost per success divides total task-attempt spending
+				by the success count.
 			</Text>
 			<Text as="p" className="result-caveat">
 				* No successful attempt observed.

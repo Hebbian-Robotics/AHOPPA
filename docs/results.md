@@ -33,7 +33,30 @@ The CSV and aggregate JSON retain both scheduled starts and completed episodes,
 which provide the denominator for the reported end-to-end success rate. The
 original observations and outcomes are unchanged by this reporting choice.
 
+## Reasoning effort and falls
+
+Eleven of Astra's twelve successful task attempts viewed all four drawer fronts.
+Higher effort increased decision latency roughly two to four times without
+consistent success gains. Sol high closed 9/10 initially open drawers versus
+4/10 at low effort, reaching physical completion in 5/7 attempts versus 4/7.
+Two physical completions went undeclared before a timeout or fall, leaving 3/7
+successes at high effort versus 4/7 at low.
+
+Of eight all-closed controls, three succeeded, four fell and one had an API
+error. Across all conditions, 16/19 falls had no recorded drawer contact;
+other collisions remain possible. Eleven of 18 post-command falls ended in
+zero-speed endpoint holds with retained pose and facing targets. Prolonged
+holds during inference are a possible contributor to instability; the records
+do not establish a cause. [The fall audit](figures/fall-analysis.json) lists the
+episodes and the fields used to reproduce these counts from the raw records.
+
 ## Cost and elapsed time
+
+Astra high matched low's success at 18% lower mean API cost, with a larger
+cache-read share despite more output tokens. Sol high's successful attempts
+cost $1.59 on average versus $1.96 at low, but including failed-attempt spending,
+Sol low spent less per success: $3.00 versus $4.06. Cost per success divides total
+task-attempt spending by the number of successful attempts.
 
 The paper and page separate means over all seven task attempts from means over
 successful attempts only. Gemini has no successful-attempt cost or duration;

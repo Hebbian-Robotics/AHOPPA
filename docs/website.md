@@ -58,7 +58,8 @@ The design review used the official [ReKep](https://rekep-robot.github.io/),
 demonstrations and capability-oriented sections.
 
 The estimated-cost table reads `figures/api-costs.json`, the same data used to
-generate the paper's paired cost, episode duration and decision latency columns.
+populate the paper's cost, episode duration and decision latency columns. The
+paper pairs all/successful cost and duration, and uses all-attempt latency.
 All-attempt means include all
 seven scheduled task attempts; successful-attempt means include only attempts
 that met the full task
@@ -127,6 +128,6 @@ renderings; their additional frames were not model observations.
 
 The paper introduces the research problem before the system and keeps its
 related-work citations in a compact paragraph. It presents the model interface
-before scene details, and labels results by task completion, reasoning effort
-and efficiency, and failure modes and timing. Both images, the full result
-table and the two-page body are retained.
+before scene details, and labels results by performance, high versus low
+effort, falls, cost and limitations. Both images, the compact result table and
+the two-page body are retained.

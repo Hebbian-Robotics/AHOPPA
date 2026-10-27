@@ -186,7 +186,9 @@ performance or safety.
 The [paper and project page](https://hebbian-robotics.github.io/AHOPPA/) report
 estimated API cost, full episode duration and model-decision latency for all
 seven scheduled task attempts and for successful attempts only. The all-closed
-control is separate. A dash and asterisk mean no successful attempt was observed.
+control is separate. A dash means no successful attempt was observed. The
+website adds an asterisk to that dash; the paper instead uses a cost asterisk
+for unresolved usage.
 Costs use recorded and provider-reconciled token usage at published standard
 rates, rather than invoice amounts. Astra high was cheaper in these runs because
 cached reads covered about 50% of its input, compared with 29% at low effort.
@@ -197,8 +199,11 @@ commands. Provider reconciliation is published separately in the repository;
 these raw archives preserve the original responses, including missing responses
 from interrupted calls. Eleven Gemini calls remain unpriced. Full episode
 duration includes inference while physics runs and ends at recorded termination.
-Decision latency is the median of per-attempt medians for completed decisions;
-physics lag is a separate simulator timing quantity.
+Decision latency is the median of per-attempt medians for completed decisions.
+The paper reports all task attempts; the page also shows successful attempts
+separately. Physics lag is a separate simulator timing quantity. Cost per success
+in the paper includes spending on failed task attempts and divides total task
+spending by the success count, unlike mean cost conditional on success.
 
 ## Attribution and licenses
 

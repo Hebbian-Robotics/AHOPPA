@@ -12,8 +12,10 @@ The paper and project page report two means for each model and reasoning effort:
   met the full success criterion. These are the costs and durations of observed
   successful tasks, rather than total spending divided by the success count.
 
-The all-closed control is separate. A dash and asterisk mean **no successful
-attempt observed**, as with Gemini at both efforts. They do not mean zero cost.
+The all-closed control is separate. The website uses a dash and asterisk for
+**no successful attempt observed**, as with Gemini at both efforts. In the
+paper, a dash means no success and the cost asterisk marks unresolved usage.
+Neither notation means zero cost.
 Costs use recorded and provider-reconciled token usage at published standard
 rates in USD. They are estimates, not invoice amounts. GPU hosting, taxes and
 account discounts are excluded. Small remaining accounting gaps are documented
@@ -33,7 +35,8 @@ The completion chart shows each successful declaration time. Its separate
 model-decision latency column reports all / successful task attempts: the median
 of per-attempt median completed-decision times from the frozen summary.
 Interrupted decisions have no completed-decision latency. Controls are excluded.
-Physics lag is a separate simulator timing quantity.
+The paper reports the all-attempt latency; the website also shows the
+successful-attempt subset. Physics lag is a separate simulator timing quantity.
 
 In this sweep, Astra high was cheaper despite generating more output tokens.
 Among the seven task attempts, cached reads covered about 50% of high-effort
@@ -147,6 +150,16 @@ cached-input split needed for exact pricing or reliably match residual usage
 to individual attempts. No billing export was present in the queried project's
 BigQuery dataset list. Do not treat quota consumption as itemized invoice data.
 The remaining nine interruptions and two timeouts stay unresolved.
+
+## Compact manuscript table
+
+The generated `paper/results-table.tex` is a detailed companion table. The
+compact table in `paper/paper.tex` is maintained from the same summary and cost
+JSON: it omits inspection counts and successful-only decision latency, adds fall
+counts, and gives observed-outcome denominators explicitly. Update that table
+when its source metrics change. Cost per success divides all task-attempt
+spending by successful task attempts, including the spending on failures. It is
+distinct from mean cost conditional on success.
 
 ## Reproduce
 
